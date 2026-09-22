@@ -903,6 +903,116 @@ const AdminStudio = {
     App.showToast("Đã tải xuống file data/games.json mới!");
   },
 
+  exportFullBackup() {
+    let communityGames = [];
+    try {
+      communityGames = JSON.parse(localStorage.getItem("thv_community_games") || "[]");
+    } catch (e) {}
+
+    let userRequests = [];
+    try {
+      userRequests = JSON.parse(localStorage.getItem("thv_user_requests") || "[]");
+    } catch (e) {}
+
+    let bugReports = [];
+    try {
+      bugReports = JSON.parse(localStorage.getItem("thv_bug_reports") || "[]");
+    } catch (e) {}
+
+    const backupData = {
+      app: "TapHoaViet",
+      version: "2026.1",
+      backup_at: new Date().toISOString(),
+      games: this.games || [],
+      community_games: communityGames,
+      requests: (window.Requests && Requests.requests) ? Requests.requests : userRequests,
+      bug_reports: bugReports
+    };
+
+    const jsonStr = JSON.stringify(backupData, null, 2);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const dateStr = new Date().toISOString().split("T")[0];
+    a.href = url;
+    a.download = `taphoaviet_backup_${dateStr}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    App.showToast("📦 Đã xuất tệp sao lưu toàn bộ hệ thống (.json)!");
+  },
+
+  async importFullBackup(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    if (!confirm(`Bạn có chắc chắn muốn nạp dữ liệu từ tệp sao lưu "${file.name}"? Dữ liệu hiện tại sẽ được cập nhật và đồng bộ.`)) {
+      e.target.value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (!data || (!data.games && !data.requests && !data.community_games)) {
+          alert("Tệp sao lưu không hợp lệ hoặc không có dữ liệu Tạp Hóa Việt!");
+          return;
+        }
+
+        // 1. Khôi phục danh sách Game
+        if (Array.isArray(data.games) && data.games.length > 0) {
+          this.games = data.games;
+          App.games = this.games;
+          localStorage.setItem("thv_custom_games", JSON.stringify(this.games));
+          // Nếu có Supabase, đồng bộ lên Cloud
+          if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+            for (const g of this.games) {
+              try { await SupabaseClient.upsertGame(g); } catch (err) {}
+            }
+          }
+        }
+
+        // 2. Khôi phục Game cộng đồng
+        if (Array.isArray(data.community_games) && data.community_games.length > 0) {
+          localStorage.setItem("thv_community_games", JSON.stringify(data.community_games));
+        }
+
+        // 3. Khôi phục Đề xuất
+        if (Array.isArray(data.requests) && data.requests.length > 0) {
+          if (window.Requests) Requests.requests = data.requests;
+          localStorage.setItem("thv_user_requests", JSON.stringify(data.requests));
+          if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+            for (const r of data.requests) {
+              try { await SupabaseClient.insertRequest(r); } catch (err) {}
+            }
+          }
+        }
+
+        // 4. Khôi phục Báo lỗi
+        if (Array.isArray(data.bug_reports) && data.bug_reports.length > 0) {
+          localStorage.setItem("thv_bug_reports", JSON.stringify(data.bug_reports));
+        }
+
+        // 5. Cập nhật lại UI toàn bộ trang web
+        this.renderGamesTable();
+        this.renderRequestsTable();
+        this.renderReportsTable();
+        if (window.Catalog) Catalog.init(this.games);
+        if (window.Progress) Progress.init(this.games);
+        if (window.Community) Community.init(this.games);
+        if (window.Requests) Requests.render();
+        if (window.Library) Library.init(this.games);
+
+        App.showToast("🎉 Phục hồi dữ liệu thành công! Đã nạp lại game, cộng đồng và đề xuất!");
+      } catch (err) {
+        console.error("Lỗi đọc file sao lưu:", err);
+        alert("Lỗi phân tích file sao lưu JSON: " + err.message);
+      }
+      e.target.value = "";
+    };
+    reader.readAsText(file);
+  },
+
   bindEvents() {
     // Phím tắt mở Admin: Ctrl + Shift + A
     document.addEventListener("keydown", (e) => {

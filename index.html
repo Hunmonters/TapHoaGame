@@ -698,12 +698,19 @@
                 <p style="font-size:0.85rem; color:var(--text-muted);">Thêm game mới, cập nhật bài dịch, ảnh poster và
                   link tải.</p>
               </div>
-              <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <button class="btn-admin-hero-add" id="btn-admin-add-game" type="button">
                   <i class="fa-solid fa-circle-plus"></i> + Thêm Game Mới
                 </button>
-                <button class="btn-secondary" id="btn-admin-export-json" type="button">
-                  <i class="fa-solid fa-download"></i> Xuất File games.json
+                <button class="btn-secondary" id="btn-admin-backup-all" type="button" onclick="AdminStudio.exportFullBackup()" title="Tải về tệp sao lưu toàn bộ kho game, cộng đồng và đề xuất">
+                  <i class="fa-solid fa-file-export"></i> Sao Lưu Hệ Thống (.json)
+                </button>
+                <label class="btn-secondary" style="cursor:pointer; display:inline-flex; align-items:center; gap:6px; margin:0;" title="Nhập tệp sao lưu để khôi phục dữ liệu khi đổi tên miền">
+                  <i class="fa-solid fa-file-import"></i> Phục Hồi Dữ Liệu
+                  <input type="file" id="admin-restore-file-input" accept=".json" style="display:none;" onchange="AdminStudio.importFullBackup(event)">
+                </label>
+                <button class="btn-secondary" id="btn-admin-export-json" type="button" title="Xuất file games.json để cập nhật vào thư mục data/">
+                  <i class="fa-solid fa-download"></i> Xuất games.json
                 </button>
               </div>
             </div>

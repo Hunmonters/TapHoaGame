@@ -62,7 +62,20 @@ const SupabaseClient = {
         .upsert([gameData], { onConflict: "id" })
         .select();
 
-      if (error) throw error;
+      if (error) {
+        // Tự động thử lại nếu CSDL Supabase chưa chạy lệnh ALTER TABLE bổ sung cột mới
+        if (error.message && (error.message.includes("is_community") || error.message.includes("screenshots") || error.message.includes("author"))) {
+          console.warn("[Supabase] Cột mới chưa có trong CSDL, đang lưu ở chế độ tương thích:", error.message);
+          const fallback = { ...gameData };
+          delete fallback.is_community;
+          delete fallback.author;
+          delete fallback.author_link;
+          delete fallback.screenshots;
+          const retry = await this.client.from("games").upsert([fallback], { onConflict: "id" }).select();
+          if (!retry.error) return retry.data && retry.data[0];
+        }
+        throw error;
+      }
       return data && data[0];
     } catch (err) {
       console.error("[Supabase] Lỗi lưu game:", err);
@@ -175,7 +188,16 @@ const SupabaseClient = {
         .from("requests")
         .insert([reqData]);
 
-      if (error) throw error;
+      if (error) {
+        if (error.message && error.message.includes("cover_url")) {
+          console.warn("[Supabase] Cột cover_url chưa có trong bảng requests, đang lưu ở chế độ tương thích...");
+          const fallback = { ...reqData };
+          delete fallback.cover_url;
+          const retry = await this.client.from("requests").insert([fallback]);
+          if (!retry.error) return true;
+        }
+        throw error;
+      }
       return true;
     } catch (err) {
       console.error("[Supabase] Lỗi thêm đề xuất:", err);
