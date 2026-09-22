@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="cyberpunk">
+<html lang="vi" data-theme="cream">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,35 +23,6 @@
 </head>
 <body>
 
-  <!-- Canvas Mưa Rơi (Tự động kích hoạt khi bật Theme Tạp Hóa Việt) -->
-  <canvas id="rain-canvas"></canvas>
-
-  <!-- ==========================================================================
-       1. BRAND ENTRY / INTRO BOOTING SCREEN (Phong cách VietPatch)
-       ========================================================================== -->
-  <div class="brand-intro" id="brand-intro" role="dialog" aria-modal="true">
-    <div class="intro-grid-bg"></div>
-    <div class="intro-content">
-      <span class="intro-badge"><i class="fa-solid fa-satellite-dish"></i> VIETHOAGAME ONLINE ARCHIVE</span>
-      <div class="intro-orbit-wrap">
-        <div class="intro-orbit"></div>
-        <div class="intro-logo-core">
-          <i class="fa-solid fa-store"></i>
-        </div>
-      </div>
-      <h1 class="intro-title">TẠP HÓA <span>VIỆT</span></h1>
-      <p class="intro-desc">Kho bản Việt hóa game PC được tuyển chọn và kiểm định chất lượng kỹ thuật.</p>
-      
-      <div class="intro-boot-track">
-        <div class="intro-boot-progress" id="intro-progress-bar"></div>
-      </div>
-      <div class="intro-status-text" id="intro-status-text">Đang đồng bộ cơ sở dữ liệu...</div>
-
-      <button class="intro-skip-btn" id="intro-skip-btn" type="button">
-        Vào trang ngay <i class="fa-solid fa-arrow-right"></i>
-      </button>
-    </div>
-  </div>
 
   <!-- ==========================================================================
        2. GLOBAL HEADER
@@ -81,13 +52,8 @@
         </button>
       </nav>
 
-      <!-- Action buttons & Theme Switcher -->
+      <!-- Action buttons -->
       <div class="header-actions">
-        <!-- Nút chuyển Theme (Cyberpunk / Tạp Hóa Mưa) -->
-        <button class="btn-theme-switch" id="btn-toggle-theme" type="button" title="Chuyển đổi giao diện Cyberpunk / Tạp Hóa Mưa">
-          <i class="fa-solid fa-bolt"></i>
-          <span>Cyberpunk</span>
-        </button>
 
         <button class="btn-bookmark-tab" data-tab="library" type="button" title="Mở bộ sưu tập của bạn">
           <i class="fa-solid fa-bookmark" style="color:var(--accent-red)"></i>
@@ -116,47 +82,42 @@
     <!-- ================= TAB 1: KHO SƯU TẬP (CATALOG) ================= -->
     <section class="tab-pane active" id="tab-catalog">
       
-      <!-- Suất Chiếu Bản Dịch / Trailer Tuần (Chuẩn VietPatch) -->
-      <section class="weekly-trailer" aria-labelledby="trailer-title">
-        <header class="weekly-trailer-head">
-          <div>
-            <span><i class="fa-solid fa-film"></i> SUẤT CHIẾU BẢN DỊCH</span>
-            <small>Game Việt hóa mới đáng chú ý</small>
-          </div>
-          <time style="font-size:0.8rem; color:var(--text-muted);"><i class="fa-solid fa-clock"></i> Tiêu điểm trong tuần</time>
-        </header>
+      <!-- ==========================================================================
+           BẢN VIỆT HÓA MỚI CẬP NHẬT NỔI BẬT (SPOTLIGHT SHOWCASE & ARCHIVE WIRE)
+           Thiết kế phong cách Retro Archive Neubrutalist Cream & Orange
+           ========================================================================== -->
+      <section class="spotlight-showcase" id="spotlight-showcase" aria-label="Bản Việt hóa mới cập nhật nổi bật">
+        <div class="spotlight-container">
+          
+          <!-- Top bar: Pagination dashes & Release Date -->
+          <header class="spotlight-top-bar">
+            <div class="spotlight-dashes" id="spotlight-dashes">
+              <!-- Rendered dynamically by Catalog.renderSpotlight() -->
+            </div>
+            <div class="spotlight-date" id="spotlight-date">
+              CẬP NHẬT • 01/08/2026
+            </div>
+          </header>
 
-        <div class="weekly-trailer-media">
-          <div class="weekly-trailer-poster" id="trailer-poster" style="background: linear-gradient(135deg, #1C3028, #0E1A16); display: flex; align-items: center; justify-content: center;">
-            <div style="text-align: center; padding: 20px;">
-              <i class="fa-solid fa-gamepad" style="font-size: 3.5rem; color: rgba(245, 158, 11, 0.75); margin-bottom: 12px; display: block;"></i>
-              <strong style="font-size: 1.4rem; color: #FFF; display: block;">Together: Moon Escape (Tiếng Việt 100%)</strong>
+          <!-- Spotlight Main Body (Left Info + Right Visual) -->
+          <div class="spotlight-body" id="spotlight-body">
+            <!-- Rendered dynamically by Catalog.renderSpotlight() -->
+          </div>
+
+        </div>
+
+        <!-- Bottom Archive Wire Ticker -->
+        <aside class="archive-wire" aria-label="Bản tin cập nhật nhanh">
+          <div class="wire-badge">
+            <i class="fa-solid fa-bolt"></i> ARCHIVE WIRE
+          </div>
+          <div class="wire-track-wrap">
+            <div class="wire-track" id="wire-track">
+              <!-- Rendered dynamically by Catalog.renderArchiveWire() -->
             </div>
           </div>
-          <button class="weekly-trailer-play-btn" id="trailer-play-btn" type="button" aria-label="Phát trailer trải nghiệm game">
-            <i class="fa-solid fa-play"></i>
-            <span>Phát trailer bản dịch</span>
-          </button>
-          <iframe class="weekly-trailer-iframe" id="trailer-iframe" title="Trailer Game" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-
-        <div class="weekly-trailer-caption">
-          <span class="weekly-trailer-meta">UNREAL ENGINE 5.4.4 / BẢN VÁ NATIVE IOSTORE</span>
-          <h3 id="trailer-title">Together: Moon Escape — Khám Phá Mặt Trăng</h3>
-          <p>Trải nghiệm tựa game phiêu lưu hành động với bản dịch trau chuốt 100%, tích hợp bộ phông chữ vector Be Vietnam Pro sắc nét, không phá hủy dữ liệu gốc.</p>
-        </div>
+        </aside>
       </section>
-
-      <!-- Hero Carousel Slider -->
-      <div class="hero-slider-wrap">
-        <div class="hero-slider-track" id="hero-slider-container">
-          <!-- Slide nổi bật được sinh tự động bằng JS -->
-        </div>
-        <div class="hero-slider-nav">
-          <button class="slider-btn" id="hero-prev" type="button" aria-label="Game trước"><i class="fa-solid fa-chevron-left"></i></button>
-          <button class="slider-btn" id="hero-next" type="button" aria-label="Game kế tiếp"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
-      </div>
 
       <!-- Live Stats Bar (Chuẩn VietPatch) -->
       <section class="stats-bar" aria-label="Thống kê hệ thống">
@@ -194,22 +155,24 @@
       <div class="catalog-toolbar" aria-label="Bộ lọc kho game">
         <div class="toolbar-search">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="search" id="catalog-search" placeholder="Tìm theo tên game, nhà phát triển hoặc engine..." autocomplete="off">
+          <input type="search" id="catalog-search" placeholder="Tìm nhanh tên tựa game bạn muốn tải..." autocomplete="off">
         </div>
 
         <div class="toolbar-filters">
-          <div class="engine-btn-group" aria-label="Lọc theo Engine">
-            <button class="engine-btn active" data-engine="all" type="button">Tất cả</button>
-            <button class="engine-btn" data-engine="ue" type="button">Unreal</button>
-            <button class="engine-btn" data-engine="unity" type="button">Unity</button>
-            <button class="engine-btn" data-engine="gamemaker" type="button">GameMaker</button>
+          <div class="filter-pill-group" aria-label="Bộ lọc nhanh">
+            <button class="filter-pill active" data-filter="all" type="button">
+              <i class="fa-solid fa-gamepad"></i> Tất Cả
+            </button>
+            <button class="filter-pill" data-filter="ready" type="button">
+              <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Tải Ngay
+            </button>
+            <button class="filter-pill" data-filter="wip" type="button">
+              <i class="fa-solid fa-clock" style="color:var(--accent-gold)"></i> Đang Dịch
+            </button>
+            <button class="filter-pill" data-filter="featured" type="button">
+              <i class="fa-solid fa-star" style="color:var(--accent-gold)"></i> Nổi Bật
+            </button>
           </div>
-
-          <select class="toolbar-select" id="filter-status" aria-label="Lọc theo trạng thái">
-            <option value="all">Mọi trạng thái</option>
-            <option value="ready">Đã hoàn thành 100%</option>
-            <option value="in-progress">Đang trong xưởng dịch</option>
-          </select>
 
           <select class="toolbar-select" id="filter-sort" aria-label="Sắp xếp">
             <option value="newest">Mới cập nhật</option>
@@ -285,12 +248,8 @@
           </div>
           <form id="form-add-request">
             <div class="form-group">
-              <label for="req-input-title">Tên tựa game <span>*</span></label>
-              <input type="text" id="req-input-title" class="form-control" required placeholder="Ví dụ: Black Myth: Wukong">
-            </div>
-            <div class="form-group">
-              <label for="req-input-engine">Game Engine <em>(nếu biết)</em></label>
-              <input type="text" id="req-input-engine" class="form-control" placeholder="Ví dụ: Unreal Engine 5, Unity...">
+              <label for="req-input-title">Tên tựa game bạn muốn dịch <span>*</span></label>
+              <input type="text" id="req-input-title" class="form-control" required placeholder="Ví dụ: Black Myth: Wukong, Hades II...">
             </div>
             <div class="form-group">
               <label for="req-input-url">Đường dẫn Steam Store <em>(không bắt buộc)</em></label>
@@ -357,8 +316,8 @@
           </div>
           <div class="detail-hero-info">
             <div class="detail-badge-group">
-              <span class="card-status-badge ready" id="detail-status-badge">Hoàn tất 100%</span>
-              <span class="engine-tag" id="detail-engine-badge">Unreal Engine 5</span>
+              <span class="card-status-badge ready" id="detail-status-badge">⚡ SẴN SÀNG TẢI</span>
+              <span class="tag-size" style="font-size:0.8rem; padding:4px 10px;"><i class="fa-solid fa-bolt"></i> <span id="detail-size-val">1.6 MB</span></span>
             </div>
             <h2 class="detail-title" id="detail-title">Tên Game</h2>
             <div class="detail-original" id="detail-original">Tên Gốc</div>
@@ -369,12 +328,12 @@
                 <dd id="detail-version-val">v1.0.0</dd>
               </div>
               <div>
-                <dt>Game hỗ trợ</dt>
+                <dt>Phiên bản game</dt>
                 <dd id="detail-gamever-val">Steam Official</dd>
               </div>
               <div>
-                <dt>Dung lượng gói</dt>
-                <dd id="detail-size-val">1.6 MB</dd>
+                <dt>Máy chủ phân phối</dt>
+                <dd style="color:var(--accent-green);"><i class="fa-brands fa-google-drive"></i> Google Drive</dd>
               </div>
             </dl>
           </div>
@@ -396,42 +355,6 @@
           <!-- Các link server tải Google Drive, Mega... -->
         </div>
 
-        <!-- 2 Công cụ kiểm định song song: SHA-256 & PE Inspector -->
-        <div class="detail-utility-grid">
-          
-          <!-- Cột 1: Checksum SHA-256 -->
-          <div class="checksum-panel">
-            <div class="checksum-head">
-              <span><i class="fa-solid fa-fingerprint" style="color:var(--accent-gold)"></i> MÃ BĂM SHA-256</span>
-              <button class="btn-copy-sha" id="btn-copy-sha" type="button"><i class="fa-regular fa-copy"></i> Sao chép</button>
-            </div>
-            <div class="checksum-value" id="detail-sha256-val">34002033cf7a3a73bdceed8415ae64c1ac9cfd61570ef9331953b5d0b1cca6c5</div>
-            
-            <div class="verifier-dropzone" id="verifier-dropzone">
-              <i class="fa-solid fa-file-shield" style="font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 4px;"></i>
-              <p><b>Kéo thả file tải về vào đây</b> để kiểm tra mã băm toàn vẹn (Chống lỗi tải file)</p>
-              <input type="file" id="verifier-file-input" style="display: none;">
-            </div>
-            <div class="verifier-result" id="verifier-result"></div>
-          </div>
-
-          <!-- Cột 2: PE Binary Inspector (Nhận diện phiên bản game tự động) -->
-          <div class="checksum-panel">
-            <div class="checksum-head">
-              <span><i class="fa-solid fa-magnifying-glass-chart" style="color:var(--accent-cyan)"></i> KIỂM ĐỊNH PHIÊN BẢN (.EXE)</span>
-              <span style="font-size:0.75rem; color:var(--text-muted);"><i class="fa-solid fa-bolt"></i> Phân tích tức thời</span>
-            </div>
-            <div class="checksum-value" style="color:var(--accent-cyan);">Phân tích PE Header nhị phân offline 100% không tải file lên mạng</div>
-            
-            <div class="detector-dropzone" id="detector-dropzone">
-              <i class="fa-solid fa-cube" style="font-size: 1.4rem; color: var(--accent-cyan); margin-bottom: 4px;"></i>
-              <p><b>Kéo thả file .exe của game vào đây</b> để hệ thống tự động đọc và so khớp phiên bản</p>
-              <input type="file" id="detector-file-input" accept=".exe" style="display: none;">
-            </div>
-            <div class="detector-result" id="detector-result"></div>
-          </div>
-
-        </div>
       </div>
 
       <!-- Detail Navigation Tabs -->
@@ -550,14 +473,19 @@
         <div class="admin-body">
           <!-- Tab Quản lý Game -->
           <div class="admin-pane active" id="admin-pane-games">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
               <div>
-                <h3 style="font-size:1.2rem; font-weight:800;">Danh sách 10 dự án trong kho</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">Cập nhật % tiến độ và đồng bộ dữ liệu ngay lập tức.</p>
+                <h3 style="font-size:1.2rem; font-weight:800;">Quản lý kho game Việt hóa</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Thêm game mới, cập nhật bài dịch, ảnh poster và link tải.</p>
               </div>
-              <button class="btn-primary" id="btn-admin-export-json" type="button">
-                <i class="fa-solid fa-download"></i> Xuất File games.json Mới
-              </button>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <button class="btn-primary" id="btn-admin-add-game" type="button" style="background:#10B981; border-color:#10B981;">
+                  <i class="fa-solid fa-circle-plus"></i> Thêm Game Mới
+                </button>
+                <button class="btn-secondary" id="btn-admin-export-json" type="button">
+                  <i class="fa-solid fa-download"></i> Xuất File games.json
+                </button>
+              </div>
             </div>
             <div style="overflow-x:auto;">
               <table class="admin-table">
@@ -565,7 +493,7 @@
                   <tr>
                     <th>STT</th>
                     <th>Tên Game</th>
-                    <th>Engine</th>
+                    <th>Dung Lượng</th>
                     <th>Phiên Bản</th>
                     <th>Trạng Thái</th>
                     <th>Tiến Độ</th>
@@ -598,6 +526,154 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       7. FORM THÊM & CHỈNH SỬA GAME (ADD / EDIT GAME MODAL)
+       ========================================================================== -->
+  <div class="admin-editor-overlay" id="admin-game-form-modal" role="dialog" aria-modal="true">
+    <div class="admin-editor-box">
+      <header class="admin-editor-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <i class="fa-solid fa-gamepad" style="color:var(--accent-gold); font-size:1.2rem;"></i>
+          <h3 id="admin-editor-heading" style="font-size:1.15rem; font-weight:800;">Thêm Bản Việt Hóa Game Mới</h3>
+        </div>
+        <button class="detail-close-btn" id="btn-close-game-editor" type="button" aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button>
+      </header>
+
+      <form id="form-admin-game-editor">
+        <div class="admin-editor-body">
+          <div class="admin-editor-grid">
+            <!-- Cột trái: Thông tin chi tiết game -->
+            <div class="admin-editor-fields">
+              <input type="hidden" id="edit-game-is-new" value="true">
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="edit-game-title">Tên Game (Tiếng Việt / Hiển thị) <span>*</span></label>
+                  <input type="text" id="edit-game-title" class="form-control" required placeholder="Ví dụ: Together: Moon Escape">
+                </div>
+                <div class="form-group">
+                  <label for="edit-game-id">Mã Định Danh (Slug ID) <span>*</span></label>
+                  <input type="text" id="edit-game-id" class="form-control" required placeholder="together-moon-escape">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="edit-game-original">Tên Gốc Quốc Tế</label>
+                  <input type="text" id="edit-game-original" class="form-control" placeholder="Tên tiếng Anh trên Steam">
+                </div>
+                <div class="form-group">
+                  <label for="edit-game-status">Trạng Thái Bản Dịch</label>
+                  <select id="edit-game-status" class="form-control">
+                    <option value="ready">Hoàn tất 100% (Sẵn sàng tải)</option>
+                    <option value="in-progress">Đang trong xưởng dịch (Tiến độ)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row-4">
+                <div class="form-group">
+                  <label for="edit-game-ver">Bản Game</label>
+                  <input type="text" id="edit-game-ver" class="form-control" placeholder="v1.0.5">
+                </div>
+                <div class="form-group">
+                  <label for="edit-game-patch-ver">Bản Patch</label>
+                  <input type="text" id="edit-game-patch-ver" class="form-control" placeholder="v1.0.0">
+                </div>
+                <div class="form-group">
+                  <label for="edit-game-size">Dung Lượng</label>
+                  <input type="text" id="edit-game-size" class="form-control" placeholder="570 KB">
+                </div>
+                <div class="form-group">
+                  <label for="edit-game-sha256">Mã SHA-256</label>
+                  <input type="text" id="edit-game-sha256" class="form-control" placeholder="64 ký tự hash">
+                </div>
+              </div>
+
+              <!-- 4 Tiến độ thành phần -->
+              <div style="background:rgba(255,255,255,0.02); padding:12px; border-radius:var(--radius-md); margin-bottom:16px; border:1px solid var(--border-subtle);">
+                <div style="font-size:0.85rem; font-weight:700; color:var(--accent-gold); margin-bottom:10px;">Tiến Độ 4 Chặng Sản Xuất (%)</div>
+                <div class="form-row-4">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label for="edit-prog-trans">Dịch (%)</label>
+                    <input type="number" id="edit-prog-trans" class="form-control" min="0" max="100" value="100">
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label for="edit-prog-proof">Hiệu đính (%)</label>
+                    <input type="number" id="edit-prog-proof" class="form-control" min="0" max="100" value="100">
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label for="edit-prog-font">Font UI (%)</label>
+                    <input type="number" id="edit-prog-font" class="form-control" min="0" max="100" value="100">
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label for="edit-prog-qa">Kiểm thử QA (%)</label>
+                    <input type="number" id="edit-prog-qa" class="form-control" min="0" max="100" value="100">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="edit-game-summary">Tóm Tắt Ngắn Bản Dịch</label>
+                <input type="text" id="edit-game-summary" class="form-control" placeholder="Mô tả 1-2 câu hiển thị ở thẻ card">
+              </div>
+
+              <div class="form-group">
+                <label for="edit-game-desc">Giới Thiệu Chi Tiết</label>
+                <textarea id="edit-game-desc" class="form-control" rows="3" placeholder="Nội dung giới thiệu về bản dịch..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="edit-game-dl-url">Link Tải Google Drive Bản Dịch</label>
+                <input type="url" id="edit-game-dl-url" class="form-control" placeholder="https://drive.google.com/file/d/...">
+              </div>
+            </div>
+
+            <!-- Cột phải: Quản lý Poster & Ảnh bìa 3:4 -->
+            <div class="admin-editor-sidebar">
+              <div class="admin-cover-uploader">
+                <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">
+                  Ảnh Poster (Chuẩn 3:4)
+                </label>
+
+                <div class="admin-cover-preview-frame" id="editor-cover-preview-frame">
+                  <div class="admin-cover-empty" id="editor-cover-empty-prompt">
+                    <i class="fa-solid fa-image" style="font-size:2.5rem; color:var(--text-muted);"></i>
+                    <span>Chưa có ảnh</span>
+                  </div>
+                  <img id="editor-cover-img" src="" alt="Cover Preview" style="display:none;">
+                </div>
+
+                <div style="margin-bottom:12px;">
+                  <label class="btn-upload-file">
+                    <i class="fa-solid fa-upload"></i> Chọn Ảnh Từ Máy
+                    <input type="file" id="editor-cover-file-input" accept="image/*" style="display:none;">
+                  </label>
+                </div>
+
+                <div class="form-group" style="text-align:left; margin-bottom:8px;">
+                  <label for="edit-game-cover-url" style="font-size:0.75rem;">Hoặc dán URL ảnh</label>
+                  <input type="url" id="edit-game-cover-url" class="form-control" style="font-size:0.8rem; padding:6px 10px;" placeholder="https://...">
+                </div>
+
+                <small style="font-size:0.72rem; color:var(--text-muted); display:block; line-height:1.3;">
+                  Tự động hiển thị xem trước. Khi kết nối Supabase, ảnh sẽ tự động tải lên Storage CDN!
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="admin-editor-footer">
+          <button type="button" class="btn-secondary" id="btn-cancel-game-editor">Hủy Bỏ</button>
+          <button type="submit" class="btn-primary" style="background:#10B981; border-color:#10B981;">
+            <i class="fa-solid fa-floppy-disk"></i> Lưu Hồ Sơ Game
+          </button>
+        </footer>
+      </form>
     </div>
   </div>
 
@@ -648,9 +724,9 @@
   <!-- Scripts -->
   <script src="data/data_bundle.js"></script>
   <script src="js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase_client.js"></script>
   <script src="js/themes.js"></script>
-  <script src="js/sha256_verifier.js"></script>
-  <script src="js/pe_inspector.js"></script>
   <script src="js/library.js"></script>
   <script src="js/catalog.js"></script>
   <script src="js/progress.js"></script>

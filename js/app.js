@@ -10,10 +10,8 @@ const App = {
   currentGame: null,
 
   async init() {
-    this.handleIntroScreen();
     await this.loadData();
     this.initModules();
-    this.initVideoShowcase();
     this.bindTabNavigation();
     this.bindModalEvents();
     this.handleHashRouting();
@@ -32,103 +30,98 @@ const App = {
     if (window.Requests) Requests.init(this.requests);
     if (window.BugReporter) BugReporter.init(this.games);
     if (window.AdminStudio) AdminStudio.init(this.games);
+    this.initRealtimeGames();
   },
 
   /**
-   * Xử lý màn hình mở màn thương hiệu phong cách VietPatch (Intro Booting Sequence)
+   * Đồng bộ Realtime cho danh sách Game khi có cập nhật từ Admin Studio
    */
-  handleIntroScreen() {
-    const introEl = document.getElementById("brand-intro");
-    const progressBar = document.getElementById("intro-progress-bar");
-    const statusText = document.getElementById("intro-status-text");
-    const skipBtn = document.getElementById("intro-skip-btn");
-
-    if (!introEl) return;
-
-    // Kiểm tra xem trong phiên duyệt web này người dùng đã xem intro chưa
-    const alreadySeen = sessionStorage.getItem("thv_intro_seen");
-    if (alreadySeen) {
-      introEl.style.display = "none";
-      return;
+  initRealtimeGames() {
+    if (!window.SupabaseClient || !SupabaseClient.hasCloud()) return;
+    try {
+      SupabaseClient.subscribeTable(
+        "games",
+        (newGame) => {
+          if (!this.games.some(g => g.id === newGame.id)) {
+            this.games.unshift(newGame);
+            if (window.Catalog) Catalog.render();
+            if (window.Progress) Progress.render();
+            this.showToast(`✨ Đã có bản Việt hóa mới: "${newGame.title}"!`);
+          }
+        },
+        (updatedGame) => {
+          const idx = this.games.findIndex(g => g.id === updatedGame.id);
+          if (idx !== -1) {
+            this.games[idx] = { ...this.games[idx], ...updatedGame };
+            if (window.Catalog) Catalog.render();
+            if (window.Progress) Progress.render();
+            if (this.currentGame && this.currentGame.id === updatedGame.id) {
+              this.openDetail(updatedGame.id, false);
+            }
+          }
+        },
+        (deletedGame) => {
+          this.games = this.games.filter(g => g.id !== deletedGame.id);
+          if (window.Catalog) Catalog.render();
+          if (window.Progress) Progress.render();
+        }
+      );
+    } catch (e) {
+      console.warn("[App Realtime Games] Lỗi kết nối:", e);
     }
-
-    const steps = [
-      { p: 25, t: "Đang nạp cấu hình hệ thống..." },
-      { p: 60, t: "Kết nối cơ sở dữ liệu VietHoaGame..." },
-      { p: 90, t: "Khởi tạo công cụ kiểm định mã băm & PE Inspector..." },
-      { p: 100, t: "Đồng bộ hoàn tất!" }
-    ];
-
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      if (currentStep < steps.length) {
-        if (progressBar) progressBar.style.width = steps[currentStep].p + "%";
-        if (statusText) statusText.textContent = steps[currentStep].t;
-        currentStep++;
-      } else {
-        clearInterval(interval);
-        setTimeout(() => this.closeIntro(), 400);
-      }
-    }, 300);
-
-    if (skipBtn) {
-      skipBtn.onclick = () => {
-        clearInterval(interval);
-        this.closeIntro();
-      };
-    }
-  },
-
-  closeIntro() {
-    const introEl = document.getElementById("brand-intro");
-    if (!introEl) return;
-    introEl.classList.add("fade-out");
-    sessionStorage.setItem("thv_intro_seen", "1");
-    setTimeout(() => {
-      introEl.style.display = "none";
-    }, 600);
   },
 
   /**
-   * Tải dữ liệu JSON
+   * Tải dữ liệu JSON (Hỗ trợ Supabase Cloud -> localStorage -> file cục bộ)
    */
   async loadData() {
-    try {
-      const [gamesRes, reqsRes] = await Promise.all([
-        fetch("data/games.json"),
-        fetch("data/requests.json").catch(() => ({ ok: false }))
-      ]);
-
-      if (gamesRes.ok) {
-        this.games = await gamesRes.json();
-      }
-      if (reqsRes && reqsRes.ok) {
-        this.requests = await reqsRes.json();
-      }
-    } catch (err) {
-      console.warn("Đang nạp dữ liệu dự phòng từ data_bundle.js", err);
-      if (window.FALLBACK_GAMES) this.games = window.FALLBACK_GAMES;
-      if (window.FALLBACK_REQUESTS) this.requests = window.FALLBACK_REQUESTS;
+    // 1. Khởi tạo Supabase client
+    if (window.SupabaseClient) {
+      SupabaseClient.init();
     }
-  },
 
-  /**
-   * Widget Suất Chiếu Bản Dịch (Trailer Tuần chuẩn VietPatch)
-   */
-  initVideoShowcase() {
-    const playBtn = document.getElementById("trailer-play-btn");
-    const frame = document.getElementById("trailer-iframe");
-    const poster = document.getElementById("trailer-poster");
-    if (!playBtn || !frame || !poster) return;
+    // 2. Thử lấy dữ liệu từ Supabase Cloud nếu đã cấu hình
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      const cloudGames = await SupabaseClient.getGames();
+      const cloudReqs = await SupabaseClient.getRequests();
+      if (cloudGames && cloudGames.length) {
+        this.games = cloudGames;
+        console.log("[App] Đã nạp thành công dữ liệu games từ Supabase Cloud!");
+      }
+      if (cloudReqs && cloudReqs.length) {
+        this.requests = cloudReqs;
+      }
+      if (this.games.length) return;
+    }
 
-    const ytId = (window.CONFIG && CONFIG.featuredTrailer && CONFIG.featuredTrailer.youtubeId) || "dQw4w9WgXcQ";
+    // 3. Thử lấy từ localStorage nếu có bản lưu tùy biến của Admin
+    try {
+      const cached = localStorage.getItem("thv_custom_games");
+      if (cached) {
+        this.games = JSON.parse(cached);
+      }
+    } catch (e) {}
 
-    playBtn.onclick = () => {
-      frame.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0`;
-      frame.style.display = "block";
-      poster.style.display = "none";
-      playBtn.style.display = "none";
-    };
+    // 4. Nạp từ games.json nếu chưa có
+    if (!this.games || !this.games.length) {
+      try {
+        const [gamesRes, reqsRes] = await Promise.all([
+          fetch("data/games.json"),
+          fetch("data/requests.json").catch(() => ({ ok: false }))
+        ]);
+
+        if (gamesRes.ok) {
+          this.games = await gamesRes.json();
+        }
+        if (reqsRes && reqsRes.ok) {
+          this.requests = await reqsRes.json();
+        }
+      } catch (err) {
+        console.warn("Đang nạp dữ liệu dự phòng từ data_bundle.js", err);
+        if (window.FALLBACK_GAMES) this.games = window.FALLBACK_GAMES;
+        if (window.FALLBACK_REQUESTS) this.requests = window.FALLBACK_REQUESTS;
+      }
+    }
   },
 
   /**
@@ -208,15 +201,24 @@ const App = {
     // Thông tin cơ bản
     document.getElementById("detail-title").textContent = game.title;
     document.getElementById("detail-original").textContent = game.original_title;
-    document.getElementById("detail-engine-badge").textContent = game.engine;
+    const engineBadge = document.getElementById("detail-engine-badge");
+    if (engineBadge) engineBadge.textContent = game.engine || "";
     document.getElementById("detail-version-val").textContent = game.patch_version;
     document.getElementById("detail-gamever-val").textContent = game.game_version;
-    document.getElementById("detail-size-val").textContent = game.size;
+    const sizeVal = document.getElementById("detail-size-val");
+    if (sizeVal) sizeVal.textContent = game.size;
 
     const statusBadge = document.getElementById("detail-status-badge");
     if (statusBadge) {
       statusBadge.textContent = game.status === "ready" ? "Hoàn tất 100%" : `Đang dịch ${game.progress.overall}%`;
       statusBadge.className = `card-status-badge ${game.status === "ready" ? "ready" : "progress"}`;
+    }
+
+    // Cập nhật background banner và poster box
+    const coverSrc = game.cover_image || `assets/covers/${game.id}.jpg`;
+    const heroBanner = document.querySelector(".detail-hero-banner");
+    if (heroBanner) {
+      heroBanner.style.backgroundImage = `url('${coverSrc}')`;
     }
 
     // Poster box
@@ -229,53 +231,47 @@ const App = {
       else if (game.engine_category === "gamemaker") icon = "fa-gear";
 
       posterBox.innerHTML = `
-        <div style="text-align:center; padding: 16px;">
+        <img class="detail-poster-img" src="${coverSrc}" alt="${game.title}"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div style="display:none; text-align:center; padding: 16px;">
           <i class="fa-solid ${icon}" style="font-size: 3rem; color: rgba(255,255,255,0.7); margin-bottom: 8px; display:block;"></i>
           <strong style="color:#FFF; font-size: 1rem; line-height: 1.2; display:block;">${game.title}</strong>
         </div>
       `;
     }
 
-    // Nút server download
+    // Nút download Google Drive Độc Quyền
     const dlGroup = document.getElementById("detail-download-links");
     if (dlGroup) {
-      if (game.download_links && game.download_links.length > 0) {
-        dlGroup.innerHTML = game.download_links.map(link => `
-          <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="btn-server-dl">
-            <i class="fa-solid fa-cloud-arrow-down" style="color:var(--accent-gold)"></i>
-            <span>${link.server}</span>
-            <span class="server-badge">${link.badge || "Tải nhanh"}</span>
+      if (game.status === "ready" && game.download_links && game.download_links.length > 0) {
+        const gdrive = game.download_links[0];
+        dlGroup.innerHTML = `
+          <a href="${gdrive.url}" target="_blank" rel="noopener noreferrer" class="btn-gdrive-primary">
+            <div class="gdrive-icon-wrap">
+              <i class="fa-brands fa-google-drive"></i>
+            </div>
+            <div class="gdrive-content">
+              <span class="gdrive-label"><i class="fa-solid fa-bolt"></i> TẢI TỐC ĐỘ CAO CHÍNH THỨC</span>
+              <span class="gdrive-title">Tải Bản Việt Hóa (Google Drive)</span>
+              <span class="gdrive-sub">Dung lượng: ${game.size || "Siêu gọn nhẹ"} • Tệp nén kiểm định sạch 100% SHA-256</span>
+            </div>
+            <div class="gdrive-action-btn">
+              <i class="fa-solid fa-cloud-arrow-down"></i> Tải Ngay
+            </div>
           </a>
-        `).join("");
+        `;
       } else {
         dlGroup.innerHTML = `
-          <div style="color:var(--text-secondary); font-size:0.9rem; padding: 8px 0;">
-            <i class="fa-solid fa-clock-rotate-left"></i> Dự án đang trong xưởng dịch kiểm thử. Sẽ mở tải công khai ngay khi đạt chuẩn 100%.
+          <div class="gdrive-wip-banner">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <div>
+              <strong>Dự án đang trong xưởng dịch kiểm thử (${game.progress ? game.progress.overall : 0}%)</strong>
+              <p>Bản vá đang được nhóm hoàn thiện và kiểm định kỹ thuật. Link Google Drive sẽ được mở công khai ngay khi đạt chuẩn 100%.</p>
+            </div>
           </div>
         `;
       }
     }
-
-    // Checksum SHA-256
-    const shaVal = document.getElementById("detail-sha256-val");
-    if (shaVal) shaVal.textContent = game.sha256 || "Đang cập nhật";
-
-    // 1. Gắn Verifier kéo thả SHA-256
-    const dropzone = document.getElementById("verifier-dropzone");
-    const fileInput = document.getElementById("verifier-file-input");
-    const resultBox = document.getElementById("verifier-result");
-    if (window.Sha256Verifier && dropzone && fileInput && resultBox) {
-      Sha256Verifier.bindDropzone(dropzone, fileInput, game.sha256, resultBox);
-    }
-
-    // 2. Gắn PE Binary Inspector kiểm tra phiên bản game tự động
-    const peDropzone = document.getElementById("detector-dropzone");
-    const peFileInput = document.getElementById("detector-file-input");
-    const peResultBox = document.getElementById("detector-result");
-    if (window.PeInspector && peDropzone && peFileInput && peResultBox) {
-      PeInspector.bindDetector(peDropzone, peFileInput, game.game_version, peResultBox);
-    }
-
     // Tab 1: Giới thiệu
     document.getElementById("pane-desc-content").innerHTML = `
       <p style="margin-bottom: 16px;">${game.description}</p>
@@ -285,30 +281,83 @@ const App = {
       </div>
     `;
 
-    // Tab 2: Hướng dẫn cài đặt & Rollback
+    // Tab 2: Hướng dẫn cài đặt tương tác 3 bước & Rollback
     const installSteps = game.install_guide || [];
     const rollbackSteps = game.rollback_guide || [];
-    document.getElementById("pane-install-content").innerHTML = `
-      <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);">
-        <i class="fa-solid fa-list-check" style="color:var(--accent-gold)"></i> Quy trình cài đặt chuẩn
-      </h3>
-      <ul class="steps-list">
-        ${installSteps.map((step, i) => `
-          <li class="step-item">
-            <span class="step-num">${i + 1}</span>
-            <div class="step-text">
-              <p>${step}</p>
-            </div>
-          </li>
-        `).join("")}
-      </ul>
 
-      <div class="rollback-box">
-        <h4><i class="fa-solid fa-rotate-left"></i> Hướng dẫn hoàn tác / Gỡ cài đặt (Rollback)</h4>
-        <ul style="list-style: none; padding-left: 0; font-size: 0.9rem; color: var(--text-secondary);">
-          ${rollbackSteps.map(r => `<li style="margin-bottom: 6px;">• ${r}</li>`).join("")}
-        </ul>
+    // Tìm thư mục game mục tiêu để hỗ trợ copy 1 chạm
+    let targetPath = "";
+    if (game.files_affected && game.files_affected.length > 0) {
+      const raw = game.files_affected[0].split(" ")[0];
+      const slashIdx = raw.lastIndexOf("/");
+      if (slashIdx !== -1) {
+        targetPath = raw.substring(0, slashIdx + 1);
+      } else {
+        targetPath = raw;
+      }
+    } else if (installSteps.length > 1) {
+      const match = installSteps.join(" ").match(/['"`]([A-Za-z0-9_\-\.\/\\ ]+\/)[ '"`]/);
+      if (match) targetPath = match[1];
+    }
+
+    const step2CustomText = installSteps.length >= 2
+      ? installSteps[1]
+      : "Giải nén tệp vừa tải và sao chép toàn bộ các file bên trong vào thư mục cài đặt gốc của game.";
+
+    document.getElementById("pane-install-content").innerHTML = `
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); margin:0;">
+          <i class="fa-solid fa-list-check" style="color:var(--accent-gold)"></i> Quy trình cài đặt 3 bước (Bấm từng bước để đánh dấu)
+        </h3>
+        <span style="font-size:0.8rem; color:var(--accent-green);"><i class="fa-solid fa-shield-halved"></i> 100% An toàn</span>
       </div>
+
+      <div class="install-checklist">
+        <!-- Bước 1 -->
+        <div class="install-step-card" onclick="App.toggleStep(this)">
+          <div class="install-step-checkbox"><i class="fa-solid fa-check"></i></div>
+          <div class="install-step-content">
+            <div class="install-step-title">Bước 1: Tải tệp bản vá từ Google Drive</div>
+            <div class="install-step-desc">${installSteps[0] || "Nhấn nút 'Tải Ngay' màu xanh ở trên để tải file nén bản Việt hóa từ Google Drive về máy."}</div>
+          </div>
+        </div>
+
+        <!-- Bước 2 -->
+        <div class="install-step-card" onclick="App.toggleStep(this)">
+          <div class="install-step-checkbox"><i class="fa-solid fa-check"></i></div>
+          <div class="install-step-content">
+            <div class="install-step-title">Bước 2: Giải nén & dán vào thư mục game</div>
+            <div class="install-step-desc">${step2CustomText}</div>
+            ${targetPath ? `
+              <div class="install-path-box">
+                <i class="fa-regular fa-folder-open" style="color:var(--accent-cyan)"></i>
+                <span class="install-path-code">${targetPath}</span>
+                <button type="button" class="btn-copy-path" onclick="event.stopPropagation(); App.copyText('${targetPath}', this)">
+                  <i class="fa-regular fa-copy"></i> Sao chép đường dẫn
+                </button>
+              </div>
+            ` : ""}
+          </div>
+        </div>
+
+        <!-- Bước 3 -->
+        <div class="install-step-card" onclick="App.toggleStep(this)">
+          <div class="install-step-checkbox"><i class="fa-solid fa-check"></i></div>
+          <div class="install-step-content">
+            <div class="install-step-title">Bước 3: Mở game và trải nghiệm tiếng Việt</div>
+            <div class="install-step-desc">${installSteps[2] || "Khởi động game từ Steam hoặc shortcut desktop. Bản dịch tiếng Việt sẽ tự động áp dụng."}</div>
+          </div>
+        </div>
+      </div>
+
+      ${rollbackSteps && rollbackSteps.length > 0 ? `
+        <div class="rollback-box" style="margin-top:24px;">
+          <h4><i class="fa-solid fa-rotate-left"></i> Hướng dẫn hoàn tác / Gỡ cài đặt (Rollback)</h4>
+          <ul style="list-style: none; padding-left: 0; font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">
+            ${rollbackSteps.map(r => `<li style="margin-bottom: 6px;">• ${r}</li>`).join("")}
+          </ul>
+        </div>
+      ` : ""}
     `;
 
     // Tab 3: Changelog
@@ -380,19 +429,6 @@ const App = {
         this.switchModalTab(btn.dataset.modaltab);
       };
     });
-
-    const copyShaBtn = document.getElementById("btn-copy-sha");
-    if (copyShaBtn) {
-      copyShaBtn.onclick = () => {
-        if (!this.currentGame || !this.currentGame.sha256) return;
-        navigator.clipboard.writeText(this.currentGame.sha256).then(() => {
-          this.showToast("Đã sao chép mã SHA-256!");
-        }).catch(() => {
-          this.showToast("Không sao chép được mã vào clipboard.");
-        });
-      };
-    }
-
     // Nút báo lỗi từ modal chi tiết
     const reportBtnInModal = document.getElementById("btn-report-from-modal");
     if (reportBtnInModal) {
@@ -416,6 +452,57 @@ const App = {
     this.toastTimeout = setTimeout(() => {
       toast.classList.remove("show");
     }, 3200);
+  },
+
+  /**
+   * Sao chép văn bản vào clipboard với hiệu ứng nút bấm
+   */
+  copyText(text, btnEl) {
+    if (!text) return;
+    const doSuccess = () => {
+      this.showToast("Đã sao chép đường dẫn vào bộ nhớ tạm!");
+      if (btnEl) {
+        const origHtml = btnEl.innerHTML;
+        btnEl.classList.add("copied");
+        btnEl.innerHTML = `<i class="fa-solid fa-check"></i> Đã sao chép!`;
+        setTimeout(() => {
+          btnEl.classList.remove("copied");
+          btnEl.innerHTML = origHtml;
+        }, 2200);
+      }
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(doSuccess).catch(() => {
+        this.fallbackCopyText(text, doSuccess);
+      });
+    } else {
+      this.fallbackCopyText(text, doSuccess);
+    }
+  },
+
+  fallbackCopyText(text, callback) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand("copy");
+      if (callback) callback();
+    } catch (err) {
+      this.showToast("Không thể sao chép tự động, vui lòng chọn và copy thủ công.");
+    }
+    document.body.removeChild(textArea);
+  },
+
+  /**
+   * Đánh dấu hoàn thành bước cài đặt trong checklist
+   */
+  toggleStep(cardEl) {
+    if (!cardEl) return;
+    cardEl.classList.toggle("completed");
   }
 };
 

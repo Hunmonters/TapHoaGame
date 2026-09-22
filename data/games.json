@@ -64,20 +64,11 @@
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
-      },
-      {
-        "server": "Mega.nz",
-        "url": "https://mega.nz/",
-        "badge": "Dự phòng"
-      },
-      {
-        "server": "Fshare",
-        "url": "https://fshare.vn/",
-        "badge": "VIP Fcode"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#28453B"
+    "cover_color": "#28453B",
+    "cover_image": "assets/covers/together-moon-escape.jpg"
   },
   {
     "id": "loop-hero",
@@ -144,20 +135,11 @@
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
-      },
-      {
-        "server": "Mega.nz",
-        "url": "https://mega.nz/",
-        "badge": "Dự phòng"
-      },
-      {
-        "server": "Fshare",
-        "url": "https://fshare.vn/",
-        "badge": "VIP"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#42281D"
+    "cover_color": "#42281D",
+    "cover_image": "assets/covers/loop-hero.jpg"
   },
   {
     "id": "cat-mail-co",
@@ -213,15 +195,11 @@
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
-      },
-      {
-        "server": "Mega.nz",
-        "url": "https://mega.nz/",
-        "badge": "Dự phòng"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#C47C35"
+    "cover_color": "#C47C35",
+    "cover_image": "assets/covers/cat-mail-co.jpg"
   },
   {
     "id": "graveyard-shift",
@@ -278,15 +256,11 @@
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
-      },
-      {
-        "server": "Mega.nz",
-        "url": "https://mega.nz/",
-        "badge": "Dự phòng"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#1A2E28"
+    "cover_color": "#1A2E28",
+    "cover_image": "assets/covers/graveyard-shift.jpg"
   },
   {
     "id": "warlord-awaji",
@@ -342,7 +316,8 @@
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#542D2D"
+    "cover_color": "#542D2D",
+    "cover_image": "assets/covers/warlord-awaji.jpg"
   },
   {
     "id": "shape-of-dreams",
@@ -395,7 +370,8 @@
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 75%",
-    "cover_color": "#3B2A54"
+    "cover_color": "#3B2A54",
+    "cover_image": "assets/covers/shape-of-dreams.jpg"
   },
   {
     "id": "ironnest",
@@ -445,7 +421,8 @@
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 90%",
-    "cover_color": "#4A3E2D"
+    "cover_color": "#4A3E2D",
+    "cover_image": "assets/covers/ironnest.jpg"
   },
   {
     "id": "valheim",
@@ -495,7 +472,8 @@
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 65%",
-    "cover_color": "#1C3642"
+    "cover_color": "#1C3642",
+    "cover_image": "assets/covers/valheim.jpg"
   },
   {
     "id": "duck-detective",
@@ -545,7 +523,8 @@
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 40%",
-    "cover_color": "#4A4325"
+    "cover_color": "#4A4325",
+    "cover_image": "assets/covers/duck-detective.jpg"
   },
   {
     "id": "manor-lords",
@@ -595,6 +574,7 @@
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 25%",
-    "cover_color": "#3D372E"
+    "cover_color": "#3D372E",
+    "cover_image": "assets/covers/manor-lords.jpg"
   }
 ]

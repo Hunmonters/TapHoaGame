@@ -1,14 +1,15 @@
 /* ==========================================================================
    TẠP HÓA VIỆT / ĐỀ XUẤT CỘNG ĐỒNG LOGIC (requests.js)
-   Bình chọn & Đề xuất game muốn Việt Hóa (lưu trữ localStorage)
+   Bình chọn & Đề xuất game muốn Việt Hóa (Supabase Realtime + Local Fallback)
    ========================================================================== */
 
 const Requests = {
   requests: [],
   userVotes: new Set(),
+  realtimeChannel: null,
 
   init(initialRequests) {
-    // Tải danh sách vote của user từ localStorage
+    // 1. Tải danh sách vote của user từ localStorage
     try {
       const savedVotes = JSON.parse(localStorage.getItem("thv_user_votes") || "[]");
       this.userVotes = new Set(savedVotes);
@@ -16,7 +17,7 @@ const Requests = {
       this.userVotes = new Set();
     }
 
-    // Tải các request người dùng tự thêm
+    // 2. Tải các request người dùng tự thêm từ localStorage (chế độ offline)
     let userRequests = [];
     try {
       userRequests = JSON.parse(localStorage.getItem("thv_user_requests") || "[]");
@@ -24,11 +25,56 @@ const Requests = {
       userRequests = [];
     }
 
-    this.requests = [...(initialRequests || []), ...userRequests];
+    // 3. Hợp nhất danh sách
+    const combined = [...(initialRequests || [])];
+    userRequests.forEach(ur => {
+      if (!combined.some(r => r.id === ur.id)) {
+        combined.unshift(ur);
+      }
+    });
+
+    this.requests = combined;
     this.render();
     this.bindEvents();
+    this.initRealtime();
   },
 
+  /**
+   * Kích hoạt kênh Supabase Realtime để đồng bộ số phiếu vote và đề xuất mới tức thì
+   */
+  initRealtime() {
+    if (!window.SupabaseClient || !SupabaseClient.hasCloud()) return;
+    if (this.realtimeChannel) return;
+
+    this.realtimeChannel = SupabaseClient.subscribeTable(
+      "requests",
+      (newRecord) => {
+        // Nhận thêm mới từ người dùng khác trên mạng
+        if (!this.requests.some(r => r.id === newRecord.id)) {
+          this.requests.unshift(newRecord);
+          this.render();
+          if (window.App) App.showToast(`🔥 Cộng đồng vừa gửi đề xuất: "${newRecord.title}"`);
+        }
+      },
+      (updatedRecord) => {
+        // Đồng bộ số lượt bình chọn từ người dùng khác
+        const idx = this.requests.findIndex(r => r.id === updatedRecord.id);
+        if (idx !== -1) {
+          this.requests[idx] = { ...this.requests[idx], ...updatedRecord };
+          this.render();
+        }
+      },
+      (deletedRecord) => {
+        // Xóa đề xuất
+        this.requests = this.requests.filter(r => r.id !== deletedRecord.id);
+        this.render();
+      }
+    );
+  },
+
+  /**
+   * Tăng hoặc hủy bỏ phiếu bình chọn cho tựa game
+   */
   toggleVote(id) {
     const item = this.requests.find(r => r.id === id);
     if (!item) return;
@@ -36,27 +82,35 @@ const Requests = {
     if (this.userVotes.has(id)) {
       this.userVotes.delete(id);
       item.votes = Math.max(0, (item.votes || 0) - 1);
-      App.showToast(`Đã hủy ủng hộ cho ${item.title}`);
+      if (window.App) App.showToast(`Đã hủy ủng hộ cho ${item.title}`);
     } else {
       this.userVotes.add(id);
       item.votes = (item.votes || 0) + 1;
-      App.showToast(`Đã ủng hộ 1 phiếu cho ${item.title}!`);
+      if (window.App) App.showToast(`⚡ Đã bình chọn 1 phiếu cho "${item.title}"!`);
     }
 
     try {
       localStorage.setItem("thv_user_votes", JSON.stringify(Array.from(this.userVotes)));
     } catch (e) {}
 
+    // Đồng bộ lên Supabase Cloud nếu khả dụng
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      SupabaseClient.updateRequestVotes(id, item.votes);
+    }
+
     this.render();
   },
 
-  addRequest(title, engine, url, why) {
+  /**
+   * Người dùng gửi đề xuất dịch tựa game mới
+   */
+  addRequest(title, url, why) {
     const newReq = {
       id: "req-" + Date.now(),
       title: title.trim(),
-      engine: engine.trim() || "Chưa rõ",
-      url: url.trim(),
-      why: why.trim() || "Cộng đồng mong muốn được thưởng thức bản dịch tiếng Việt.",
+      engine: "PC",
+      url: (url || "").trim(),
+      why: (why || "").trim() || "Cộng đồng mong muốn được thưởng thức bản dịch tiếng Việt.",
       votes: 1
     };
 
@@ -71,7 +125,12 @@ const Requests = {
       localStorage.setItem("thv_user_votes", JSON.stringify(Array.from(this.userVotes)));
     } catch (e) {}
 
-    App.showToast(`Đã nhận đề xuất dịch: ${newReq.title}`);
+    // Đồng bộ lên Supabase Cloud nếu khả dụng
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      SupabaseClient.insertRequest(newReq);
+    }
+
+    if (window.App) App.showToast(`🎉 Đã gửi đề xuất: "${newReq.title}"!`);
     this.render();
   },
 
@@ -95,24 +154,28 @@ const Requests = {
       topNameEl.textContent = sorted[0].title;
     }
 
-    listContainer.innerHTML = sorted.map(r => {
+    listContainer.innerHTML = sorted.map((r, idx) => {
       const hasVoted = this.userVotes.has(r.id);
+      const isTop3 = idx < 3;
+      const rankClass = idx === 0 ? "rank-gold" : idx === 1 ? "rank-silver" : idx === 2 ? "rank-bronze" : "";
+
       return `
         <div class="request-item">
-          <button class="btn-vote ${hasVoted ? "voted" : ""}" onclick="Requests.toggleVote('${r.id}')" title="${hasVoted ? "Hủy ủng hộ" : "Bình chọn cho game này"}">
+          <button class="btn-vote ${hasVoted ? "voted" : ""}" onclick="Requests.toggleVote('${r.id}')" title="${hasVoted ? "Hủy bình chọn" : "Bình chọn cho tựa game này"}">
             <i class="fa-solid fa-arrow-up"></i>
             <span>${r.votes || 0}</span>
           </button>
           <div class="req-details">
             <div class="req-title">
-              <span>${r.title}</span>
-              <span class="req-engine">${r.engine}</span>
+              <span class="req-rank-pill ${rankClass}">#${idx + 1}</span>
+              <strong style="font-size:1.1rem; color:var(--text-primary);">${r.title}</strong>
+              ${isTop3 ? `<span class="req-top-tag"><i class="fa-solid fa-fire"></i> Top đề cử</span>` : ""}
             </div>
             <p class="req-why">${r.why}</p>
             ${r.url ? `
               <div class="req-links">
                 <a href="${r.url}" target="_blank" rel="noopener noreferrer">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Trang Steam cửa hàng
+                  <i class="fa-brands fa-steam"></i> Steam Store <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.75rem; margin-left:2px;"></i>
                 </a>
               </div>
             ` : ""}
@@ -128,13 +191,16 @@ const Requests = {
 
     form.onsubmit = (e) => {
       e.preventDefault();
-      const title = document.getElementById("req-input-title").value;
-      const engine = document.getElementById("req-input-engine").value;
-      const url = document.getElementById("req-input-url").value;
-      const why = document.getElementById("req-input-why").value;
+      const titleInput = document.getElementById("req-input-title");
+      const urlInput = document.getElementById("req-input-url");
+      const whyInput = document.getElementById("req-input-why");
 
-      if (!title) return;
-      this.addRequest(title, engine, url, why);
+      const title = titleInput ? titleInput.value : "";
+      const url = urlInput ? urlInput.value : "";
+      const why = whyInput ? whyInput.value : "";
+
+      if (!title || !title.trim()) return;
+      this.addRequest(title, url, why);
       form.reset();
     };
   }

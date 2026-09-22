@@ -4,43 +4,46 @@
    ========================================================================== */
 
 :root {
-  /* Bảng màu Dark Mode Gaming cao cấp */
-  --bg-base: #080C10;
-  --bg-surface: #0E131A;
-  --bg-card: #131A24;
-  --bg-card-hover: #1A2433;
-  --bg-glass: rgba(19, 26, 36, 0.78);
-  --bg-input: #0B0E14;
+  /* Hệ Màu Tạp Hóa Kem & Cam (Editorial Vintage Cream & Orange) */
+  --bg-base: #F5F0E6;          /* Màu kem ấm chuẩn vintage newsprint */
+  --bg-surface: #EFE9DC;       /* Màu kem ngà trung tính */
+  --bg-card: #FFFFFF;          /* Nền card trắng kem sạch sẽ */
+  --bg-card-hover: #FFFFFF;
+  --bg-glass: rgba(245, 240, 230, 0.95);
+  --bg-input: #FFFFFF;
   
   /* Đường viền & Phân cách */
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-active: rgba(245, 158, 11, 0.4);
-  --border-glow: rgba(239, 68, 68, 0.35);
+  --border-subtle: #E2DAC8;    /* Viền kem tự nhiên */
+  --border-active: #EA4828;    /* Viền cam nổi bật */
+  --border-strong: #121316;    /* Viền đen neubrutalist */
+  --border-glow: rgba(234, 72, 40, 0.35);
 
-  /* Màu chủ đạo (Brand Accent) */
-  --accent-gold: #F59E0B;
-  --accent-gold-hover: #D97706;
-  --accent-red: #EF4444;
-  --accent-red-hover: #DC2626;
-  --accent-green: #10B981;
-  --accent-cyan: #06B6D4;
-  --accent-purple: #8B5CF6;
+  /* Màu chủ đạo: Cam & Đỏ Cam (Orange / Vermilion) */
+  --accent-orange: #EA4828;
+  --accent-orange-hover: #CE3214;
+  --accent-gold: #EA4828;
+  --accent-gold-hover: #CE3214;
+  --accent-red: #EA4828;
+  --accent-red-hover: #CE3214;
+  --accent-green: #059669;
+  --accent-cyan: #0284C7;
+  --accent-purple: #7C3AED;
 
   /* Màu chữ (Typography) */
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --text-inverse: #0F172A;
+  --text-primary: #121316;     /* Đen than obsidian cực nét */
+  --text-secondary: #57534E;   /* Xám khói ấm */
+  --text-muted: #888275;       /* Xám be mờ */
+  --text-inverse: #FFFFFF;     /* Chữ trắng tương phản cao */
 
   /* Font chữ chuẩn tiếng Việt */
   --font-main: "Be Vietnam Pro", system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Code", monospace;
 
-  /* Hiệu ứng bóng đổ */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.75);
-  --shadow-neon: 0 0 20px rgba(245, 158, 11, 0.25);
+  /* Hiệu ứng bóng đổ Neubrutalist */
+  --shadow-sm: 2px 2px 0px #121316;
+  --shadow-md: 4px 4px 0px #121316;
+  --shadow-lg: 6px 6px 0px #121316;
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
 
   /* Bo góc */
   --radius-sm: 6px;
@@ -74,10 +77,11 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background: 
-    radial-gradient(circle at 15% 10%, rgba(239, 68, 68, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 60%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
-    var(--bg-base);
+  background-color: #F5F0E6;
+  background-image: 
+    radial-gradient(circle at 12% 15%, rgba(234, 72, 40, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 88% 70%, rgba(234, 72, 40, 0.03) 0%, transparent 45%);
+  color: #121316;
 }
 
 a {
@@ -113,156 +117,6 @@ img {
 }
 
 /* ==========================================================================
-   1. BRAND ENTRY / INTRO BOOTING SCREEN (Mở màn phong cách VietPatch)
-   ========================================================================== */
-.brand-intro {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: #06090D;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
-}
-
-.brand-intro.fade-out {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.intro-grid-bg {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.7;
-}
-
-.intro-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 480px;
-  padding: 0 24px;
-}
-
-.intro-badge {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--accent-gold);
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  margin-bottom: 24px;
-  text-transform: uppercase;
-}
-
-.intro-orbit-wrap {
-  position: relative;
-  width: 110px;
-  height: 110px;
-  margin: 0 auto 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.intro-orbit {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px dashed rgba(245, 158, 11, 0.4);
-  animation: orbitRotate 12s linear infinite;
-}
-
-.intro-logo-core {
-  width: 74px;
-  height: 74px;
-  background: linear-gradient(135deg, #1E293B, #0F172A);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.2rem;
-  color: var(--accent-gold);
-  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
-}
-
-.intro-title {
-  font-size: 1.85rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
-
-.intro-title span {
-  color: var(--accent-gold);
-}
-
-.intro-desc {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  margin-bottom: 28px;
-}
-
-.intro-boot-track {
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.intro-boot-progress {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent-red), var(--accent-gold));
-  border-radius: var(--radius-full);
-  transition: width 0.3s ease;
-}
-
-.intro-status-text {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-}
-
-.intro-skip-btn {
-  margin-top: 24px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  padding: 6px 16px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border-subtle);
-  transition: all 0.2s ease;
-}
-
-.intro-skip-btn:hover {
-  color: var(--text-primary);
-  border-color: rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-@keyframes orbitRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ==========================================================================
    2. GLOBAL HEADER
    ========================================================================== */
 .main-header {
@@ -270,7 +124,7 @@ img {
   top: 0;
   z-index: 100;
   height: var(--header-height);
-  background: rgba(8, 12, 16, 0.88);
+  background: var(--bg-glass);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-subtle);
@@ -295,19 +149,19 @@ img {
 .logo-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #1E293B, #0F172A);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: var(--accent-orange, #EA4828);
+  border: 2px solid var(--border-strong, #121316);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent-gold);
+  color: #FFF;
   font-size: 1.3rem;
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
 }
 
 .logo-text span {
-  color: var(--accent-gold);
+  color: var(--accent-orange, #EA4828);
 }
 
 .logo-tagline {
@@ -323,7 +177,7 @@ img {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--bg-surface);
   padding: 4px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-subtle);
@@ -333,7 +187,7 @@ img {
   padding: 8px 18px;
   border-radius: var(--radius-full);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -343,13 +197,13 @@ img {
 
 .nav-tab-btn:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(234, 72, 40, 0.08);
 }
 
 .nav-tab-btn.active {
-  color: var(--text-inverse);
-  background: var(--accent-gold);
-  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.35);
+  color: #FFF;
+  background: var(--accent-orange, #EA4828);
+  box-shadow: 0 2px 10px rgba(234, 72, 40, 0.35);
 }
 
 /* Header Utilities */

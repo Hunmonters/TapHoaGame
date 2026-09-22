@@ -12,12 +12,15 @@ const Catalog = {
     sort: "newest"
   },
   currentSlide: 0,
-  sliderInterval: null,
+  spotlightGames: [],
+  currentSpotlightIndex: 0,
+  spotlightInterval: null,
 
   init(gamesData) {
     this.games = gamesData || [];
     this.renderStats();
-    this.renderHeroSlider();
+    this.renderSpotlight();
+    this.renderArchiveWire();
     this.bindEvents();
     this.renderCatalog();
   },
@@ -56,62 +59,170 @@ const Catalog = {
   },
 
   /**
-   * Hiển thị Hero Slider trình chiếu các game nổi bật (featured)
+   * Hiển thị Bản Việt Hóa Mới Cập Nhật Nổi Bật (Spotlight Showcase)
+   * Bám sát 100% bố cục từ hình ảnh mẫu
    */
-  renderHeroSlider() {
-    const featured = this.games.filter(g => g.featured);
-    const container = document.getElementById("hero-slider-container");
-    if (!container || !featured.length) return;
+  renderSpotlight() {
+    let featured = this.games.filter(g => g.featured);
+    if (!featured.length) featured = this.games.slice(0, 5);
+    this.spotlightGames = featured;
 
-    container.innerHTML = featured.map((g, idx) => `
-      <div class="hero-slide ${idx === 0 ? "active" : ""}" data-slide="${idx}" style="background-color: ${g.cover_color || "#131A24"}">
-        <div class="hero-slide-overlay"></div>
-        <div class="hero-slide-content">
-          <span class="hero-tagline"><i class="fa-solid fa-star"></i> BẢN DỊCH NỔI BẬT</span>
-          <h1 class="hero-title">${g.title}</h1>
-          <div class="hero-meta">
-            <span><i class="fa-solid fa-microchip"></i> ${g.engine}</span>
-            <span><i class="fa-solid fa-code-branch"></i> ${g.patch_version}</span>
-            <span><i class="fa-solid fa-weight-hanging"></i> ${g.size}</span>
-            <span><i class="fa-solid fa-circle-check"></i> ${g.status === "ready" ? "Hoàn thành 100%" : "Đang thực hiện"}</span>
-          </div>
-          <p class="hero-desc">${g.summary}</p>
-          <div class="hero-actions">
-            <button class="btn-primary" onclick="App.openDetail('${g.id}')">
-              <i class="fa-solid fa-download"></i> TẢI BẢN VÁ
-            </button>
-            <button class="btn-secondary" onclick="App.openDetail('${g.id}')">
-              <i class="fa-solid fa-circle-info"></i> Xem Chi Tiết
-            </button>
-          </div>
-        </div>
-      </div>
-    `).join("");
+    if (!this.spotlightGames.length) return;
 
-    this.startSliderAutoPlay(featured.length);
+    // Render dashes pagination
+    const dashesContainer = document.getElementById("spotlight-dashes");
+    if (dashesContainer) {
+      dashesContainer.innerHTML = this.spotlightGames.map((g, idx) => `
+        <div class="spotlight-dash ${idx === this.currentSpotlightIndex ? "active" : ""}"
+             onclick="Catalog.goToSpotlight(${idx})" title="${g.title}"></div>
+      `).join("");
+    }
+
+    this.renderSpotlightSlide(this.currentSpotlightIndex);
+    this.startSpotlightAutoPlay();
   },
 
-  startSliderAutoPlay(totalSlides) {
-    if (this.sliderInterval) clearInterval(this.sliderInterval);
-    if (totalSlides <= 1) return;
+  renderSpotlightSlide(index) {
+    const game = this.spotlightGames[index];
+    if (!game) return;
 
-    const showSlide = (n) => {
-      const slides = document.querySelectorAll(".hero-slide");
-      slides.forEach(s => s.classList.remove("active"));
-      this.currentSlide = (n + totalSlides) % totalSlides;
-      const target = document.querySelector(`.hero-slide[data-slide="${this.currentSlide}"]`);
-      if (target) target.classList.add("active");
-    };
+    this.currentSpotlightIndex = index;
 
-    const nextBtn = document.getElementById("hero-next");
-    const prevBtn = document.getElementById("hero-prev");
+    // Update dashes active class
+    const dashes = document.querySelectorAll(".spotlight-dash");
+    dashes.forEach((d, i) => d.classList.toggle("active", i === index));
 
-    if (nextBtn) nextBtn.onclick = () => showSlide(this.currentSlide + 1);
-    if (prevBtn) prevBtn.onclick = () => showSlide(this.currentSlide - 1);
+    // Update release date
+    const dateEl = document.getElementById("spotlight-date");
+    if (dateEl) {
+      let dateText = "01/08/2026";
+      if (game.release_date) {
+        const parts = game.release_date.split("-");
+        if (parts.length === 3) dateText = `${parts[2]}/${parts[1]}/${parts[0]}`;
+      }
+      dateEl.textContent = `CẬP NHẬT • ${dateText}`;
+    }
 
-    this.sliderInterval = setInterval(() => {
-      showSlide(this.currentSlide + 1);
-    }, 6500);
+    const bodyEl = document.getElementById("spotlight-body");
+    if (!bodyEl) return;
+
+    const numStr = String(index + 1).padStart(2, "0");
+    const coverSrc = game.cover_image || `assets/covers/${game.id}.jpg`;
+    const devText = game.developer || "VietHoaGame Team";
+    const statusText = game.status === "ready" ? "Sẵn sàng" : "Đang dịch";
+    const statusSub = game.status === "ready" ? "Hoàn tất 100%" : `Đang dịch ${game.progress ? game.progress.overall : 0}%`;
+
+    bodyEl.innerHTML = `
+      <!-- Cột trái: Thông tin bản dịch -->
+      <div class="spotlight-info">
+        <div class="spotlight-corner-accent"></div>
+        <div class="spotlight-badge">
+          <i class="fa-solid fa-circle-dot" style="font-size:0.65rem;"></i> CẬP NHẬT MỚI
+        </div>
+        <h1 class="spotlight-title">${game.title} Việt Hóa</h1>
+        <div class="spotlight-subtitle">
+          ${devText} · ${statusSub}
+        </div>
+        <div class="spotlight-divider"></div>
+        
+        <div class="spotlight-stats-wrap">
+          <div class="spotlight-watermark">${numStr}</div>
+          <div class="spotlight-stat-item">
+            <span class="spotlight-stat-label">PHIÊN BẢN</span>
+            <span class="spotlight-stat-val">${game.patch_version || "v1.0.0"}</span>
+          </div>
+          <div class="spotlight-stat-item">
+            <span class="spotlight-stat-label">DUNG LƯỢNG</span>
+            <span class="spotlight-stat-val">${game.size || "18 MB"}</span>
+          </div>
+          <div class="spotlight-stat-item">
+            <span class="spotlight-stat-label">TRẠNG THÁI</span>
+            <span class="spotlight-stat-val" style="color:${game.status === "ready" ? "var(--text-primary)" : "var(--accent-orange)"}">${statusText}</span>
+          </div>
+        </div>
+
+        <button type="button" class="spotlight-btn-action" onclick="App.openDetail('${game.id}')">
+          <span>Mở hồ sơ</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Cột phải: Khung ảnh 16:9 & Cụm nút điều hướng -->
+      <div class="spotlight-media-wrap">
+        <div class="spotlight-corner-tl"></div>
+        <div class="spotlight-corner-br"></div>
+        <div class="spotlight-media-box" onclick="App.openDetail('${game.id}')" style="cursor:pointer;" title="Bấm để xem hồ sơ ${game.title}">
+          <img class="spotlight-media-img" src="${coverSrc}" alt="${game.title}" onerror="this.src='assets/covers/together-moon-escape.jpg'">
+        </div>
+        <div class="spotlight-nav-controls">
+          <button type="button" class="spotlight-nav-btn" onclick="Catalog.prevSpotlight()" aria-label="Game trước">
+            <i class="fa-solid fa-chevron-up"></i>
+          </button>
+          <button type="button" class="spotlight-nav-btn" onclick="Catalog.nextSpotlight()" aria-label="Game kế tiếp">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  },
+
+  goToSpotlight(idx) {
+    if (!this.spotlightGames.length) return;
+    this.currentSpotlightIndex = (idx + this.spotlightGames.length) % this.spotlightGames.length;
+    this.renderSpotlightSlide(this.currentSpotlightIndex);
+  },
+
+  nextSpotlight() {
+    this.goToSpotlight(this.currentSpotlightIndex + 1);
+  },
+
+  prevSpotlight() {
+    this.goToSpotlight(this.currentSpotlightIndex - 1);
+  },
+
+  startSpotlightAutoPlay() {
+    if (this.spotlightInterval) clearInterval(this.spotlightInterval);
+    if (this.spotlightGames.length <= 1) return;
+
+    this.spotlightInterval = setInterval(() => {
+      this.nextSpotlight();
+    }, 7000);
+
+    const showcase = document.getElementById("spotlight-showcase");
+    if (showcase) {
+      showcase.onmouseenter = () => clearInterval(this.spotlightInterval);
+      showcase.onmouseleave = () => this.startSpotlightAutoPlay();
+    }
+  },
+
+  /**
+   * Dải tin vắn Archive Wire Ticker chạy chữ mượt mà dưới chân Spotlight
+   */
+  renderArchiveWire() {
+    const wireTrack = document.getElementById("wire-track");
+    if (!wireTrack || !this.games.length) return;
+
+    const items = this.games.map(g => {
+      const patch = g.patch_version ? g.patch_version.split(" ")[0] : "v1.0.0";
+      let dateText = "16/09/2026";
+      if (g.release_date) {
+        const parts = g.release_date.split("-");
+        if (parts.length === 3) dateText = `${parts[2]}/${parts[1]}/${parts[0]}`;
+      }
+      return `${g.title.toUpperCase()} VIỆT HÓA — PATCH ${patch} — ${dateText}`;
+    });
+
+    const separator = `<span style="color:var(--accent-orange, #EA4828); margin: 0 16px;">♦</span>`;
+    const staticBanner = `GỬI ĐỀ XUẤT GAME BẠN MUỐN VIỆT HÓA TẠI MỤC ĐỀ XUẤT ${separator} TẠP HÓA VIỆT — KHO BẢN DỊCH CHUẨN MỰC`;
+    const fullText = [...items, staticBanner].join(` ${separator} `);
+
+    wireTrack.innerHTML = `${fullText} ${separator} ${fullText}`;
+  },
+
+  filters: {
+    query: "",
+    filter: "all",
+    sort: "newest"
   },
 
   /**
@@ -123,16 +234,16 @@ const Catalog = {
     let result = this.games.filter(g => {
       // Lọc theo search
       if (q) {
-        const textToSearch = this.removeAccents(`${g.title} ${g.original_title} ${g.developer} ${g.engine} ${g.summary}`);
+        const textToSearch = this.removeAccents(`${g.title} ${g.original_title || ""} ${g.summary || ""}`);
         if (!textToSearch.includes(q)) return false;
       }
-      // Lọc theo engine
-      if (this.filters.engine !== "all") {
-        if (g.engine_category !== this.filters.engine) return false;
-      }
-      // Lọc theo status
-      if (this.filters.status !== "all") {
-        if (g.status !== this.filters.status) return false;
+      // Lọc theo tab nhanh
+      if (this.filters.filter === "ready") {
+        if (g.status !== "ready") return false;
+      } else if (this.filters.filter === "wip") {
+        if (g.status === "ready") return false;
+      } else if (this.filters.filter === "featured") {
+        if (!g.featured) return false;
       }
       return true;
     });
@@ -165,7 +276,7 @@ const Catalog = {
         <div class="catalog-empty">
           <i class="fa-solid fa-box-open"></i>
           <h3>Không tìm thấy bản Việt hóa nào phù hợp</h3>
-          <p>Thử tìm kiếm với từ khóa khác hoặc bỏ bớt bộ lọc Engine / Trạng thái.</p>
+          <p>Thử tìm kiếm với từ khóa khác hoặc chọn xem Tất Cả Game.</p>
         </div>
       `;
       return;
@@ -177,42 +288,44 @@ const Catalog = {
       const isSaved = savedSet.has(g.id);
       const isReady = g.status === "ready";
       const statusClass = isReady ? "ready" : "progress";
-      const statusText = isReady ? "Hoàn tất 100%" : `Đang dịch ${g.progress.overall}%`;
+      const statusText = isReady ? "⚡ SẴN SÀNG TẢI" : `Đang dịch ${g.progress ? g.progress.overall : 0}%`;
       const fillClass = isReady ? "" : "wip";
-
-      // Icon minh họa cho thẻ game
-      let engineIcon = "fa-gamepad";
-      if (g.engine_category === "ue") engineIcon = "fa-cubes";
-      else if (g.engine_category === "unity") engineIcon = "fa-cube";
-      else if (g.engine_category === "gamemaker") engineIcon = "fa-gear";
+      const readyGlowClass = isReady ? "card-ready" : "";
+      const coverSrc = g.cover_image || `assets/covers/${g.id}.jpg`;
 
       return `
-        <article class="game-card" onclick="App.openDetail('${g.id}')">
+        <article class="game-card ${readyGlowClass}" onclick="App.openDetail('${g.id}')">
           <div class="card-poster-wrap" style="background-color: ${g.cover_color || '#111822'}">
+            <img class="card-poster-img" src="${coverSrc}" alt="${g.title}" loading="lazy"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="card-poster-art" style="display:none;">
+              <i class="fa-solid fa-gamepad card-poster-icon" style="color: rgba(255,255,255,0.7)"></i>
+              <h3 class="card-poster-title">${g.title}</h3>
+            </div>
             <span class="card-status-badge ${statusClass}">${statusText}</span>
             <button class="card-bookmark-btn ${isSaved ? "active" : ""}" 
                     title="${isSaved ? "Bỏ lưu" : "Lưu vào bộ sưu tập"}" 
                     onclick="event.stopPropagation(); Library.toggle('${g.id}')">
               <i class="${isSaved ? "fa-solid" : "fa-regular"} fa-bookmark"></i>
             </button>
-            <div class="card-poster-art">
-              <i class="fa-solid ${engineIcon} card-poster-icon" style="color: rgba(255,255,255,0.7)"></i>
-              <h3 class="card-poster-title">${g.title}</h3>
-            </div>
             <div class="card-shade"></div>
+            ${isReady ? `
+              <span class="card-quick-download" onclick="event.stopPropagation(); App.openDetail('${g.id}')">
+                <i class="fa-brands fa-google-drive"></i> Tải Ngay
+              </span>
+            ` : ""}
           </div>
           <div class="card-body">
             <div class="card-meta-tags">
-              <span class="engine-tag">${g.engine}</span>
-              <span class="size-tag">${g.size}</span>
+              <span class="tag-version"><i class="fa-solid fa-code-branch"></i> ${g.game_version || "Bản 1.0"}</span>
+              <span class="tag-size"><i class="fa-solid fa-bolt"></i> ${g.size || "Nhẹ"}</span>
             </div>
             <h4 class="card-title" title="${g.title}">${g.title}</h4>
-            <div class="card-version-info">Hỗ trợ: ${g.game_version}</div>
             <div class="card-progress-wrap">
               <div class="card-progress-bar">
-                <div class="card-progress-fill ${fillClass}" style="width: ${g.progress.overall}%"></div>
+                <div class="card-progress-fill ${fillClass}" style="width: ${g.progress ? g.progress.overall : 0}%"></div>
               </div>
-              <span class="card-progress-percent">${g.progress.overall}%</span>
+              <span class="card-progress-percent">${g.progress ? g.progress.overall : 0}%</span>
             </div>
           </div>
         </article>
@@ -230,25 +343,16 @@ const Catalog = {
       };
     }
 
-    // Filter engine buttons
-    const engineBtns = document.querySelectorAll(".engine-btn");
-    engineBtns.forEach(btn => {
-      btn.onclick = () => {
-        engineBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        this.filters.engine = btn.dataset.engine;
+    // Filter pill buttons (Tất cả, Tải ngay, Đang dịch, Nổi bật)
+    const filterPills = document.querySelectorAll(".filter-pill");
+    filterPills.forEach(pill => {
+      pill.onclick = () => {
+        filterPills.forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        this.filters.filter = pill.dataset.filter || "all";
         this.renderCatalog();
       };
     });
-
-    // Select status
-    const statusSelect = document.getElementById("filter-status");
-    if (statusSelect) {
-      statusSelect.onchange = (e) => {
-        this.filters.status = e.target.value;
-        this.renderCatalog();
-      };
-    }
 
     // Select sort
     const sortSelect = document.getElementById("filter-sort");
@@ -263,13 +367,12 @@ const Catalog = {
     const resetBtn = document.getElementById("btn-reset-filters");
     if (resetBtn) {
       resetBtn.onclick = () => {
-        this.filters = { query: "", engine: "all", status: "all", sort: "newest" };
+        this.filters = { query: "", filter: "all", sort: "newest" };
         if (searchInput) searchInput.value = "";
-        if (statusSelect) statusSelect.value = "all";
         if (sortSelect) sortSelect.value = "newest";
-        engineBtns.forEach(b => b.classList.remove("active"));
-        const defaultEngine = document.querySelector('.engine-btn[data-engine="all"]');
-        if (defaultEngine) defaultEngine.classList.add("active");
+        filterPills.forEach(p => p.classList.remove("active"));
+        const defaultPill = document.querySelector('.filter-pill[data-filter="all"]');
+        if (defaultPill) defaultPill.classList.add("active");
         this.renderCatalog();
       };
     }

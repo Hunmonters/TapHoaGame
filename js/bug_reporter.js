@@ -57,7 +57,20 @@ const BugReporter = {
       localStorage.setItem("thv_bug_reports", JSON.stringify(saved));
     } catch (e) {}
 
-    // 2. Gửi Discord Webhook nếu đã cấu hình
+    // 2. Lưu vào Supabase Cloud nếu khả dụng
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      try {
+        SupabaseClient.submitBugReport({
+          gameName: gameName,
+          bugType: bugType,
+          desc: desc,
+          screenshot: screenshotUrl,
+          contact: userContact
+        });
+      } catch (e) {}
+    }
+
+    // 3. Gửi Discord Webhook nếu đã cấu hình
     if (window.CONFIG && CONFIG.discordBugWebhook) {
       try {
         await fetch(CONFIG.discordBugWebhook, {

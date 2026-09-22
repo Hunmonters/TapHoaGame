@@ -105,6 +105,14 @@
   align-items: center;
   justify-content: center;
   background: #111822;
+  position: relative;
+}
+
+.detail-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .detail-hero-info {
@@ -181,30 +189,259 @@
 
 .download-btn-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex-direction: column;
   margin-bottom: 20px;
 }
 
-.btn-server-dl {
+/* Nút Tải Google Drive Độc Quyền Cỡ Lớn */
+.btn-gdrive-primary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(245, 158, 11, 0.15) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.55);
+  border-radius: var(--radius-lg);
+  padding: 18px 24px;
+  color: #FFF;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 24px rgba(16, 185, 129, 0.25);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.btn-gdrive-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.7s ease;
+}
+
+.btn-gdrive-primary:hover::before {
+  left: 100%;
+}
+
+.btn-gdrive-primary:hover {
+  transform: translateY(-3px) scale(1.01);
+  border-color: #10B981;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.75), 0 0 32px rgba(16, 185, 129, 0.45);
+  color: #FFF;
+}
+
+.gdrive-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+.gdrive-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+
+.gdrive-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+.gdrive-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #FFF;
+  line-height: 1.2;
+}
+
+.gdrive-sub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.gdrive-action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  gap: 8px;
+  background: #10B981;
+  color: #FFF;
+  padding: 11px 22px;
   border-radius: var(--radius-md);
-  padding: 12px 20px;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.9rem;
-  color: var(--text-primary);
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+  flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
-.btn-server-dl:hover {
-  border-color: var(--accent-gold);
-  background: rgba(245, 158, 11, 0.12);
+.btn-gdrive-primary:hover .gdrive-action-btn {
+  background: #059669;
+  transform: scale(1.05);
+}
+
+.gdrive-wip-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+
+.gdrive-wip-banner i {
+  font-size: 2rem;
   color: var(--accent-gold);
-  transform: translateY(-2px);
+}
+
+.gdrive-wip-banner strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  margin-bottom: 2px;
+}
+
+.gdrive-wip-banner p {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Interactive 3-Step Installation Checklist */
+.install-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.install-step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.install-step-card.completed {
+  background: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.install-step-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 2px solid var(--border-subtle);
+  cursor: pointer;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #090E14;
+  color: transparent;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.install-step-card.completed .install-step-checkbox {
+  background: #10B981;
+  border-color: #10B981;
+  color: #FFF;
+}
+
+.install-step-content {
+  flex: 1;
+}
+
+.install-step-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.install-step-card.completed .install-step-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.install-step-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.install-path-box {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #06090D;
+  border: 1px solid var(--border-subtle);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.install-path-code {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--accent-cyan);
+  word-break: break-all;
+  flex: 1;
+}
+
+.btn-copy-path {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-copy-path:hover {
+  background: var(--accent-cyan);
+  color: #000;
+}
+
+.btn-copy-path.copied {
+  background: #10B981;
+  border-color: #10B981;
+  color: #FFF;
+}
+
+.btn-server-dl {
+  display: none;
 }
 
 .server-badge {
@@ -215,115 +452,7 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Double Utility Grid (SHA-256 Verifier & PE Version Inspector) */
-.detail-utility-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
 
-/* Checksum SHA-256 Box */
-.checksum-panel {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 16px 20px;
-}
-
-.checksum-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 0.85rem;
-}
-
-.checksum-head span {
-  font-weight: 700;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-copy-sha {
-  font-size: 0.8rem;
-  color: var(--accent-gold);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: color 0.2s;
-}
-
-.btn-copy-sha:hover {
-  color: #FFF;
-}
-
-.checksum-value {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  word-break: break-all;
-  background: var(--bg-input);
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  margin-bottom: 14px;
-}
-
-/* Ô Kéo thả File Verifier (Web Crypto API) */
-.verifier-dropzone, .detector-dropzone {
-  border: 2px dashed rgba(255, 255, 255, 0.14);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.verifier-dropzone:hover, .detector-dropzone:hover,
-.verifier-dropzone.dragover, .detector-dropzone.dragover {
-  border-color: var(--accent-gold);
-  background: rgba(245, 158, 11, 0.08);
-}
-
-.verifier-dropzone p, .detector-dropzone p {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  margin-top: 4px;
-}
-
-.verifier-result, .detector-result {
-  margin-top: 10px;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 0.84rem;
-  display: none;
-  line-height: 1.5;
-}
-
-.verifier-result.match, .detector-result.match {
-  display: block;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid var(--accent-green);
-  color: var(--accent-green);
-}
-
-.verifier-result.mismatch, .detector-result.mismatch {
-  display: block;
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid var(--accent-red);
-  color: var(--accent-red);
-}
-
-.detector-result.warn {
-  display: block;
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid var(--accent-gold);
-  color: var(--accent-gold);
-}
 
 /* ==========================================================================
    DETAIL TABS (Giới thiệu, Cài đặt, Changelog, Credits)
@@ -499,4 +628,86 @@
     padding-left: 20px;
     padding-right: 20px;
   }
+}
+
+/* ==========================================================================
+   TẠP HÓA KEM & CAM - THEME OVERRIDES (detail.css)
+   ========================================================================== */
+[data-theme="cream"] .detail-box {
+  background: #FAF6EE;
+  border: 2px solid #121316;
+  box-shadow: 8px 8px 0px #121316;
+}
+
+[data-theme="cream"] .detail-close-btn {
+  background: #FFFFFF;
+  border: 1.5px solid #121316;
+  color: #121316;
+  box-shadow: 2px 2px 0px #121316;
+}
+
+[data-theme="cream"] .detail-close-btn:hover {
+  background: var(--accent-orange, #EA4828);
+  color: #FFF;
+}
+
+[data-theme="cream"] .detail-hero-banner::before {
+  background: linear-gradient(180deg, rgba(245, 240, 230, 0.8) 0%, rgba(250, 246, 238, 0.98) 100%);
+}
+
+[data-theme="cream"] .detail-title {
+  color: #121316;
+}
+
+[data-theme="cream"] .detail-original {
+  color: #78716C;
+}
+
+[data-theme="cream"] .detail-meta-table {
+  background: #FFFFFF;
+  border: 1.5px solid #121316;
+  box-shadow: 3px 3px 0px #121316;
+}
+
+[data-theme="cream"] .detail-meta-table dd {
+  color: #121316;
+}
+
+
+
+[data-theme="cream"] .install-step-card {
+  background: #FFFFFF;
+  border: 1.5px solid #121316;
+  box-shadow: 3px 3px 0px #121316;
+}
+
+[data-theme="cream"] .install-path-box {
+  background: #FAF6EE;
+  border: 1.5px solid #121316;
+}
+
+[data-theme="cream"] .install-path-code {
+  color: #121316;
+  font-weight: 700;
+}
+
+[data-theme="cream"] .btn-copy-path {
+  background: var(--accent-orange, #EA4828);
+  color: #FFF;
+  border: 1.5px solid #121316;
+  box-shadow: 2px 2px 0px #121316;
+}
+
+[data-theme="cream"] .detail-tabs-bar {
+  background: #FAF6EE;
+  border-bottom: 2px solid #121316;
+}
+
+[data-theme="cream"] .detail-tab-btn {
+  color: #57534E;
+}
+
+[data-theme="cream"] .detail-tab-btn.active {
+  color: var(--accent-orange, #EA4828);
+  border-bottom: 3px solid var(--accent-orange, #EA4828);
 }

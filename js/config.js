@@ -15,11 +15,11 @@ const CONFIG = {
   // Ví dụ: "https://discord.com/api/webhooks/123456/abcdef"
   discordBugWebhook: "",
 
-  // Cấu hình Supabase (khi cần đồng bộ phiếu vote toàn quốc)
+  // Cấu hình Supabase Cloud (Đồng bộ Realtime kho game, bình chọn và upload ảnh CDN)
   supabase: {
-    enabled: false,
-    url: "",
-    anonKey: ""
+    enabled: true,
+    url: "https://qtfnokoacwuokrbamzka.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0Zm5va29hY3d1b2tyYmFtemthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAwNjcyNjgsImV4cCI6MjEwNTY0MzI2OH0.6vzYGeRiVmqsh_U1TZocuQrWBzMkD-3ZciUPqNgNGqc"
   },
 
   // Video trailer nổi bật mặc định ở đầu trang chủ (YouTube Video ID)

@@ -1,3 +1,4 @@
+// Bundle dữ liệu offline phục vụ mở trực tiếp file:/// không qua HTTP server
 window.FALLBACK_GAMES = [
   {
     "id": "together-moon-escape",
@@ -64,20 +65,11 @@ window.FALLBACK_GAMES = [
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
-      },
-      {
-        "server": "Mega.nz",
-        "url": "https://mega.nz/",
-        "badge": "Dự phòng"
-      },
-      {
-        "server": "Fshare",
-        "url": "https://fshare.vn/",
-        "badge": "VIP Fcode"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#28453B"
+    "cover_color": "#28453B",
+    "cover_image": "assets/covers/together-moon-escape.jpg"
   },
   {
     "id": "loop-hero",
@@ -144,20 +136,11 @@ window.FALLBACK_GAMES = [
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
-      },
-      {
-        "server": "Mega.nz",
-        "url": "https://mega.nz/",
-        "badge": "Dự phòng"
-      },
-      {
-        "server": "Fshare",
-        "url": "https://fshare.vn/",
-        "badge": "VIP"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#42281D"
+    "cover_color": "#42281D",
+    "cover_image": "assets/covers/loop-hero.jpg"
   },
   {
     "id": "cat-mail-co",
@@ -213,15 +196,11 @@ window.FALLBACK_GAMES = [
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
-      },
-      {
-        "server": "Mega.nz",
-        "url": "https://mega.nz/",
-        "badge": "Dự phòng"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#C47C35"
+    "cover_color": "#C47C35",
+    "cover_image": "assets/covers/cat-mail-co.jpg"
   },
   {
     "id": "graveyard-shift",
@@ -278,15 +257,11 @@ window.FALLBACK_GAMES = [
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
-      },
-      {
-        "server": "Mega.nz",
-        "url": "https://mega.nz/",
-        "badge": "Dự phòng"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#1A2E28"
+    "cover_color": "#1A2E28",
+    "cover_image": "assets/covers/graveyard-shift.jpg"
   },
   {
     "id": "warlord-awaji",
@@ -342,7 +317,8 @@ window.FALLBACK_GAMES = [
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#542D2D"
+    "cover_color": "#542D2D",
+    "cover_image": "assets/covers/warlord-awaji.jpg"
   },
   {
     "id": "shape-of-dreams",
@@ -395,7 +371,8 @@ window.FALLBACK_GAMES = [
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 75%",
-    "cover_color": "#3B2A54"
+    "cover_color": "#3B2A54",
+    "cover_image": "assets/covers/shape-of-dreams.jpg"
   },
   {
     "id": "ironnest",
@@ -445,7 +422,8 @@ window.FALLBACK_GAMES = [
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 90%",
-    "cover_color": "#4A3E2D"
+    "cover_color": "#4A3E2D",
+    "cover_image": "assets/covers/ironnest.jpg"
   },
   {
     "id": "valheim",
@@ -495,7 +473,8 @@ window.FALLBACK_GAMES = [
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 65%",
-    "cover_color": "#1C3642"
+    "cover_color": "#1C3642",
+    "cover_image": "assets/covers/valheim.jpg"
   },
   {
     "id": "duck-detective",
@@ -545,7 +524,8 @@ window.FALLBACK_GAMES = [
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 40%",
-    "cover_color": "#4A4325"
+    "cover_color": "#4A4325",
+    "cover_image": "assets/covers/duck-detective.jpg"
   },
   {
     "id": "manor-lords",
@@ -595,48 +575,7 @@ window.FALLBACK_GAMES = [
     ],
     "download_links": [],
     "badge": "TIẾN ĐỘ 25%",
-    "cover_color": "#3D372E"
-  }
-];
-window.FALLBACK_REQUESTS = [
-  {
-    "id": "req-1",
-    "title": "Black Myth: Wukong",
-    "engine": "Unreal Engine 5",
-    "votes": 1420,
-    "url": "https://store.steampowered.com/app/2358720/",
-    "why": "Siêu phẩm Tây Du Ký đồ họa tuyệt đẹp, nhiều thuật ngữ Phật giáo và thơ ca cổ cần bản dịch chỉn chu."
-  },
-  {
-    "id": "req-2",
-    "title": "Hades II",
-    "engine": "Custom Engine",
-    "votes": 980,
-    "url": "https://store.steampowered.com/app/1145350/",
-    "why": "Thần thoại Hy Lạp với lượng hội thoại phân nhánh khổng lồ, rất cần tiếng Việt để cảm nhận hết chiều sâu."
-  },
-  {
-    "id": "req-3",
-    "title": "Silent Hill 2 Remake",
-    "engine": "Unreal Engine 5",
-    "votes": 850,
-    "url": "https://store.steampowered.com/app/2124490/",
-    "why": "Tuyệt tác kinh dị tâm lý, phụ đề tiếng Việt sẽ giúp người chơi hiểu sâu nỗi ám ảnh của James Sunderland."
-  },
-  {
-    "id": "req-4",
-    "title": "Dragon's Dogma 2",
-    "engine": "RE Engine",
-    "votes": 720,
-    "url": "https://store.steampowered.com/app/2054970/",
-    "why": "Thế giới mở nhập vai rộng lớn, thoại của dàn Pawn đồng hành rất đa dạng."
-  },
-  {
-    "id": "req-5",
-    "title": "Monster Hunter: Wilds",
-    "engine": "RE Engine",
-    "votes": 610,
-    "url": "https://store.steampowered.com/app/2246340/",
-    "why": "Game săn quái thế hệ mới, cần chuẩn hóa glossary tên quái vật và kỹ năng."
+    "cover_color": "#3D372E",
+    "cover_image": "assets/covers/manor-lords.jpg"
   }
 ];

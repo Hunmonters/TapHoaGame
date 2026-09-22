@@ -238,3 +238,32 @@
     justify-content: space-between;
   }
 }
+
+/* ==========================================================================
+   TẠP HÓA KEM & CAM - THEME OVERRIDES (progress.css)
+   ========================================================================== */
+[data-theme="cream"] .progress-masthead {
+  background: #FFFFFF;
+  border: 2px solid #121316;
+  box-shadow: 4px 4px 0px #121316;
+}
+
+[data-theme="cream"] .masthead-metrics {
+  background: #FAF6EE;
+  border: 1.5px solid #121316;
+}
+
+[data-theme="cream"] .production-legend {
+  background: #FAF6EE;
+  border: 1.5px solid #121316;
+}
+
+[data-theme="cream"] .progress-card {
+  background: #FFFFFF;
+  border: 2px solid #121316;
+  box-shadow: 4px 4px 0px #121316;
+}
+
+[data-theme="cream"] .prog-total-percent {
+  color: var(--accent-orange, #EA4828);
+}

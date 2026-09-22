@@ -102,9 +102,7 @@ def build_curated_database():
             {"name": "SIL Open Font", "role": "Phông chữ Be Vietnam Pro"}
         ],
         "download_links": [
-            {"server": "Google Drive", "url": "https://drive.google.com/", "badge": "Tốc độ cao"},
-            {"server": "Mega.nz", "url": "https://mega.nz/", "badge": "Dự phòng"},
-            {"server": "Fshare", "url": "https://fshare.vn/", "badge": "VIP Fcode"}
+            {"server": "Google Drive", "url": "https://drive.google.com/", "badge": "Tốc độ cao"}
         ],
         "badge": "HOÀN TẤT 100%",
         "cover_color": "#28453B"
@@ -167,9 +165,7 @@ def build_curated_database():
             {"name": "Four Quarters", "role": "Game Developer"}
         ],
         "download_links": [
-            {"server": "Google Drive", "url": "https://drive.google.com/", "badge": "Tốc độ cao"},
-            {"server": "Mega.nz", "url": "https://mega.nz/", "badge": "Dự phòng"},
-            {"server": "Fshare", "url": "https://fshare.vn/", "badge": "VIP"}
+            {"server": "Google Drive", "url": "https://drive.google.com/", "badge": "Tốc độ cao"}
         ],
         "badge": "HOÀN TẤT 100%",
         "cover_color": "#42281D"
@@ -542,10 +538,22 @@ def main():
     TARGET_JSON.parent.mkdir(parents=True, exist_ok=True)
     games_data = build_curated_database()
 
+    # Tự động gán đường dẫn cover_image cho mỗi game
+    for g in games_data:
+        if "cover_image" not in g:
+            g["cover_image"] = f"assets/covers/{g['id']}.jpg"
+
     with open(TARGET_JSON, "w", encoding="utf-8") as f:
         json.dump(games_data, f, ensure_ascii=False, indent=2)
 
     print(f"[OK] Đã xuất thành công {len(games_data)} hồ sơ game vào: {TARGET_JSON}")
+
+    # Đồng bộ sang data_bundle.js để hỗ trợ mở offline qua file:///
+    bundle_file = TARGET_JSON.parent / "data_bundle.js"
+    with open(bundle_file, "w", encoding="utf-8") as f:
+        f.write("// Bundle dữ liệu offline phục vụ mở trực tiếp file:/// không qua HTTP server\n")
+        f.write("window.FALLBACK_GAMES = " + json.dumps(games_data, ensure_ascii=False, indent=2) + ";\n")
+    print(f"[OK] Đã đồng bộ bundle offline: {bundle_file}")
     
     # Tạo thêm file requests mẫu
     requests_json = TARGET_JSON.parent / "requests.json"

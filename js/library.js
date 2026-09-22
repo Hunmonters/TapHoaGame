@@ -74,19 +74,23 @@ const Library = {
       else if (g.engine_category === "unity") engineIcon = "fa-cube";
       else if (g.engine_category === "gamemaker") engineIcon = "fa-gear";
 
+      const coverSrc = g.cover_image || `assets/covers/${g.id}.jpg`;
+
       return `
         <article class="game-card" onclick="App.openDetail('${g.id}')">
           <div class="card-poster-wrap" style="background-color: ${g.cover_color || '#111822'}">
+            <img class="card-poster-img" src="${coverSrc}" alt="${g.title}" loading="lazy"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="card-poster-art" style="display:none;">
+              <i class="fa-solid ${engineIcon} card-poster-icon" style="color: rgba(255,255,255,0.7)"></i>
+              <h3 class="card-poster-title">${g.title}</h3>
+            </div>
             <span class="card-status-badge ${g.status === "ready" ? "ready" : "progress"}">
               ${g.status === "ready" ? "Hoàn tất 100%" : `Đang dịch ${g.progress.overall}%`}
             </span>
             <button class="card-bookmark-btn active" title="Bỏ lưu" onclick="event.stopPropagation(); Library.toggle('${g.id}')">
               <i class="fa-solid fa-bookmark"></i>
             </button>
-            <div class="card-poster-art">
-              <i class="fa-solid ${engineIcon} card-poster-icon" style="color: rgba(255,255,255,0.7)"></i>
-              <h3 class="card-poster-title">${g.title}</h3>
-            </div>
             <div class="card-shade"></div>
           </div>
           <div class="card-body">

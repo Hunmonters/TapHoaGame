@@ -11,17 +11,17 @@ Website chia sẻ và tra cứu các bản Việt hóa game PC chuẩn mực, đ
    - Tự động ghi nhớ vào `sessionStorage` để chỉ hiển thị 1 lần trong phiên duyệt web.
 
 2. **Hệ thống 4 Tab Chuyên Nghiệp:**
-   - **Kho Sưu Tập (Catalog):** Hero Slider trình chiếu bản dịch nổi bật, Live Stats thống kê thời gian thực, bộ lọc theo Engine (Unreal, Unity, GameMaker...), tìm kiếm tức thời tiếng Việt không dấu, card game chuẩn tỉ lệ poster dọc 3:4.
-   - **Xưởng Dịch (Production Progress):** Phân chia tiến độ minh bạch theo 4 công đoạn thực tế: *Dịch thuật -> Hiệu đính -> Giao diện & Font -> Kiểm định QA in-game*.
-   - **Đề Xuất Cộng Đồng (Requests):** Gửi đề xuất game muốn dịch và bình chọn (Upvote) lưu trữ an toàn trên trình duyệt.
-   - **Bộ Sưu Tập Của Tôi (Library):** Đánh dấu lưu trữ các game đang chơi để cập nhật nhanh.
+    - **Kho Sưu Tập (Catalog):** Hero Slider trình chiếu bản dịch nổi bật, Live Stats thống kê thời gian thực, bộ lọc game thủ thân thiện (Tất Cả, Tải Ngay, Đang Dịch, Nổi Bật), card game chuẩn tỉ lệ poster dọc 3:4 với hiệu ứng thở hào quang (breathing glow) và nút tải nhanh 1-chạm khi rê chuột.
+    - **Xưởng Dịch (Production Progress):** Phân chia tiến độ minh bạch theo 4 công đoạn thực tế: *Dịch thuật -> Hiệu đính -> Giao diện & Font -> Kiểm định QA in-game*.
+    - **Đề Xuất Cộng Đồng (Requests):** Gửi đề xuất game muốn dịch và bình chọn (Upvote) đồng bộ thời gian thực qua **Supabase Cloud Realtime**.
+    - **Bộ Sưu Tập Của Tôi (Library):** Đánh dấu lưu trữ các game đang chơi để cập nhật nhanh.
 
 3. **Hồ Sơ Chi Tiết Game (Game Profile Modal & Deep-Link):**
-   - Thông tin tương thích game (Phiên bản hỗ trợ, Steam AppID, Engine, Dung lượng).
-   - Nút Tải Về đa server (Google Drive, Mega, MediaFire, Fshare).
-   - **Công cụ kiểm định mã SHA-256 trực tiếp:** Nút 1-click sao chép mã và khu vực kéo-thả tệp vừa tải về để trình duyệt (Web Crypto API) tự tính toán và xác thực tính toàn vẹn 100%.
-   - Quy trình cài đặt chuẩn mực & Hướng dẫn hoàn tác (Rollback an toàn).
-   - Hỗ trợ đường dẫn trực tiếp (Deep-link URL hash như `index.html#together-moon-escape`, `index.html#loop-hero`) để dễ dàng chia sẻ lên Facebook/Discord.
+    - Thông tin tương thích game (Phiên bản hỗ trợ, dung lượng, phiên bản Việt hóa).
+    - **Nút Tải Google Drive Độc Quyền:** Nút tải cỡ lớn tốc độ cao, không quảng cáo, không link rút gọn hay server rườm rà.
+    - **Quy trình cài đặt tương tác 3 bước:** Checklist đánh dấu hoàn thành từng bước trực quan, kèm nút 1-click sao chép đường dẫn thư mục cài đặt game.
+    - **Công cụ kiểm định mã SHA-256 & PE Binary Inspector:** Kéo-thả file tải về để kiểm tra hash và kéo-thả file .exe để tự động đọc phiên bản game offline 100%.
+    - Hướng dẫn hoàn tác (Rollback an toàn) và hỗ trợ Deep-link URL hash.
 
 4. **Pipeline Tự Động Hóa Đồng Bộ:**
    - Script `tools/sync_from_viethoagame.py` tự động quét kho `C:\Users\khat5\OneDrive\Máy tính\VietHoaGame`, đọc các `manifest.json`, file `.rar`, `.zip`, tính toán mã SHA-256 và xuất ra `data/games.json`.

@@ -189,13 +189,48 @@ textarea.form-control {
   gap: 10px;
 }
 
-.req-engine {
-  font-size: 0.7rem;
+.req-rank-pill {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  display: inline-flex;
+  align-items: center;
+}
+
+.req-rank-pill.rank-gold {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #F59E0B;
+  color: #F59E0B;
+}
+
+.req-rank-pill.rank-silver {
+  background: rgba(148, 163, 184, 0.2);
+  border-color: #94A3B8;
+  color: #E2E8F0;
+}
+
+.req-rank-pill.rank-bronze {
+  background: rgba(217, 119, 6, 0.2);
+  border-color: #D97706;
+  color: #FBBF24;
+}
+
+.req-top-tag {
+  font-size: 0.72rem;
   font-weight: 700;
-  color: var(--accent-cyan);
-  background: rgba(6, 182, 212, 0.1);
-  padding: 2px 6px;
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 2px 7px;
   border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .req-why {
@@ -224,4 +259,40 @@ textarea.form-control {
   .request-form-card {
     position: static;
   }
+}
+
+/* ==========================================================================
+   TẠP HÓA KEM & CAM - THEME OVERRIDES (requests.css)
+   ========================================================================== */
+[data-theme="cream"] .request-form-card,
+[data-theme="cream"] .requests-board {
+  background: #FFFFFF;
+  border: 2px solid #121316;
+  box-shadow: 4px 4px 0px #121316;
+}
+
+[data-theme="cream"] .request-item {
+  background: #FAF6EE;
+  border: 1.5px solid #121316;
+  box-shadow: 2px 2px 0px #121316;
+}
+
+[data-theme="cream"] .btn-vote {
+  background: #FFFFFF;
+  border: 1.5px solid #121316;
+  color: #121316;
+}
+
+[data-theme="cream"] .btn-vote.voted {
+  background: var(--accent-orange, #EA4828);
+  color: #FFF;
+  border-color: #121316;
+  box-shadow: 2px 2px 0px #121316;
+}
+
+[data-theme="cream"] .btn-submit-req {
+  background: var(--accent-orange, #EA4828);
+  border: 2px solid #121316;
+  box-shadow: 3px 3px 0px #121316;
+  color: #FFF;
 }
