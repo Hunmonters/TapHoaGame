@@ -313,10 +313,59 @@ const App = {
         `;
       }
     }
-    // Tab 1: Giới thiệu
+    // Tab 1: Giới thiệu kèm Ảnh Chụp Minh Họa Bản Dịch
+    const screenshots = (game.screenshots && game.screenshots.length > 0)
+      ? game.screenshots
+      : (game.cover_image ? [game.cover_image] : []);
+    this.currentGalleryImages = screenshots;
+    this.currentGalleryIndex = 0;
+
+    let galleryHtml = "";
+    if (screenshots.length > 0) {
+      galleryHtml = `
+        <div class="detail-gallery-wrap">
+          <div class="detail-gallery-header">
+            <div class="detail-gallery-title">
+              <i class="fa-solid fa-images"></i> Ảnh Chụp Minh Họa Bản Dịch
+            </div>
+            <span class="detail-gallery-counter" id="gallery-counter">1 / ${screenshots.length}</span>
+          </div>
+
+          <div class="detail-gallery-viewport" id="gallery-viewport" onclick="App.openLightbox()" title="Bấm để phóng to xem rõ chữ">
+            <img id="gallery-main-img" src="${screenshots[0]}" alt="Ảnh minh họa ${game.title}">
+            ${screenshots.length > 1 ? `
+              <button type="button" class="gallery-nav-btn prev" onclick="event.stopPropagation(); App.stepGallery(-1)" aria-label="Ảnh trước">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <button type="button" class="gallery-nav-btn next" onclick="event.stopPropagation(); App.stepGallery(1)" aria-label="Ảnh kế tiếp">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            ` : ""}
+            <div class="detail-gallery-expand-hint">
+              <i class="fa-solid fa-maximize"></i> Bấm để phóng to
+            </div>
+          </div>
+
+          <!-- Dải ảnh nhỏ (Thumbnails) phía dưới -->
+          ${screenshots.length > 1 ? `
+            <div class="detail-gallery-thumbs" id="gallery-thumbs-row">
+              ${screenshots.map((s, idx) => `
+                <div class="detail-gallery-thumb ${idx === 0 ? "active" : ""}" 
+                     onclick="App.selectGalleryImage(${idx})"
+                     title="Xem ảnh ${idx + 1}">
+                  <img src="${s}" alt="Thumbnail ${idx + 1}" loading="lazy" onerror="this.parentElement.style.display='none'">
+                </div>
+              `).join("")}
+            </div>
+          ` : ""}
+        </div>
+      `;
+    }
+
     document.getElementById("pane-desc-content").innerHTML = `
-      <p style="margin-bottom: 16px;">${game.description}</p>
-      <div style="background: var(--bg-surface); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+      <p style="margin-bottom: 16px; font-size: 0.95rem; line-height: 1.6;">${game.description}</p>
+      ${galleryHtml}
+      <div style="background: var(--bg-surface); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-top: 18px;">
         <strong style="color:var(--accent-gold); display:block; margin-bottom: 6px;"><i class="fa-solid fa-shield-halved"></i> Tiêu chuẩn chất lượng VietHoaGame:</strong>
         <p style="font-size: 0.88rem; color: var(--text-secondary);">Bản vá tuân thủ nguyên tắc không phá hủy dữ liệu gốc. Đảm bảo hỗ trợ đầy đủ font dấu tiếng Việt, không lỗi tràn viền và có thể gỡ bỏ dễ dàng.</p>
       </div>
@@ -428,6 +477,7 @@ const App = {
   },
 
   closeDetail(clearHash = true) {
+    this.closeLightbox();
     const modal = document.getElementById("detail-modal");
     if (!modal) return;
     modal.classList.remove("active");
@@ -437,6 +487,38 @@ const App = {
     if (clearHash && window.location.hash && window.location.hash !== "#admin") {
       history.pushState(null, "", window.location.pathname);
     }
+  },
+
+  selectGalleryImage(idx) {
+    if (!this.currentGalleryImages || !this.currentGalleryImages.length) return;
+    this.currentGalleryIndex = (idx + this.currentGalleryImages.length) % this.currentGalleryImages.length;
+    const mainImg = document.getElementById("gallery-main-img");
+    const counter = document.getElementById("gallery-counter");
+    const lbImg = document.getElementById("lightbox-img");
+    if (mainImg) mainImg.src = this.currentGalleryImages[this.currentGalleryIndex];
+    if (counter) counter.textContent = `${this.currentGalleryIndex + 1} / ${this.currentGalleryImages.length}`;
+    if (lbImg) lbImg.src = this.currentGalleryImages[this.currentGalleryIndex];
+
+    document.querySelectorAll(".detail-gallery-thumb").forEach((t, i) => {
+      t.classList.toggle("active", i === this.currentGalleryIndex);
+    });
+  },
+
+  stepGallery(delta) {
+    this.selectGalleryImage(this.currentGalleryIndex + delta);
+  },
+
+  openLightbox() {
+    if (!this.currentGalleryImages || !this.currentGalleryImages.length) return;
+    const lightbox = document.getElementById("gallery-lightbox");
+    const lbImg = document.getElementById("lightbox-img");
+    if (lbImg) lbImg.src = this.currentGalleryImages[this.currentGalleryIndex];
+    if (lightbox) lightbox.classList.add("active");
+  },
+
+  closeLightbox() {
+    const lightbox = document.getElementById("gallery-lightbox");
+    if (lightbox) lightbox.classList.remove("active");
   },
 
   switchModalTab(tabKey) {
@@ -460,8 +542,19 @@ const App = {
     }
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal && modal.classList.contains("active")) {
-        this.closeDetail();
+      const lb = document.getElementById("gallery-lightbox");
+      if (e.key === "Escape") {
+        if (lb && lb.classList.contains("active")) {
+          this.closeLightbox();
+          return;
+        }
+        if (modal && modal.classList.contains("active")) {
+          this.closeDetail();
+        }
+      }
+      if (modal && modal.classList.contains("active")) {
+        if (e.key === "ArrowLeft") this.stepGallery(-1);
+        if (e.key === "ArrowRight") this.stepGallery(1);
       }
     });
 

@@ -521,6 +521,16 @@
     </div>
   </div>
 
+  <!-- Lightbox xem ảnh minh họa toàn màn hình -->
+  <div class="gallery-lightbox-overlay" id="gallery-lightbox" onclick="App.closeLightbox()" role="dialog" aria-modal="true" aria-label="Phóng to ảnh">
+    <div class="gallery-lightbox-box" onclick="event.stopPropagation()">
+      <button class="gallery-lightbox-close" type="button" onclick="App.closeLightbox()" title="Đóng phóng to">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <img id="lightbox-img" class="gallery-lightbox-img" src="" alt="Ảnh minh họa toàn màn hình">
+    </div>
+  </div>
+
   <!-- ==========================================================================
        5. MODAL BÁO LỖI BẢN DỊCH (BUG REPORTER)
        ========================================================================== -->

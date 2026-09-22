@@ -69,7 +69,14 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "HOÀN TẤT 100%",
     "cover_color": "#28453B",
-    "cover_image": "assets/covers/together-moon-escape.jpg"
+    "cover_image": "assets/covers/together-moon-escape.jpg",
+    "screenshots": [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3744430/8e034bb1834e863546316fc43027d837f91bbb88/ss_8e034bb1834e863546316fc43027d837f91bbb88.1920x1080.jpg?t=1778172724",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3744430/ab91cc38bd2c70c4ec4dc53508fcf5bb46905c41/ss_ab91cc38bd2c70c4ec4dc53508fcf5bb46905c41.1920x1080.jpg?t=1778172724",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3744430/823b3e5dff99d20460daadfbc2c868f3f2ca1849/ss_823b3e5dff99d20460daadfbc2c868f3f2ca1849.1920x1080.jpg?t=1778172724",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3744430/0b139182a90ef2aecd1e41a5cf783a9440837f09/ss_0b139182a90ef2aecd1e41a5cf783a9440837f09.1920x1080.jpg?t=1778172724",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3744430/50803314045193d287bbacef700c1679e5833105/ss_50803314045193d287bbacef700c1679e5833105.1920x1080.jpg?t=1778172724"
+    ]
   },
   {
     "id": "loop-hero",
@@ -140,7 +147,14 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "HOÀN TẤT 100%",
     "cover_color": "#42281D",
-    "cover_image": "assets/covers/loop-hero.jpg"
+    "cover_image": "assets/covers/loop-hero.jpg",
+    "screenshots": [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1282730/ss_500e7212653fa6586f7a84c89b4c60be4e425fbb.1920x1080.jpg?t=1751489185",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1282730/ss_455789884ed94fd20410ac5a139e8c3bb8f6f369.1920x1080.jpg?t=1751489185",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1282730/ss_d6cf090e7c644756cc66443c0740f5497e6afbba.1920x1080.jpg?t=1751489185",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1282730/ss_6a416c70c8f1bc80c84a02a0627d2050061b0e39.1920x1080.jpg?t=1751489185",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1282730/ss_d03a4b7460d5da83d7a208c7500d73861922664b.1920x1080.jpg?t=1751489185"
+    ]
   },
   {
     "id": "cat-mail-co",
@@ -200,7 +214,10 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "HOÀN TẤT 100%",
     "cover_color": "#C47C35",
-    "cover_image": "assets/covers/cat-mail-co.jpg"
+    "cover_image": "assets/covers/cat-mail-co.jpg",
+    "screenshots": [
+      "assets/covers/cat-mail-co.jpg"
+    ]
   },
   {
     "id": "graveyard-shift",
@@ -261,7 +278,10 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "HOÀN TẤT 100%",
     "cover_color": "#1A2E28",
-    "cover_image": "assets/covers/graveyard-shift.jpg"
+    "cover_image": "assets/covers/graveyard-shift.jpg",
+    "screenshots": [
+      "assets/covers/graveyard-shift.jpg"
+    ]
   },
   {
     "id": "warlord-awaji",
@@ -318,7 +338,10 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "HOÀN TẤT 100%",
     "cover_color": "#542D2D",
-    "cover_image": "assets/covers/warlord-awaji.jpg"
+    "cover_image": "assets/covers/warlord-awaji.jpg",
+    "screenshots": [
+      "assets/covers/warlord-awaji.jpg"
+    ]
   },
   {
     "id": "shape-of-dreams",
@@ -372,7 +395,10 @@ window.FALLBACK_GAMES = [
     "download_links": [],
     "badge": "TIẾN ĐỘ 75%",
     "cover_color": "#3B2A54",
-    "cover_image": "assets/covers/shape-of-dreams.jpg"
+    "cover_image": "assets/covers/shape-of-dreams.jpg",
+    "screenshots": [
+      "assets/covers/shape-of-dreams.jpg"
+    ]
   },
   {
     "id": "ironnest",
@@ -423,7 +449,10 @@ window.FALLBACK_GAMES = [
     "download_links": [],
     "badge": "TIẾN ĐỘ 90%",
     "cover_color": "#4A3E2D",
-    "cover_image": "assets/covers/ironnest.jpg"
+    "cover_image": "assets/covers/ironnest.jpg",
+    "screenshots": [
+      "assets/covers/ironnest.jpg"
+    ]
   },
   {
     "id": "valheim",
@@ -474,7 +503,14 @@ window.FALLBACK_GAMES = [
     "download_links": [],
     "badge": "TIẾN ĐỘ 65%",
     "cover_color": "#1C3642",
-    "cover_image": "assets/covers/valheim.jpg"
+    "cover_image": "assets/covers/valheim.jpg",
+    "screenshots": [
+      "assets/screenshots/preview-demo.png",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/5a31353178f635b67f0c8720ebb8a1a95b637276/ss_5a31353178f635b67f0c8720ebb8a1a95b637276.1920x1080.jpg?t=1789470462",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/bc7c361dab1780543a3ceca50c8fba831e5bc8db/ss_bc7c361dab1780543a3ceca50c8fba831e5bc8db.1920x1080.jpg?t=1789470462",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/ss_a600a7d4ca954543e22f571a9629521a13f82143.1920x1080.jpg?t=1789470462",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/f7a47b4bd150ce1a2c6ec88f7d79fd57e7c538c8/ss_f7a47b4bd150ce1a2c6ec88f7d79fd57e7c538c8.1920x1080.jpg?t=1789470462"
+    ]
   },
   {
     "id": "duck-detective",
@@ -525,7 +561,10 @@ window.FALLBACK_GAMES = [
     "download_links": [],
     "badge": "TIẾN ĐỘ 40%",
     "cover_color": "#4A4325",
-    "cover_image": "assets/covers/duck-detective.jpg"
+    "cover_image": "assets/covers/duck-detective.jpg",
+    "screenshots": [
+      "assets/covers/duck-detective.jpg"
+    ]
   },
   {
     "id": "manor-lords",
@@ -584,7 +623,14 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "HOÀN TẤT 100%",
     "cover_color": "#3D372E",
-    "cover_image": "assets/covers/manor-lords.jpg"
+    "cover_image": "assets/covers/manor-lords.jpg",
+    "screenshots": [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1363080/bffe9f34abaae09855becd6e8ca2ddb9065b2ebb/ss_bffe9f34abaae09855becd6e8ca2ddb9065b2ebb.1920x1080.jpg?t=1789670136",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1363080/2a8486cf95c15af440a4857d6021bb15c057416c/ss_2a8486cf95c15af440a4857d6021bb15c057416c.1920x1080.jpg?t=1789670136",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1363080/e96c54a784a4fa874beb1c21ce0e34ada8eb932f/ss_e96c54a784a4fa874beb1c21ce0e34ada8eb932f.1920x1080.jpg?t=1789670136",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1363080/5111f429dfbd8b65611e0e322dc90f470d015dca/ss_5111f429dfbd8b65611e0e322dc90f470d015dca.1920x1080.jpg?t=1789670136",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1363080/541dce83a952beb779f2221cb107c6557f192439/ss_541dce83a952beb779f2221cb107c6557f192439.1920x1080.jpg?t=1789670136"
+    ]
   },
   {
     "id": "black-myth-wukong",
@@ -652,7 +698,14 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "THE RED TEAM",
     "cover_color": "#1E1A16",
-    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg"
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg",
+    "screenshots": [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_86c4b7462bba219a0d0b89931a35812b9f188976.1920x1080.jpg?t=1760601605",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_d9391ab31a4d15dddf7ba4949bfa44f5d9170580.1920x1080.jpg?t=1760601605",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_524a39da392ee83dde091033562bc719d46b5838.1920x1080.jpg?t=1760601605",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_968bbc9caceb7d798bd0c393e1e9b4c44ed6d835.1920x1080.jpg?t=1760601605",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_415397426d4c939ebb8a93ac66831f28ee7199be.1920x1080.jpg?t=1760601605"
+    ]
   },
   {
     "id": "hollow-knight",
@@ -717,7 +770,14 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "CÁNH CỤT TEAM",
     "cover_color": "#18222E",
-    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg"
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg",
+    "screenshots": [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_5384f9f8b96a0b9934b2bc35a4058376211636d2.1920x1080.jpg?t=1776125684",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_d5b6edd94e77ba6db31c44d8a3c09d807ab27751.1920x1080.jpg?t=1776125684",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_a81e4231cc8d55f58b51a4a938898af46503cae5.1920x1080.jpg?t=1776125684",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_62e10cf506d461e11e050457b08aa0e2a1c078d0.1920x1080.jpg?t=1776125684",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_bd76bd88bc5334ee56ae3d5f0d8dec4455e8e3b8.1920x1080.jpg?t=1776125684"
+    ]
   },
   {
     "id": "persona-5-royal",
@@ -781,7 +841,14 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "HỘI GAME Á CHÂU",
     "cover_color": "#3D1014",
-    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1687950/header.jpg"
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1687950/header.jpg",
+    "screenshots": [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_663171dc3afce8fe987e57e8659f91b69faa39bc.1920x1080.jpg?t=1783356822",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_a3258aba84ae2f2ff13a02a160f7495bfc152adb.1920x1080.jpg?t=1783356822",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_ddcc016b8e5c434ccbd1a89c0157ce73acf905ae.1920x1080.jpg?t=1783356822",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_c665872b4c5cb3a4e4fd3a4abde97ee60fe51e33.1920x1080.jpg?t=1783356822",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_63d2164bf39a43905e9602381f43a9ad4ab46dea.1920x1080.jpg?t=1783356822"
+    ]
   },
   {
     "id": "elden-ring",
@@ -845,6 +912,13 @@ window.FALLBACK_GAMES = [
     ],
     "badge": "NAM PHONG",
     "cover_color": "#2C2618",
-    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg"
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg",
+    "screenshots": [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_943bf6fe62352757d9070c1d33e50b92fe8539f1.1920x1080.jpg?t=1789162449",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_dcdac9e4b26ac0ee5248bfd2967d764fd00cdb42.1920x1080.jpg?t=1789162449",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_3c41384a24d86dddd58a8f61db77f9dc0bfda8b5.1920x1080.jpg?t=1789162449",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_e0316c76f8197405c1312d072b84331dd735d60b.1920x1080.jpg?t=1789162449",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_ef61b771ee6b269b1f0cb484233e07a0bfb5f81b.1920x1080.jpg?t=1789162449"
+    ]
   }
 ];

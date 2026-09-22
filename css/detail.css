@@ -711,3 +711,252 @@
   color: var(--accent-orange, #EA4828);
   border-bottom: 3px solid var(--accent-orange, #EA4828);
 }
+
+/* ==========================================================================
+   IN-GAME SCREENSHOT GALLERY (ẢNH MINH HỌA BẢN VIỆT HÓA)
+   ========================================================================== */
+.detail-gallery-wrap {
+  margin: 22px 0 20px;
+  background: #FFFFFF;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-md, 12px);
+  padding: 16px;
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+}
+
+.detail-gallery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.detail-gallery-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-primary, #121316);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-gallery-title i {
+  color: var(--accent-orange, #EA4828);
+  font-size: 1.1rem;
+}
+
+.detail-gallery-counter {
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+  padding: 3px 10px;
+  background: var(--bg-surface, #FAF6EE);
+  border: 1.5px solid var(--border-strong, #121316);
+  border-radius: 9999px;
+  box-shadow: 1.5px 1.5px 0px var(--border-strong, #121316);
+  color: var(--text-primary, #121316);
+}
+
+/* Khung ảnh chính lớn 16:9 */
+.detail-gallery-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 440px;
+  background: #0D1117;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  cursor: pointer;
+}
+
+.detail-gallery-viewport img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.detail-gallery-viewport:hover img {
+  transform: scale(1.015);
+}
+
+.detail-gallery-expand-hint {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(18, 19, 22, 0.85);
+  backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+}
+
+.detail-gallery-viewport:hover .detail-gallery-expand-hint {
+  opacity: 1;
+}
+
+/* Nút bấm chuyển ảnh Prev / Next */
+.gallery-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 2px solid var(--border-strong, #121316);
+  color: var(--text-primary, #121316);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.15s ease;
+}
+
+.gallery-nav-btn:hover {
+  background: var(--accent-orange, #EA4828);
+  color: #FFFFFF;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.gallery-nav-btn.prev {
+  left: 12px;
+}
+
+.gallery-nav-btn.next {
+  right: 12px;
+}
+
+/* Hàng thumbnail nhỏ phía dưới */
+.detail-gallery-thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: thin;
+}
+
+.detail-gallery-thumb {
+  flex: 0 0 calc(25% - 8px);
+  min-width: 90px;
+  max-width: 140px;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid #D6CEBE;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  background: #000;
+}
+
+.detail-gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+
+.detail-gallery-thumb:hover {
+  border-color: var(--border-strong, #121316);
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+}
+
+.detail-gallery-thumb:hover img {
+  opacity: 0.9;
+}
+
+.detail-gallery-thumb.active {
+  border: 2.5px solid var(--accent-orange, #EA4828);
+  box-shadow: 2.5px 2.5px 0px var(--border-strong, #121316);
+  transform: translateY(-2px);
+}
+
+.detail-gallery-thumb.active img {
+  opacity: 1;
+}
+
+/* Lightbox Fullscreen Popup */
+.gallery-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  background: rgba(10, 12, 16, 0.94);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+.gallery-lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gallery-lightbox-box {
+  position: relative;
+  max-width: 94vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-lightbox-img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 2px solid #121316;
+  box-shadow: 6px 6px 0px #121316;
+  background: #000;
+}
+
+.gallery-lightbox-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #E11D48;
+  color: #FFF;
+  border: 2px solid #121316;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 2px 2px 0px #121316;
+  transition: transform 0.15s ease;
+}
+
+.gallery-lightbox-close:hover {
+  transform: scale(1.1) rotate(90deg);
+}
