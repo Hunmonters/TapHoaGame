@@ -1,0 +1,42 @@
+[
+  {
+    "id": "req-1",
+    "title": "Black Myth: Wukong",
+    "engine": "Unreal Engine 5",
+    "votes": 1420,
+    "url": "https://store.steampowered.com/app/2358720/",
+    "why": "Siêu phẩm Tây Du Ký đồ họa tuyệt đẹp, nhiều thuật ngữ Phật giáo và thơ ca cổ cần bản dịch chỉn chu."
+  },
+  {
+    "id": "req-2",
+    "title": "Hades II",
+    "engine": "Custom Engine",
+    "votes": 980,
+    "url": "https://store.steampowered.com/app/1145350/",
+    "why": "Thần thoại Hy Lạp với lượng hội thoại phân nhánh khổng lồ, rất cần tiếng Việt để cảm nhận hết chiều sâu."
+  },
+  {
+    "id": "req-3",
+    "title": "Silent Hill 2 Remake",
+    "engine": "Unreal Engine 5",
+    "votes": 850,
+    "url": "https://store.steampowered.com/app/2124490/",
+    "why": "Tuyệt tác kinh dị tâm lý, phụ đề tiếng Việt sẽ giúp người chơi hiểu sâu nỗi ám ảnh của James Sunderland."
+  },
+  {
+    "id": "req-4",
+    "title": "Dragon's Dogma 2",
+    "engine": "RE Engine",
+    "votes": 720,
+    "url": "https://store.steampowered.com/app/2054970/",
+    "why": "Thế giới mở nhập vai rộng lớn, thoại của dàn Pawn đồng hành rất đa dạng."
+  },
+  {
+    "id": "req-5",
+    "title": "Monster Hunter: Wilds",
+    "engine": "RE Engine",
+    "votes": 610,
+    "url": "https://store.steampowered.com/app/2246340/",
+    "why": "Game săn quái thế hệ mới, cần chuẩn hóa glossary tên quái vật và kỹ năng."
+  }
+]

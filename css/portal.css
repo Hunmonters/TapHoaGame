@@ -1,0 +1,549 @@
+/* ==========================================================================
+   TẠP HÓA VIỆT / VIETHOAGAME - GAMING PORTAL CORE STYLES (portal.css)
+   Lấy cảm hứng từ VietPatch, The Red Team & Cánh Cụt Team
+   ========================================================================== */
+
+:root {
+  /* Bảng màu Dark Mode Gaming cao cấp */
+  --bg-base: #080C10;
+  --bg-surface: #0E131A;
+  --bg-card: #131A24;
+  --bg-card-hover: #1A2433;
+  --bg-glass: rgba(19, 26, 36, 0.78);
+  --bg-input: #0B0E14;
+  
+  /* Đường viền & Phân cách */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(245, 158, 11, 0.4);
+  --border-glow: rgba(239, 68, 68, 0.35);
+
+  /* Màu chủ đạo (Brand Accent) */
+  --accent-gold: #F59E0B;
+  --accent-gold-hover: #D97706;
+  --accent-red: #EF4444;
+  --accent-red-hover: #DC2626;
+  --accent-green: #10B981;
+  --accent-cyan: #06B6D4;
+  --accent-purple: #8B5CF6;
+
+  /* Màu chữ (Typography) */
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #0F172A;
+
+  /* Font chữ chuẩn tiếng Việt */
+  --font-main: "Be Vietnam Pro", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+
+  /* Hiệu ứng bóng đổ */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.75);
+  --shadow-neon: 0 0 20px rgba(245, 158, 11, 0.25);
+
+  /* Bo góc */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Kích thước */
+  --header-height: 72px;
+  --max-width: 1320px;
+}
+
+/* CSS Reset cơ bản */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-main);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background: 
+    radial-gradient(circle at 15% 10%, rgba(239, 68, 68, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 60%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
+    var(--bg-base);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, select, textarea {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Container dùng chung */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* ==========================================================================
+   1. BRAND ENTRY / INTRO BOOTING SCREEN (Mở màn phong cách VietPatch)
+   ========================================================================== */
+.brand-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #06090D;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+}
+
+.brand-intro.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.7;
+}
+
+.intro-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 480px;
+  padding: 0 24px;
+}
+
+.intro-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.intro-orbit-wrap {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro-orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed rgba(245, 158, 11, 0.4);
+  animation: orbitRotate 12s linear infinite;
+}
+
+.intro-logo-core {
+  width: 74px;
+  height: 74px;
+  background: linear-gradient(135deg, #1E293B, #0F172A);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: var(--accent-gold);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+}
+
+.intro-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.intro-title span {
+  color: var(--accent-gold);
+}
+
+.intro-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+
+.intro-boot-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.intro-boot-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-red), var(--accent-gold));
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+.intro-status-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.intro-skip-btn {
+  margin-top: 24px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s ease;
+}
+
+.intro-skip-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@keyframes orbitRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   2. GLOBAL HEADER
+   ========================================================================== */
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: rgba(8, 12, 16, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.header-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 1.35rem;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #1E293B, #0F172A);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-gold);
+  font-size: 1.3rem;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+}
+
+.logo-text span {
+  color: var(--accent-gold);
+}
+
+.logo-tagline {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* Nav Menu Tabs */
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+}
+
+.nav-tab-btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-tab-btn.active {
+  color: var(--text-inverse);
+  background: var(--accent-gold);
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.35);
+}
+
+/* Header Utilities */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-bookmark-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.btn-bookmark-tab:hover {
+  border-color: var(--border-active);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.badge-count {
+  background: var(--accent-red);
+  color: #FFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+}
+
+.btn-discord {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #5865F2;
+  color: #FFF;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.btn-discord:hover {
+  background: #4752C4;
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  font-size: 1.4rem;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   3. TAB CONTENT MANAGEMENT
+   ========================================================================== */
+.tab-pane {
+  display: none;
+  animation: fadeInPane 0.3s ease;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+@keyframes fadeInPane {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   4. GLOBAL FOOTER
+   ========================================================================== */
+.main-footer {
+  margin-top: auto;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: 60px 0 30px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-brand p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 12px;
+  max-width: 440px;
+}
+
+.footer-col h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col a {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: var(--accent-gold);
+}
+
+.footer-bottom {
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Toast Notification */
+.toast-box {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  background: var(--bg-card);
+  border: 1px solid var(--border-active);
+  box-shadow: var(--shadow-lg);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.toast-box.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toast-box i {
+  color: var(--accent-gold);
+  font-size: 1.2rem;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 992px) {
+  .nav-tabs {
+    display: none; /* Sẽ bung qua mobile menu */
+  }
+  .mobile-toggle {
+    display: block;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-actions .btn-discord {
+    display: none;
+  }
+  .logo-tagline {
+    display: none;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}

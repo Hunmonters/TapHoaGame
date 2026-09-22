@@ -1,0 +1,775 @@
+/* ==========================================================================
+   TẠP HÓA VIỆT / CATALOG & HERO STYLES (catalog.css)
+   Lấy cảm hứng từ VietPatch & The Red Team Game Catalog
+   ========================================================================== */
+
+/* ==========================================================================
+   0. SUẤT CHIẾU BẢN DỊCH / TRAILER TUẦN (Chuẩn VietPatch)
+   ========================================================================== */
+.weekly-trailer {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-md);
+}
+
+.weekly-trailer-head {
+  padding: 14px 24px;
+  background: rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.weekly-trailer-head span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+}
+
+.weekly-trailer-head small {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: 10px;
+}
+
+.weekly-trailer-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  max-height: 400px;
+  background: #06090D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.weekly-trailer-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+  transition: transform 0.4s ease;
+}
+
+.weekly-trailer-media:hover .weekly-trailer-poster {
+  transform: scale(1.02);
+}
+
+.weekly-trailer-play-btn {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  color: #FFF;
+  font-size: 1rem;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(245, 158, 11, 0.25);
+  transition: all 0.2s ease;
+}
+
+.weekly-trailer-play-btn i {
+  font-size: 1.3rem;
+  color: var(--accent-gold);
+}
+
+.weekly-trailer-play-btn:hover {
+  transform: scale(1.06);
+  border-color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-gold);
+}
+
+.weekly-trailer-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: none;
+}
+
+.weekly-trailer-caption {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.weekly-trailer-meta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 1px;
+}
+
+.weekly-trailer-caption h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.weekly-trailer-caption p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   1. HERO CAROUSEL / SLIDER
+   ========================================================================== */
+.hero-slider-wrap {
+  position: relative;
+  margin-bottom: 36px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-slider-track {
+  position: relative;
+  width: 100%;
+  height: 440px;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.7s;
+  display: flex;
+  align-items: center;
+  padding: 48px;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    rgba(8, 12, 16, 0.96) 0%, 
+    rgba(8, 12, 16, 0.85) 45%, 
+    rgba(8, 12, 16, 0.3) 100%
+  );
+  z-index: 1;
+}
+
+.hero-slide-content {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+}
+
+.hero-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: #FFF;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.hero-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--accent-gold), #D97706);
+  color: var(--text-inverse);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(245, 158, 11, 0.45);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 12px 22px;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Slider Controls */
+.hero-slider-nav {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(19, 26, 36, 0.8);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.slider-btn:hover {
+  background: var(--accent-gold);
+  color: var(--text-inverse);
+  border-color: var(--accent-gold);
+}
+
+/* ==========================================================================
+   2. LIVE STATS BAR (Chuẩn VietPatch)
+   ========================================================================== */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-active);
+}
+
+.stat-icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+
+.stat-icon-box.gold { color: var(--accent-gold); background: rgba(245, 158, 11, 0.1); }
+.stat-icon-box.green { color: var(--accent-green); background: rgba(16, 185, 129, 0.1); }
+.stat-icon-box.cyan { color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1); }
+.stat-icon-box.purple { color: var(--accent-purple); background: rgba(139, 92, 246, 0.1); }
+
+.stat-number {
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   3. CATALOG TOOLBAR (Bộ lọc & Tìm kiếm)
+   ========================================================================== */
+.catalog-toolbar {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.toolbar-search {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+}
+
+.toolbar-search i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.toolbar-search input {
+  width: 100%;
+  height: 44px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding-left: 44px;
+  padding-right: 16px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.toolbar-search input:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+.toolbar-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.engine-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.engine-btn {
+  padding: 6px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.engine-btn:hover {
+  color: var(--text-primary);
+}
+
+.engine-btn.active {
+  background: var(--bg-card);
+  color: var(--accent-gold);
+  box-shadow: var(--shadow-sm);
+}
+
+.toolbar-select {
+  height: 40px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}
+
+.toolbar-select:focus {
+  border-color: var(--accent-gold);
+}
+
+.btn-reset-filters {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.btn-reset-filters:hover {
+  color: var(--accent-red);
+}
+
+/* ==========================================================================
+   4. GAMES GRID & GAME CARDS (Chuẩn Poster 3:4)
+   ========================================================================== */
+.catalog-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.catalog-head h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.catalog-count-badge {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.game-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  cursor: pointer;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), var(--shadow-neon);
+}
+
+.card-poster-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #111822;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-poster-art {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.4s ease;
+}
+
+.game-card:hover .card-poster-art {
+  transform: scale(1.04);
+}
+
+.card-poster-icon {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  opacity: 0.85;
+}
+
+.card-poster-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #FFF;
+}
+
+.card-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(8, 12, 16, 0.85) 100%);
+  pointer-events: none;
+}
+
+.card-status-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.card-status-badge.ready {
+  background: var(--accent-green);
+  color: #FFF;
+}
+
+.card-status-badge.progress {
+  background: var(--accent-gold);
+  color: var(--text-inverse);
+}
+
+.card-bookmark-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  backdrop-filter: blur(6px);
+  transition: all 0.2s ease;
+}
+
+.card-bookmark-btn:hover {
+  color: var(--accent-red);
+  background: rgba(15, 23, 42, 0.95);
+  transform: scale(1.1);
+}
+
+.card-bookmark-btn.active {
+  color: var(--accent-red);
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--accent-red);
+}
+
+.card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-meta-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.engine-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.size-tag {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-left: auto;
+  font-family: var(--font-mono);
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-version-info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.card-progress-wrap {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.card-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+}
+
+.card-progress-fill.wip {
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-red));
+}
+
+.card-progress-percent {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.catalog-empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--bg-card);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  grid-column: 1 / -1;
+}
+
+.catalog-empty i {
+  font-size: 3rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.catalog-empty h3 {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.catalog-empty p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE
+   ========================================================================== */
+@media (max-width: 992px) {
+  .hero-slide {
+    height: 380px;
+    padding: 32px;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-slide {
+    height: 340px;
+    padding: 24px;
+  }
+  .hero-title {
+    font-size: 1.6rem;
+  }
+  .hero-desc {
+    display: none;
+  }
+  .stats-bar {
+    grid-template-columns: 1fr;
+  }
+  .catalog-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar-filters {
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,92 @@
+/* ==========================================================================
+   TẠP HÓA VIỆT / THEMES & RAIN CANVAS (themes.css)
+   2 Chế độ: Cyberpunk Gaming & Vintage Tạp Hóa (Mưa Rơi Hoài Niệm)
+   ========================================================================== */
+
+/* Canvas mưa toàn trang */
+#rain-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  display: none;
+  opacity: 0.65;
+}
+
+/* 1. Theme Mặc định: Cyberpunk Gaming */
+[data-theme="cyberpunk"] {
+  --bg-base: #080C10;
+  --bg-surface: #0E131A;
+  --bg-card: #131A24;
+  --bg-card-hover: #1A2433;
+  --bg-glass: rgba(19, 26, 36, 0.78);
+  --bg-input: #0B0E14;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(245, 158, 11, 0.4);
+  --accent-gold: #F59E0B;
+  --accent-red: #EF4444;
+  --accent-green: #10B981;
+  --accent-cyan: #06B6D4;
+  --accent-purple: #8B5CF6;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+}
+
+/* 2. Theme Tạp Hóa Việt Cổ Điển: Vintage Rêu Đen & Neon Cam Mưa */
+[data-theme="vintage"] {
+  --bg-base: #050B09;
+  --bg-surface: #0C1814;
+  --bg-card: #101E19;
+  --bg-card-hover: #162822;
+  --bg-glass: rgba(16, 30, 25, 0.85);
+  --bg-input: #08120F;
+  --border-subtle: rgba(206, 255, 228, 0.12);
+  --border-active: rgba(242, 182, 50, 0.45);
+  --accent-gold: #F2B632;
+  --accent-red: #E2452F;
+  --accent-green: #5AD39A;
+  --accent-cyan: #4DD0E1;
+  --accent-purple: #BA68C8;
+  --text-primary: #E9F2EC;
+  --text-secondary: #93AA9E;
+  --text-muted: #5C7568;
+}
+
+[data-theme="vintage"] body {
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(15, 51, 41, 0.4) 0%, transparent 60%),
+    radial-gradient(circle at 90% 80%, rgba(242, 182, 50, 0.05) 0%, transparent 50%),
+    #050B09;
+}
+
+[data-theme="vintage"] #rain-canvas {
+  display: block;
+}
+
+/* Nút bấm chuyển Theme trên Header */
+.btn-theme-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.btn-theme-switch:hover {
+  color: var(--text-primary);
+  border-color: var(--border-active);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-theme-switch i {
+  color: var(--accent-gold);
+}

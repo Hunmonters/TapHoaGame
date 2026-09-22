@@ -1,0 +1,240 @@
+/* ==========================================================================
+   TẠP HÓA VIỆT / XƯỞNG DỊCH TIẾN ĐỘ STYLES (progress.css)
+   Mô hình 4 chặng: Dịch thuật -> Hiệu đính -> Font & UI -> Kiểm thử QA
+   ========================================================================== */
+
+.progress-page {
+  padding: 32px 0 60px;
+}
+
+.progress-masthead {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.masthead-info {
+  max-width: 600px;
+}
+
+.masthead-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.masthead-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.masthead-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.masthead-metrics {
+  display: flex;
+  gap: 24px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 18px 24px;
+  border-radius: var(--radius-md);
+}
+
+.metric-item {
+  text-align: center;
+}
+
+.metric-item dt {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.metric-item dd {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  font-family: var(--font-mono);
+}
+
+/* Chú thích 4 công đoạn */
+.production-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  margin-bottom: 28px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-dot.trans { background: var(--accent-gold); }
+.legend-dot.proof { background: var(--accent-cyan); }
+.legend-dot.font { background: var(--accent-purple); }
+.legend-dot.qa { background: var(--accent-green); }
+
+/* Danh sách dự án xưởng dịch */
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.progress-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr;
+  align-items: center;
+  gap: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.progress-card:hover {
+  border-color: var(--border-active);
+  transform: translateY(-2px);
+}
+
+.prog-info h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.prog-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.prog-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* 4 thanh công đoạn chi tiết */
+.stages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 18px;
+}
+
+.stage-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stage-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.stage-label-row strong {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.stage-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.stage-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+}
+
+.stage-fill.trans { background: var(--accent-gold); }
+.stage-fill.proof { background: var(--accent-cyan); }
+.stage-fill.font { background: var(--accent-purple); }
+.stage-fill.qa { background: var(--accent-green); }
+
+/* Cột tổng % tiến độ */
+.prog-total-box {
+  text-align: center;
+  border-left: 1px solid var(--border-subtle);
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.prog-total-percent {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  font-family: var(--font-mono);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.prog-total-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 992px) {
+  .progress-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .prog-total-box {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding-left: 0;
+    padding-top: 16px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
