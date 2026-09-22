@@ -1,24 +1,78 @@
 /* ==========================================================================
    TẠP HÓA VIỆT / THEMES & COLOR SYSTEM (themes.js)
-   Giao diện duy nhất: Tạp Hóa Kem & Cam (Editorial Vintage Cream & Orange)
+   Quản lý chuyển đổi giao diện Sáng (Kem & Cam) / Tối (Ban Đêm Obsidian)
    ========================================================================== */
 
 const ThemeManager = {
   currentTheme: "cream",
 
   init() {
-    // Xóa bỏ triệt để cache cyberpunk cũ trong trình duyệt
+    let saved = null;
     try {
-      localStorage.removeItem("thv_theme");
-      sessionStorage.removeItem("thv_intro_seen");
+      saved = localStorage.getItem("thv_theme");
     } catch (e) {}
 
-    this.applyTheme("cream");
+    // Nếu chưa lưu thiết lập, tự động nhận diện từ hệ điều hành người dùng
+    if (!saved) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        saved = "dark";
+      } else {
+        saved = "cream";
+      }
+    }
+
+    this.applyTheme(saved);
+
+    // Lắng nghe nếu người dùng thay đổi chế độ sáng/tối của hệ thống (Windows / macOS)
+    if (window.matchMedia) {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+        if (!localStorage.getItem("thv_theme_manual")) {
+          this.applyTheme(e.matches ? "dark" : "cream");
+        }
+      });
+    }
   },
 
   applyTheme(theme) {
-    this.currentTheme = "cream";
-    document.documentElement.setAttribute("data-theme", "cream");
+    this.currentTheme = theme === "dark" ? "dark" : "cream";
+    document.documentElement.setAttribute("data-theme", this.currentTheme);
+    if (document.body) {
+      document.body.setAttribute("data-theme", this.currentTheme);
+    }
+
+    try {
+      localStorage.setItem("thv_theme", this.currentTheme);
+    } catch (e) {}
+
+    this.updateIcon();
+  },
+
+  toggleTheme() {
+    const nextTheme = this.currentTheme === "dark" ? "cream" : "dark";
+    try {
+      localStorage.setItem("thv_theme_manual", "true");
+    } catch (e) {}
+    this.applyTheme(nextTheme);
+
+    if (window.App && App.showToast) {
+      App.showToast(nextTheme === "dark" ? "🌙 Đã kích hoạt Chế Độ Ban Đêm (Dark Mode)" : "☀️ Đã chuyển sang Giao Diện Kem & Cam");
+    }
+  },
+
+  updateIcon() {
+    const icon = document.getElementById("icon-theme");
+    const btn = document.getElementById("btn-theme-toggle");
+    if (!icon) return;
+
+    if (this.currentTheme === "dark") {
+      icon.className = "fa-solid fa-sun";
+      icon.style.color = "#F59E0B";
+      if (btn) btn.title = "Chuyển sang Giao diện Sáng (Kem & Cam)";
+    } else {
+      icon.className = "fa-solid fa-moon";
+      icon.style.color = "var(--text-secondary)";
+      if (btn) btn.title = "Chuyển sang Giao diện Tối (Ban Đêm)";
+    }
   }
 };
 

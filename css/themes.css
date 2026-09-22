@@ -1,8 +1,13 @@
 /* ==========================================================================
    TẠP HÓA VIỆT / THEMES & COLOR SYSTEM (themes.css)
-   Theme Độc Quyền: Tạp Hóa Kem & Cam (Editorial Vintage Cream & Orange)
+   Hỗ trợ chuyển đổi mượt mà 2 chế độ:
+   1. Giao diện Ban Ngày: Tạp Hóa Kem & Cam (Editorial Vintage Cream & Orange)
+   2. Giao diện Ban Đêm: Đêm Obsidian & Cam Lửa (Midnight Cyberpunk Neubrutalist)
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1. THEME: LIGHT / CREAM (Mặc Định)
+   -------------------------------------------------------------------------- */
 :root, [data-theme="cream"] {
   --bg-base: #F5F0E6;          /* Màu kem ấm chuẩn vintage newsprint */
   --bg-surface: #EFE9DC;       /* Màu kem ngà trung tính */
@@ -41,10 +46,225 @@
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-body {
+body, body[data-theme="cream"] {
   background-color: #F5F0E6;
   background-image: 
     radial-gradient(circle at 12% 15%, rgba(234, 72, 40, 0.04) 0%, transparent 40%),
     radial-gradient(circle at 88% 70%, rgba(234, 72, 40, 0.03) 0%, transparent 45%);
   color: #121316;
+}
+
+/* --------------------------------------------------------------------------
+   2. THEME: DARK MODE (Đêm Obsidian / Midnight Cyberpunk Neubrutalist)
+   -------------------------------------------------------------------------- */
+[data-theme="dark"], :root[data-theme="dark"] {
+  --bg-base: #111317;          /* Nền đen than obsidian huyền bí */
+  --bg-surface: #181C23;       /* Nền khối bề mặt */
+  --bg-card: #1F242E;          /* Nền thẻ game / khung nội dung */
+  --bg-card-hover: #262C38;
+  --bg-glass: rgba(17, 19, 23, 0.94);
+  --bg-input: #15181E;
+
+  /* Đường viền & Phân cách */
+  --border-subtle: #2D3442;    /* Viền xám tối */
+  --border-active: #FF5733;    /* Viền cam phát sáng */
+  --border-strong: #3D4658;    /* Viền khối tương phản cao */
+  --border-glow: rgba(255, 87, 51, 0.45);
+
+  /* Màu chủ đạo: Cam Lửa & Hổ Phách */
+  --accent-orange: #FF5733;
+  --accent-orange-hover: #FF7043;
+  --accent-gold: #F59E0B;
+  --accent-gold-hover: #D97706;
+  --accent-red: #EF4444;
+  --accent-red-hover: #DC2626;
+  --accent-green: #10B981;
+  --accent-cyan: #38BDF8;
+  --accent-purple: #A855F7;
+
+  /* Màu chữ */
+  --text-primary: #F3F4F6;     /* Trắng ngà sắc nét */
+  --text-secondary: #9CA3AF;   /* Xám sáng dễ đọc */
+  --text-muted: #6B7280;       /* Xám mờ */
+  --text-inverse: #111317;
+
+  /* Hiệu ứng bóng đổ Neubrutalist trên nền tối */
+  --shadow-sm: 2px 2px 0px #08090C;
+  --shadow-md: 4px 4px 0px #08090C;
+  --shadow-lg: 6px 6px 0px #08090C;
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+body[data-theme="dark"] {
+  background-color: var(--bg-base);
+  background-image: 
+    radial-gradient(circle at 12% 15%, rgba(255, 87, 51, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 88% 70%, rgba(255, 87, 51, 0.04) 0%, transparent 45%);
+  color: var(--text-primary);
+}
+
+/* Tinh chỉnh các thành phần chính khi ở Dark Mode */
+[data-theme="dark"] .game-card,
+[data-theme="dark"] .game-card-content {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .request-item,
+[data-theme="dark"] .requests-board,
+[data-theme="dark"] .request-form-card {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .progress-card,
+[data-theme="dark"] .progress-card-content {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .community-card,
+[data-theme="dark"] .community-card-body,
+[data-theme="dark"] .community-hub-header,
+[data-theme="dark"] .community-hero-card {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .community-stat-box {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .spotlight-container {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .archive-wire {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .archive-wire-label {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .catalog-toolbar,
+[data-theme="dark"] .community-toolbar {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .search-bar-wrap {
+  background: var(--bg-input);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .search-bar-wrap input {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-pill {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .filter-pill:hover {
+  border-color: var(--accent-orange);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .filter-pill.active {
+  background: var(--accent-orange);
+  color: #FFF;
+  border-color: var(--accent-orange);
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] input.form-control,
+[data-theme="dark"] textarea.form-control,
+[data-theme="dark"] select.form-control {
+  background: var(--bg-input);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+/* Modals */
+[data-theme="dark"] .detail-box,
+[data-theme="dark"] .community-modal-box,
+[data-theme="dark"] .admin-editor-box,
+[data-theme="dark"] .admin-studio-box {
+  background: var(--bg-card);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .detail-tabs-bar,
+[data-theme="dark"] .community-modal-header,
+[data-theme="dark"] .community-modal-footer,
+[data-theme="dark"] .admin-header,
+[data-theme="dark"] .admin-editor-header,
+[data-theme="dark"] .admin-editor-footer {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .admin-login-screen {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .admin-table th {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .admin-table td {
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .admin-table tr:hover td {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="dark"] .site-footer {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .footer-bottom {
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .btn-upload-file {
+  background: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-strong) !important;
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+[data-theme="dark"] .admin-screenshots-uploader {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-strong) !important;
+}
+
+/* Hiệu ứng chuyển động mượt mà khi đổi màu nền */
+html, body, .game-card, .main-header, .detail-box, .community-card, .progress-card, .requests-board, .request-form-card, .btn-theme-toggle {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }

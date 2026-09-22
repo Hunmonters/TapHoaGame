@@ -28,6 +28,17 @@
   <link rel="stylesheet" href="css/detail.css">
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="css/community.css">
+  <script>
+    (function() {
+      var saved = localStorage.getItem("thv_theme");
+      if (!saved && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        saved = "dark";
+      }
+      if (saved === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -66,6 +77,11 @@
 
       <!-- Action buttons -->
       <div class="header-actions">
+
+        <!-- Nút chuyển đổi Giao diện Ban Đêm / Ban Ngày -->
+        <button class="btn-theme-toggle" id="btn-theme-toggle" type="button" onclick="App.toggleTheme()" title="Chuyển chế độ Giao diện Ban Đêm / Ban Ngày" aria-label="Đổi giao diện">
+          <i class="fa-solid fa-moon" id="icon-theme"></i>
+        </button>
 
         <button class="btn-bookmark-tab" data-tab="library" type="button" title="Mở bộ sưu tập của bạn">
           <i class="fa-solid fa-bookmark" style="color:var(--accent-red)"></i>

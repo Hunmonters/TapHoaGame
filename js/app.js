@@ -575,6 +575,12 @@ const App = {
     }
   },
 
+  toggleTheme() {
+    if (window.ThemeManager) {
+      ThemeManager.toggleTheme();
+    }
+  },
+
   showToast(message) {
     const toast = document.getElementById("toast-box");
     const textEl = document.getElementById("toast-msg");
