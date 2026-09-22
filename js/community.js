@@ -31,32 +31,37 @@ const Community = {
    * Đồng bộ dữ liệu bản dịch cộng đồng từ danh sách tổng + localStorage
    */
   syncCommunityGames() {
+    let deletedIds = new Set();
+    try {
+      deletedIds = new Set(JSON.parse(localStorage.getItem("thv_deleted_games") || "[]"));
+    } catch (e) {}
+
     let localCommunity = [];
     try {
       const stored = localStorage.getItem("thv_community_games");
       if (stored) {
-        localCommunity = JSON.parse(stored);
+        localCommunity = JSON.parse(stored).filter(g => !deletedIds.has(g.id));
       }
     } catch (e) {
       console.warn("[Community] Lỗi đọc localStorage thv_community_games:", e);
     }
 
-    // Gộp game có flag is_community từ hệ thống
-    const systemCommunity = this.allGamesRef.filter(g => g.is_community);
+    // Gộp game có flag is_community từ hệ thống (loại trừ game Admin đã xóa)
+    const systemCommunity = this.allGamesRef.filter(g => g.is_community && !deletedIds.has(g.id));
 
     // Ghép và lọc trùng theo ID
     const map = new Map();
     [...localCommunity, ...systemCommunity].forEach(g => {
-      if (!map.has(g.id)) {
+      if (!map.has(g.id) && !deletedIds.has(g.id)) {
         map.set(g.id, g);
       }
     });
 
     this.games = Array.from(map.values());
 
-    // Bảo đảm các game cộng đồng trong localStorage cũng có mặt trong App.games
+    // Bảo đảm các game cộng đồng chưa bị xóa có mặt trong App.games
     localCommunity.forEach(localG => {
-      if (!this.allGamesRef.some(g => g.id === localG.id)) {
+      if (!deletedIds.has(localG.id) && !this.allGamesRef.some(g => g.id === localG.id)) {
         this.allGamesRef.unshift(localG);
       }
     });

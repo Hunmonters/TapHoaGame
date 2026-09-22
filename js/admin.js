@@ -440,32 +440,63 @@ const AdminStudio = {
     const game = this.games.find(g => g.id === gameId);
     if (!game) return;
 
-    if (!confirm(`Bạn có chắc chắn muốn xóa tựa game "${game.title}" khỏi danh sách?`)) {
+    if (!confirm(`Bạn có chắc chắn muốn xóa vĩnh viễn tựa game "${game.title}" khỏi hệ thống?`)) {
       return;
     }
 
+    // 1. Xóa khỏi Supabase Cloud nếu có kết nối
     if (window.SupabaseClient && SupabaseClient.hasCloud()) {
       try {
         await SupabaseClient.deleteGame(gameId);
       } catch (e) {
-        console.error("Lỗi xóa từ Supabase:", e);
+        console.warn("[Admin] Lỗi xóa từ Supabase:", e);
       }
     }
 
+    // 2. Lọc bỏ khỏi bộ nhớ Admin & App
     this.games = this.games.filter(g => g.id !== gameId);
-    App.games = this.games;
+    if (window.App && Array.isArray(App.games)) {
+      App.games = App.games.filter(g => g.id !== gameId);
+    }
 
+    // 3. Cập nhật kho game tùy biến thv_custom_games
     try {
       localStorage.setItem("thv_custom_games", JSON.stringify(this.games));
     } catch (e) {}
 
+    // 4. Xóa triệt để khỏi kho cộng đồng thv_community_games trong localStorage
+    try {
+      let commGames = JSON.parse(localStorage.getItem("thv_community_games") || "[]");
+      commGames = commGames.filter(g => g.id !== gameId);
+      localStorage.setItem("thv_community_games", JSON.stringify(commGames));
+    } catch (e) {}
+
+    // 5. Lưu ID vào danh sách cấm thv_deleted_games để không bao giờ bị nạp lại khi F5
+    try {
+      let deletedList = JSON.parse(localStorage.getItem("thv_deleted_games") || "[]");
+      if (!deletedList.includes(gameId)) {
+        deletedList.push(gameId);
+      }
+      localStorage.setItem("thv_deleted_games", JSON.stringify(deletedList));
+    } catch (e) {}
+
+    // 6. Cập nhật trực tiếp module Cộng Đồng
+    if (window.Community) {
+      Community.games = Community.games.filter(g => g.id !== gameId);
+      if (Array.isArray(Community.allGamesRef)) {
+        Community.allGamesRef = Community.allGamesRef.filter(g => g.id !== gameId);
+      }
+      Community.renderMetrics();
+      Community.render();
+    }
+
+    // 7. Cập nhật giao diện Admin và các tab khác
     this.renderGamesTable();
     if (window.Catalog) Catalog.init(this.games);
     if (window.Progress) Progress.init(this.games);
-    if (window.Community) Community.init(this.games);
     if (window.Library) Library.init(this.games);
 
-    App.showToast(`Đã xóa "${game.title}" khỏi hệ thống.`);
+    App.showToast(`Đã xóa vĩnh viễn "${game.title}" khỏi hệ thống.`);
   },
 
   async toggleSpotlight(gameId) {

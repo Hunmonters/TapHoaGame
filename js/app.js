@@ -63,8 +63,17 @@ const App = {
         },
         (deletedGame) => {
           this.games = this.games.filter(g => g.id !== deletedGame.id);
+          if (window.Community) {
+            Community.games = Community.games.filter(g => g.id !== deletedGame.id);
+            if (Array.isArray(Community.allGamesRef)) {
+              Community.allGamesRef = Community.allGamesRef.filter(g => g.id !== deletedGame.id);
+            }
+            Community.renderMetrics();
+            Community.render();
+          }
           if (window.Catalog) Catalog.render();
           if (window.Progress) Progress.render();
+          if (window.AdminStudio) AdminStudio.renderGamesTable();
         }
       );
     } catch (e) {
@@ -123,6 +132,14 @@ const App = {
         if (window.FALLBACK_REQUESTS) this.requests = window.FALLBACK_REQUESTS;
       }
     }
+
+    // 5. Loại bỏ vĩnh viễn các game Admin đã bấm Xóa
+    try {
+      const deletedIds = new Set(JSON.parse(localStorage.getItem("thv_deleted_games") || "[]"));
+      if (deletedIds.size > 0 && Array.isArray(this.games)) {
+        this.games = this.games.filter(g => !deletedIds.has(g.id));
+      }
+    } catch (e) {}
   },
 
   /**
