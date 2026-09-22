@@ -9,6 +9,16 @@ const Requests = {
   realtimeChannel: null,
 
   init(initialRequests) {
+    // Tự động dọn dẹp sạch sẽ bộ nhớ đệm đề xuất cũ nếu có
+    try {
+      if (!localStorage.getItem("thv_requests_cleared_2026")) {
+        localStorage.removeItem("thv_user_requests");
+        localStorage.removeItem("thv_user_votes");
+        localStorage.setItem("thv_requests_cleared_2026", "true");
+        this.userVotes = new Set();
+      }
+    } catch (e) {}
+
     // 1. Tải danh sách vote của user từ localStorage
     try {
       const savedVotes = JSON.parse(localStorage.getItem("thv_user_votes") || "[]");
@@ -151,8 +161,23 @@ const Requests = {
       const total = sorted.reduce((acc, r) => acc + (r.votes || 0), 0);
       totalVoteEl.textContent = total.toLocaleString("vi-VN");
     }
-    if (topNameEl && sorted.length > 0) {
-      topNameEl.textContent = sorted[0].title;
+    if (topNameEl) {
+      topNameEl.textContent = sorted.length > 0 ? sorted[0].title : "Chưa có";
+    }
+
+    if (!sorted.length) {
+      listContainer.innerHTML = `
+        <div style="text-align:center; padding:60px 24px; background:#FFFFFF; border:2px solid var(--border-strong,#121316); border-radius:12px; box-shadow:4px 4px 0px var(--border-strong,#121316);">
+          <div style="width:58px; height:58px; margin:0 auto 16px; background:var(--bg-surface,#FAF6EE); border:2px solid #121316; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:var(--accent-orange,#EA4828); box-shadow:2px 2px 0px #121316;">
+            <i class="fa-solid fa-square-poll-vertical"></i>
+          </div>
+          <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-primary,#121316); margin-bottom:8px;">Bảng Xếp Hạng Đang Trống</h3>
+          <p style="font-size:0.9rem; color:var(--text-secondary,#555); max-width:440px; margin:0 auto; line-height:1.5;">
+            Chưa có tựa game nào trong danh sách bình chọn. Hãy là người đầu tiên gửi đề xuất tựa game bạn mong muốn nhóm Việt hóa tiếp theo ở biểu mẫu bên cạnh!
+          </p>
+        </div>
+      `;
+      return;
     }
 
     listContainer.innerHTML = sorted.map((r, idx) => {
