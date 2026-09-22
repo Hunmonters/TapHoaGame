@@ -477,7 +477,7 @@ const Community = {
     // 3. Nếu Supabase Cloud có cấu hình, lưu lên cloud
     if (window.SupabaseClient && SupabaseClient.hasCloud()) {
       try {
-        await SupabaseClient.saveGame(newGame, true);
+        await SupabaseClient.upsertGame(newGame);
         console.log("[Community] Đã lưu bản dịch lên Supabase Cloud thành công!");
       } catch (cloudErr) {
         console.warn("[Community] Lỗi lưu lên Supabase Cloud:", cloudErr);

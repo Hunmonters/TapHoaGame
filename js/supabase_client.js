@@ -70,6 +70,10 @@ const SupabaseClient = {
     }
   },
 
+  async saveGame(gameData) {
+    return this.upsertGame(gameData);
+  },
+
   /**
    * Xóa game khỏi Cloud
    */
