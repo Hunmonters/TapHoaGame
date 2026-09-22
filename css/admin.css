@@ -251,6 +251,43 @@
   box-shadow: 2.5px 2.5px 0px var(--border-strong, #121316);
 }
 
+.btn-admin-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  border-radius: 9999px;
+  border: 1.5px solid var(--border-strong, #121316);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-admin-status-pill.ready {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.btn-admin-status-pill.ready:hover {
+  background: #A7F3D0;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+}
+
+.btn-admin-status-pill.progress {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.btn-admin-status-pill.progress:hover {
+  background: #FDE68A;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+}
+
 .admin-json-export {
   margin-top: 24px;
   display: flex;

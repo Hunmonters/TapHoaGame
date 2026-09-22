@@ -126,9 +126,12 @@ const AdminStudio = {
         <td><span class="tag-size" style="font-size:0.75rem; padding:3px 8px;"><i class="fa-solid fa-bolt"></i> ${g.size || "Gọn nhẹ"}</span></td>
         <td><small style="font-family:var(--font-mono);">${g.game_version || "1.0"}</small></td>
         <td>
-          <span class="card-status-badge ${g.status === "ready" ? "ready" : "progress"}" style="position:static; display:inline-block;">
-            ${g.status === "ready" ? "Hoàn tất" : "Đang dịch"}
-          </span>
+          <button class="btn-admin-status-pill ${g.status === "ready" ? "ready" : "progress"}"
+                  type="button"
+                  title="Nhấp 1 chạm để chuyển: ${g.status === "ready" ? "Hoàn tất -> Đang dịch" : "Đang dịch -> Hoàn tất 100%"}"
+                  onclick="AdminStudio.toggleGameStatus('${g.id}')">
+            ${g.status === "ready" ? '<i class="fa-solid fa-circle-check"></i> Hoàn tất' : '<i class="fa-solid fa-clock"></i> Đang dịch'}
+          </button>
         </td>
         <td><b>${g.progress ? g.progress.overall : 0}%</b></td>
         <td>
@@ -248,6 +251,24 @@ const AdminStudio = {
     const engCatEditInput = document.getElementById("edit-game-engine-cat");
     if (engCatEditInput) engCatEditInput.value = game.engine_category || "other";
     document.getElementById("edit-game-status").value = game.status || "ready";
+    
+    // Tự động đẩy tiến độ lên 100% khi chọn Hoàn tất trong form
+    const statusSel = document.getElementById("edit-game-status");
+    if (statusSel) {
+      statusSel.onchange = () => {
+        if (statusSel.value === "ready") {
+          const t = document.getElementById("edit-prog-trans");
+          const p = document.getElementById("edit-prog-proof");
+          const f = document.getElementById("edit-prog-font");
+          const q = document.getElementById("edit-prog-qa");
+          if (t) t.value = 100;
+          if (p) p.value = 100;
+          if (f) f.value = 100;
+          if (q) q.value = 100;
+        }
+      };
+    }
+
     document.getElementById("edit-game-ver").value = game.game_version || "";
     document.getElementById("edit-game-patch-ver").value = game.patch_version || "";
     document.getElementById("edit-game-size").value = game.size || "";
@@ -322,13 +343,24 @@ const AdminStudio = {
       return;
     }
 
-    const trans = parseInt(document.getElementById("edit-prog-trans").value, 10) || 0;
-    const proof = parseInt(document.getElementById("edit-prog-proof").value, 10) || 0;
-    const font = parseInt(document.getElementById("edit-prog-font").value, 10) || 0;
-    const qa = parseInt(document.getElementById("edit-prog-qa").value, 10) || 0;
-    const overall = Math.round((trans + proof + font + qa) / 4);
+    let trans = parseInt(document.getElementById("edit-prog-trans").value, 10) || 0;
+    let proof = parseInt(document.getElementById("edit-prog-proof").value, 10) || 0;
+    let font = parseInt(document.getElementById("edit-prog-font").value, 10) || 0;
+    let qa = parseInt(document.getElementById("edit-prog-qa").value, 10) || 0;
+    let overall = Math.round((trans + proof + font + qa) / 4);
 
     const status = document.getElementById("edit-game-status").value;
+
+    // Tự động đồng bộ chuẩn xác: Nếu chuyển thành 'ready' (Hoàn tất) thì tự động đặt 100%
+    if (status === "ready") {
+      overall = 100;
+      trans = 100;
+      proof = 100;
+      font = 100;
+      qa = 100;
+    } else if (overall === 100) {
+      overall = 90;
+    }
     const dlUrl = document.getElementById("edit-game-dl-url").value.trim();
     const coverUrlInput = document.getElementById("edit-game-cover-url").value.trim();
 
@@ -528,6 +560,65 @@ const AdminStudio = {
     } else {
       App.showToast(`Đã gỡ "${game.title}" khỏi Spotlight.`);
     }
+  },
+
+  /**
+   * Đổi trạng thái nhanh 1 chạm (Hoàn Tất <-> Đang Dịch) ngay trên bảng Admin
+   */
+  async toggleGameStatus(gameId) {
+    const game = this.games.find(g => g.id === gameId);
+    if (!game) return;
+
+    if (game.status === "ready") {
+      game.status = "in-progress";
+      if (!game.progress) game.progress = {};
+      game.progress.overall = 75;
+      game.progress.translation = 80;
+      game.progress.proofread = 70;
+      game.progress.font = 80;
+      game.progress.qa = 70;
+      game.badge = "TIẾN ĐỘ 75%";
+    } else {
+      game.status = "ready";
+      game.progress = {
+        overall: 100,
+        translation: 100,
+        proofread: 100,
+        font: 100,
+        qa: 100
+      };
+      game.badge = "HOÀN TẤT 100%";
+      if (!game.download_links || !game.download_links.length) {
+        game.download_links = [
+          { server: "Google Drive", url: "https://drive.google.com/", badge: "Tốc độ cao" }
+        ];
+      }
+    }
+
+    // 1. Đồng bộ lên Supabase Cloud nếu khả dụng
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      try {
+        await SupabaseClient.upsertGame(game);
+      } catch (err) {
+        console.warn("[Admin] Lỗi đồng bộ trạng thái lên Supabase:", err);
+      }
+    }
+
+    // 2. Lưu vào localStorage
+    try {
+      localStorage.setItem("thv_custom_games", JSON.stringify(this.games));
+    } catch (e) {}
+
+    // 3. Cập nhật UI toàn trang web
+    App.games = this.games;
+    this.renderGamesTable();
+    if (window.Catalog) Catalog.init(this.games);
+    if (window.Progress) Progress.init(this.games);
+    if (window.Community) Community.init(this.games);
+    if (window.Library) Library.init(this.games);
+
+    const isNowReady = game.status === "ready";
+    App.showToast(`✨ Đã chuyển "${game.title}" sang: ${isNowReady ? "⚡ HOÀN TẤT (Sẵn sàng tải)" : "⏳ ĐANG DỊCH"}`);
   },
 
   editGame(gameId) {
