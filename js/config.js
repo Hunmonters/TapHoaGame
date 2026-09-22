@@ -7,9 +7,9 @@ const CONFIG = {
   // Thông tin thương hiệu
   siteName: "Tạp Hóa Việt",
   siteUrl: "https://taphoaviet.vn",
-  
+
   // Mật khẩu truy cập Studio Dashboard quản trị nội bộ
-  adminPin: "viethoagame2026",
+  adminPin: "020402",
 
   // Discord Webhook nhận thông báo báo lỗi (Điền URL Webhook kênh Discord của bạn vào đây)
   // Ví dụ: "https://discord.com/api/webhooks/123456/abcdef"
