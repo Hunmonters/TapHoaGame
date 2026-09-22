@@ -240,6 +240,8 @@ const Catalog = {
       // Lọc theo tab nhanh
       if (this.filters.filter === "ready") {
         if (g.status !== "ready") return false;
+      } else if (this.filters.filter === "community") {
+        if (!g.is_community) return false;
       } else if (this.filters.filter === "wip") {
         if (g.status === "ready") return false;
       } else if (this.filters.filter === "featured") {
@@ -261,10 +263,72 @@ const Catalog = {
   },
 
   /**
-   * Render Lưới Card Game
+   * Render HTML cho 1 thẻ Game Card
+   */
+  renderGameCard(g, savedSet) {
+    const isSaved = savedSet.has(g.id);
+    const isReady = g.status === "ready";
+    const statusClass = isReady ? "ready" : "progress";
+    const statusText = isReady ? "⚡ SẴN SÀNG TẢI" : `Đang dịch ${g.progress ? g.progress.overall : 0}%`;
+    const fillClass = isReady ? "" : "wip";
+    const readyGlowClass = isReady ? "card-ready" : "";
+    const coverSrc = g.cover_image || `assets/covers/${g.id}.jpg`;
+
+    return `
+      <article class="game-card ${readyGlowClass}" onclick="App.openDetail('${g.id}')">
+        <div class="card-poster-wrap" style="background-color: ${g.cover_color || '#111822'}">
+          <img class="card-poster-img" src="${coverSrc}" alt="${g.title}" loading="lazy"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="card-poster-art" style="display:none;">
+            <i class="fa-solid fa-gamepad card-poster-icon" style="color: rgba(255,255,255,0.7)"></i>
+            <h3 class="card-poster-title">${g.title}</h3>
+          </div>
+          <span class="card-status-badge ${statusClass}">${statusText}</span>
+          ${g.is_community ? `
+            <span class="card-status-badge" style="top:38px; background:#7C3AED; color:#FFF; font-size:0.68rem; padding:2px 7px;">
+              <i class="fa-solid fa-users"></i> CỘNG ĐỒNG
+            </span>
+          ` : ""}
+          <button class="card-bookmark-btn ${isSaved ? "active" : ""}" 
+                  title="${isSaved ? "Bỏ lưu" : "Lưu vào bộ sưu tập"}" 
+                  onclick="event.stopPropagation(); Library.toggle('${g.id}')">
+            <i class="${isSaved ? "fa-solid" : "fa-regular"} fa-bookmark"></i>
+          </button>
+          <div class="card-shade"></div>
+          ${isReady ? `
+            <span class="card-quick-download" onclick="event.stopPropagation(); App.openDetail('${g.id}')">
+              <i class="fa-brands fa-google-drive"></i> Tải Ngay
+            </span>
+          ` : ""}
+        </div>
+        <div class="card-body">
+          <div class="card-meta-tags">
+            ${g.is_community ? `
+              <span class="tag-version" style="background:rgba(124, 58, 237, 0.08); color:#7C3AED; border-color:rgba(124, 58, 237, 0.25);" title="Dịch giả: ${g.author}">
+                <i class="fa-solid fa-user-pen"></i> ${g.author || "Cộng Đồng"}
+              </span>
+            ` : `
+              <span class="tag-version"><i class="fa-solid fa-code-branch"></i> ${g.game_version || "Bản 1.0"}</span>
+            `}
+            <span class="tag-size"><i class="fa-solid fa-bolt"></i> ${g.size || "Nhẹ"}</span>
+          </div>
+          <h4 class="card-title" title="${g.title}">${g.title}</h4>
+          <div class="card-progress-wrap">
+            <div class="card-progress-bar">
+              <div class="card-progress-fill ${fillClass}" style="width: ${g.progress ? g.progress.overall : 0}%"></div>
+            </div>
+            <span class="card-progress-percent">${g.progress ? g.progress.overall : 0}%</span>
+          </div>
+        </div>
+      </article>
+    `;
+  },
+
+  /**
+   * Render Thư Viện Bản Dịch chia thành 2 phân khu Hoàn Thành & Đang Dịch
    */
   renderCatalog() {
-    const container = document.getElementById("games-grid");
+    const container = document.getElementById("catalog-sections-wrap") || document.getElementById("games-grid");
     const countEl = document.getElementById("catalog-count");
     if (!container) return;
 
@@ -273,10 +337,10 @@ const Catalog = {
 
     if (!filtered.length) {
       container.innerHTML = `
-        <div class="catalog-empty">
-          <i class="fa-solid fa-box-open"></i>
-          <h3>Không tìm thấy bản Việt hóa nào phù hợp</h3>
-          <p>Thử tìm kiếm với từ khóa khác hoặc chọn xem Tất Cả Game.</p>
+        <div class="catalog-empty" style="text-align:center; padding:60px 20px; background:#FFFFFF; border:2px solid #121316; border-radius:var(--radius-md); box-shadow:4px 4px 0px #121316;">
+          <i class="fa-solid fa-box-open" style="font-size:2.8rem; color:var(--text-muted); margin-bottom:12px;"></i>
+          <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:6px;">Không tìm thấy bản Việt hóa nào phù hợp</h3>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">Thử tìm kiếm với từ khóa khác hoặc chọn xem Tất Cả Game.</p>
         </div>
       `;
       return;
@@ -284,53 +348,88 @@ const Catalog = {
 
     const savedSet = Library.getSavedSet();
 
-    container.innerHTML = filtered.map(g => {
-      const isSaved = savedSet.has(g.id);
-      const isReady = g.status === "ready";
-      const statusClass = isReady ? "ready" : "progress";
-      const statusText = isReady ? "⚡ SẴN SÀNG TẢI" : `Đang dịch ${g.progress ? g.progress.overall : 0}%`;
-      const fillClass = isReady ? "" : "wip";
-      const readyGlowClass = isReady ? "card-ready" : "";
-      const coverSrc = g.cover_image || `assets/covers/${g.id}.jpg`;
-
-      return `
-        <article class="game-card ${readyGlowClass}" onclick="App.openDetail('${g.id}')">
-          <div class="card-poster-wrap" style="background-color: ${g.cover_color || '#111822'}">
-            <img class="card-poster-img" src="${coverSrc}" alt="${g.title}" loading="lazy"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="card-poster-art" style="display:none;">
-              <i class="fa-solid fa-gamepad card-poster-icon" style="color: rgba(255,255,255,0.7)"></i>
-              <h3 class="card-poster-title">${g.title}</h3>
+    // Nếu người dùng chọn tab Cộng Đồng
+    if (this.filters.filter === "community") {
+      container.innerHTML = `
+        <section class="catalog-group-section" id="section-community-games">
+          <div class="catalog-group-head">
+            <div class="catalog-group-title">
+              <span class="group-badge ready" style="background:#7C3AED"><i class="fa-solid fa-users"></i> CỘNG ĐỒNG</span>
+              <h3>Bản Dịch Do Cộng Đồng & Nhóm Dịch Đóng Góp</h3>
             </div>
-            <span class="card-status-badge ${statusClass}">${statusText}</span>
-            <button class="card-bookmark-btn ${isSaved ? "active" : ""}" 
-                    title="${isSaved ? "Bỏ lưu" : "Lưu vào bộ sưu tập"}" 
-                    onclick="event.stopPropagation(); Library.toggle('${g.id}')">
-              <i class="${isSaved ? "fa-solid" : "fa-regular"} fa-bookmark"></i>
-            </button>
-            <div class="card-shade"></div>
-            ${isReady ? `
-              <span class="card-quick-download" onclick="event.stopPropagation(); App.openDetail('${g.id}')">
-                <i class="fa-brands fa-google-drive"></i> Tải Ngay
-              </span>
-            ` : ""}
-          </div>
-          <div class="card-body">
-            <div class="card-meta-tags">
-              <span class="tag-version"><i class="fa-solid fa-code-branch"></i> ${g.game_version || "Bản 1.0"}</span>
-              <span class="tag-size"><i class="fa-solid fa-bolt"></i> ${g.size || "Nhẹ"}</span>
-            </div>
-            <h4 class="card-title" title="${g.title}">${g.title}</h4>
-            <div class="card-progress-wrap">
-              <div class="card-progress-bar">
-                <div class="card-progress-fill ${fillClass}" style="width: ${g.progress ? g.progress.overall : 0}%"></div>
-              </div>
-              <span class="card-progress-percent">${g.progress ? g.progress.overall : 0}%</span>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <span class="catalog-group-count">${filtered.length} bản dịch</span>
             </div>
           </div>
-        </article>
+          <div class="games-grid grid-community">
+            ${filtered.map(g => this.renderGameCard(g, savedSet)).join("")}
+          </div>
+        </section>
       `;
-    }).join("");
+      return;
+    }
+
+    // Nếu người dùng chọn tab Nổi bật (Featured)
+    if (this.filters.filter === "featured") {
+      container.innerHTML = `
+        <section class="catalog-group-section" id="section-featured-games">
+          <div class="catalog-group-head">
+            <div class="catalog-group-title">
+              <span class="group-badge ready" style="background:var(--accent-orange)"><i class="fa-solid fa-star"></i> SPOTLIGHT</span>
+              <h3>Bản Dịch Mới Cập Nhật Nổi Bật</h3>
+            </div>
+            <span class="catalog-group-count">${filtered.length} bản dịch nổi bật</span>
+          </div>
+          <div class="games-grid grid-featured">
+            ${filtered.map(g => this.renderGameCard(g, savedSet)).join("")}
+          </div>
+        </section>
+      `;
+      return;
+    }
+
+    const readyGames = filtered.filter(g => g.status === "ready");
+    const wipGames = filtered.filter(g => g.status !== "ready");
+
+    let html = "";
+
+    // Phân khu 1: Bản Dịch Đã Hoàn Thành
+    if (readyGames.length > 0) {
+      html += `
+        <section class="catalog-group-section" id="section-ready-games">
+          <div class="catalog-group-head">
+            <div class="catalog-group-title">
+              <span class="group-badge ready"><i class="fa-solid fa-circle-check"></i> HOÀN THÀNH</span>
+              <h3>Bản Dịch Đã Hoàn Thành (Sẵn Sàng Tải Về)</h3>
+            </div>
+            <span class="catalog-group-count">${readyGames.length} bản dịch</span>
+          </div>
+          <div class="games-grid grid-ready">
+            ${readyGames.map(g => this.renderGameCard(g, savedSet)).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    // Phân khu 2: Dự Án Đang Dịch
+    if (wipGames.length > 0) {
+      html += `
+        <section class="catalog-group-section" id="section-wip-games">
+          <div class="catalog-group-head">
+            <div class="catalog-group-title">
+              <span class="group-badge wip"><i class="fa-solid fa-clock-rotate-left"></i> ĐANG THỰC HIỆN</span>
+              <h3>Dự Án Đang Dịch (Tiến Độ Trong Xưởng)</h3>
+            </div>
+            <span class="catalog-group-count">${wipGames.length} dự án</span>
+          </div>
+          <div class="games-grid grid-wip">
+            ${wipGames.map(g => this.renderGameCard(g, savedSet)).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    container.innerHTML = html;
   },
 
   bindEvents() {

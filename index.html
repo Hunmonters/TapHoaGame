@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="vi" data-theme="cream">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tạp Hóa Việt | Kho Bản Việt Hóa Game PC Chuyên Nghiệp</title>
-  <meta name="description" content="Thư viện chia sẻ bản Việt hóa game PC chuẩn mực từ hệ thống VietHoaGame. Kiểm định phiên bản, dung lượng, hỗ trợ kiểm tra mã SHA-256 và nhận diện phiên bản game tự động.">
-  
+  <meta name="description"
+    content="Thư viện chia sẻ bản Việt hóa game PC chuẩn mực từ hệ thống VietHoaGame. Kiểm định phiên bản, dung lượng, hỗ trợ kiểm tra mã SHA-256 và nhận diện phiên bản game tự động.">
+
   <!-- Font chữ tiếng Việt chuẩn & FontAwesome 6 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Core Stylesheets -->
@@ -20,7 +23,9 @@
   <link rel="stylesheet" href="css/requests.css">
   <link rel="stylesheet" href="css/detail.css">
   <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/community.css">
 </head>
+
 <body>
 
 
@@ -47,6 +52,9 @@
         <button class="nav-tab-btn" data-tab="progress" type="button">
           <i class="fa-solid fa-bars-progress"></i> Xưởng Dịch
         </button>
+        <button class="nav-tab-btn" data-tab="community" type="button">
+          <i class="fa-solid fa-users"></i> Cộng Đồng
+        </button>
         <button class="nav-tab-btn" data-tab="requests" type="button">
           <i class="fa-solid fa-paper-plane"></i> Đề Xuất
         </button>
@@ -61,8 +69,8 @@
           <span class="badge-count library-badge-count">0</span>
         </button>
 
-        <button class="btn-secondary" style="padding: 8px 14px; font-size: 0.85rem;" onclick="BugReporter.openModal()" type="button" title="Báo lỗi bản dịch">
-          <i class="fa-solid fa-bug" style="color:var(--accent-red)"></i>
+        <button class="btn-header-bug" onclick="BugReporter.openModal()" type="button" title="Báo lỗi bản dịch">
+          <i class="fa-solid fa-bug"></i>
           <span>Báo lỗi</span>
         </button>
 
@@ -81,14 +89,14 @@
 
     <!-- ================= TAB 1: KHO SƯU TẬP (CATALOG) ================= -->
     <section class="tab-pane active" id="tab-catalog">
-      
+
       <!-- ==========================================================================
            BẢN VIỆT HÓA MỚI CẬP NHẬT NỔI BẬT (SPOTLIGHT SHOWCASE & ARCHIVE WIRE)
            Thiết kế phong cách Retro Archive Neubrutalist Cream & Orange
            ========================================================================== -->
       <section class="spotlight-showcase" id="spotlight-showcase" aria-label="Bản Việt hóa mới cập nhật nổi bật">
         <div class="spotlight-container">
-          
+
           <!-- Top bar: Pagination dashes & Release Date -->
           <header class="spotlight-top-bar">
             <div class="spotlight-dashes" id="spotlight-dashes">
@@ -155,7 +163,8 @@
       <div class="catalog-toolbar" aria-label="Bộ lọc kho game">
         <div class="toolbar-search">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="search" id="catalog-search" placeholder="Tìm nhanh tên tựa game bạn muốn tải..." autocomplete="off">
+          <input type="search" id="catalog-search" placeholder="Tìm nhanh tên tựa game bạn muốn tải..."
+            autocomplete="off">
         </div>
 
         <div class="toolbar-filters">
@@ -165,6 +174,9 @@
             </button>
             <button class="filter-pill" data-filter="ready" type="button">
               <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Tải Ngay
+            </button>
+            <button class="filter-pill" data-filter="community" type="button">
+              <i class="fa-solid fa-users" style="color:var(--accent-orange)"></i> Cộng Đồng
             </button>
             <button class="filter-pill" data-filter="wip" type="button">
               <i class="fa-solid fa-clock" style="color:var(--accent-gold)"></i> Đang Dịch
@@ -186,14 +198,11 @@
         </div>
       </div>
 
-      <!-- Danh sách Lưới Game Cards -->
-      <div class="catalog-head">
-        <h2>Thư Viện Bản Dịch</h2>
-        <span class="catalog-count-badge" id="catalog-count">Đang hiển thị...</span>
-      </div>
-
-      <div class="games-grid" id="games-grid">
-        <!-- Danh sách card game render động qua catalog.js -->
+      <!-- Danh sách Lưới Game Cards Phân Nhóm -->
+      <div id="catalog-sections-wrap">
+        <div class="games-grid" id="games-grid">
+          <!-- Danh sách card game render động 2 nhóm qua catalog.js -->
+        </div>
       </div>
     </section>
 
@@ -203,7 +212,8 @@
         <div class="masthead-info">
           <span class="masthead-tag"><i class="fa-solid fa-hammer"></i> TIẾN ĐỘ THỰC CHIẾN</span>
           <h1 class="masthead-title">Những bản dịch đang thành hình.</h1>
-          <p class="masthead-desc">Tiến độ được đo lường minh bạch theo 4 công đoạn kỹ thuật công nghiệp: Dịch thuật, Hiệu đính, Giao diện & Phông chữ, Kiểm định QA trong game.</p>
+          <p class="masthead-desc">Tiến độ được đo lường minh bạch theo 4 công đoạn kỹ thuật công nghiệp: Dịch thuật,
+            Hiệu đính, Giao diện & Phông chữ, Kiểm định QA trong game.</p>
         </div>
         <dl class="masthead-metrics">
           <div class="metric-item">
@@ -223,10 +233,28 @@
 
       <!-- Chú thích 4 công đoạn -->
       <div class="production-legend" aria-label="Chú thích 4 công đoạn">
-        <div class="legend-item"><span class="legend-dot trans"></span> <b>Chặng 1:</b> Dịch thuật hội thoại & cốt truyện</div>
+        <div class="legend-item"><span class="legend-dot trans"></span> <b>Chặng 1:</b> Dịch thuật hội thoại & cốt
+          truyện</div>
         <div class="legend-item"><span class="legend-dot proof"></span> <b>Chặng 2:</b> Hiệu đính văn phong</div>
-        <div class="legend-item"><span class="legend-dot font"></span> <b>Chặng 3:</b> Font chữ tiếng Việt & Đồ họa UI</div>
+        <div class="legend-item"><span class="legend-dot font"></span> <b>Chặng 3:</b> Font chữ tiếng Việt & Đồ họa UI
+        </div>
         <div class="legend-item"><span class="legend-dot qa"></span> <b>Chặng 4:</b> Thẩm định QA in-game</div>
+      </div>
+
+      <!-- Thanh lọc nhanh dự án xưởng dịch -->
+      <div class="progress-toolbar">
+        <div class="progress-filter-pills">
+          <button class="prog-pill active" data-filter="in-progress" type="button">
+            <i class="fa-solid fa-clock-rotate-left"></i> Đang Dịch (<span id="count-wip-projects">0</span>)
+          </button>
+          <button class="prog-pill" data-filter="ready" type="button">
+            <i class="fa-solid fa-circle-check" style="color:var(--accent-green)"></i> Đã Hoàn Thành (<span
+              id="count-ready-projects">0</span>)
+          </button>
+          <button class="prog-pill" data-filter="all" type="button">
+            <i class="fa-solid fa-layer-group"></i> Tất Cả Dự Án
+          </button>
+        </div>
       </div>
 
       <!-- Danh sách dự án xưởng dịch -->
@@ -235,29 +263,102 @@
       </div>
     </section>
 
+    <!-- ================= TAB: VIỆT HÓA CỘNG ĐỒNG CHIA SẺ (COMMUNITY) ================= -->
+    <section class="tab-pane community-page" id="tab-community">
+      <header class="community-masthead">
+        <div class="community-masthead-info">
+          <span class="community-masthead-tag"><i class="fa-solid fa-users"></i> KẾT NỐI & VINH DANH</span>
+          <h1 class="community-masthead-title">Góc Việt Hóa Cộng Đồng Chia Sẻ.</h1>
+          <p class="community-masthead-desc">Nơi lưu trữ, kết nối và vinh danh những bản dịch tâm huyết từ mọi nhóm dịch
+            độc lập, dịch giả tự do và cộng đồng game thủ Việt Nam. Tải tốc độ cao độc quyền qua Google Drive.</p>
+          <div class="community-masthead-actions">
+            <button class="btn-submit-community" onclick="Community.openSubmitModal()" type="button">
+              <i class="fa-solid fa-circle-plus"></i> Chia Sẻ Bản Dịch Của Bạn
+            </button>
+          </div>
+        </div>
+        <dl class="community-metrics">
+          <div class="comm-metric-item">
+            <dt>Bản dịch</dt>
+            <dd id="comm-stat-total">4</dd>
+          </div>
+          <div class="comm-metric-item">
+            <dt>Nhóm dịch</dt>
+            <dd id="comm-stat-groups">4</dd>
+          </div>
+          <div class="comm-metric-item">
+            <dt>Lượt tải</dt>
+            <dd id="comm-stat-downloads">58.7K</dd>
+          </div>
+        </dl>
+      </header>
+
+      <!-- Thanh công cụ tìm kiếm & lọc cộng đồng -->
+      <div class="community-toolbar" aria-label="Bộ lọc cộng đồng">
+        <div class="comm-search-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" class="comm-search-input" id="comm-search"
+            placeholder="Tìm theo tên game hoặc tên nhóm dịch (The Red Team, Cánh Cụt, Nam Phong...)..."
+            autocomplete="off">
+        </div>
+        <div class="comm-filters-wrap">
+          <div class="comm-pill-group" aria-label="Lọc trạng thái">
+            <button class="comm-pill active" data-filter="all" type="button">
+              <i class="fa-solid fa-layer-group"></i> Tất Cả
+            </button>
+            <button class="comm-pill" data-filter="ready" type="button">
+              <i class="fa-solid fa-circle-check" style="color:var(--accent-green)"></i> Hoàn Tất 100%
+            </button>
+            <button class="comm-pill" data-filter="in-progress" type="button">
+              <i class="fa-solid fa-clock" style="color:var(--accent-gold)"></i> Đang Dịch
+            </button>
+          </div>
+          <select class="comm-sort-select" id="comm-sort" aria-label="Sắp xếp">
+            <option value="newest">Mới cập nhật</option>
+            <option value="popular">Tải nhiều nhất</option>
+            <option value="a-z">Tên game (A–Z)</option>
+          </select>
+
+          <button class="btn-submit-community" onclick="Community.openSubmitModal()" type="button"
+            style="padding: 7px 16px; font-size: 0.85rem;" title="Đăng chia sẻ bản Việt hóa của bạn">
+            <i class="fa-solid fa-cloud-arrow-up"></i> + Đăng Bản Dịch
+          </button>
+        </div>
+      </div>
+
+      <!-- Danh sách card bản dịch cộng đồng chuẩn 460x215 -->
+      <div class="community-grid" id="community-grid">
+        <!-- Render động qua community.js -->
+      </div>
+    </section>
+
     <!-- ================= TAB 3: ĐỀ XUẤT CỘNG ĐỒNG (REQUESTS) ================= -->
     <section class="tab-pane requests-page" id="tab-requests">
       <div class="requests-layout">
-        
+
         <!-- Cột trái: Form gửi đề xuất -->
         <div class="request-form-card">
           <div class="request-form-head">
             <span>TÍN HIỆU CỘNG ĐỒNG</span>
             <h3>Đề xuất game mới</h3>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Gửi thông tin tựa game bạn mong muốn nhóm Việt hóa tiếp theo.</p>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Gửi thông tin tựa game bạn
+              mong muốn nhóm Việt hóa tiếp theo.</p>
           </div>
           <form id="form-add-request">
             <div class="form-group">
               <label for="req-input-title">Tên tựa game bạn muốn dịch <span>*</span></label>
-              <input type="text" id="req-input-title" class="form-control" required placeholder="Ví dụ: Black Myth: Wukong, Hades II...">
+              <input type="text" id="req-input-title" class="form-control" required
+                placeholder="Ví dụ: Black Myth: Wukong, Hades II...">
             </div>
             <div class="form-group">
               <label for="req-input-url">Đường dẫn Steam Store <em>(không bắt buộc)</em></label>
-              <input type="url" id="req-input-url" class="form-control" placeholder="https://store.steampowered.com/app/...">
+              <input type="url" id="req-input-url" class="form-control"
+                placeholder="https://store.steampowered.com/app/...">
             </div>
             <div class="form-group">
               <label for="req-input-why">Lý do nên Việt hóa game này? <span>*</span></label>
-              <textarea id="req-input-why" class="form-control" required placeholder="Cốt truyện hay, nhiều hội thoại ý nghĩa, chưa có nhóm nào làm..."></textarea>
+              <textarea id="req-input-why" class="form-control" required
+                placeholder="Cốt truyện hay, nhiều hội thoại ý nghĩa, chưa có nhóm nào làm..."></textarea>
             </div>
             <button type="submit" class="btn-submit-req">
               <i class="fa-solid fa-paper-plane"></i> Gửi Đề Xuất & Bỏ Phiếu
@@ -270,11 +371,14 @@
           <div class="board-head">
             <div>
               <h3>Bảng Xếp Hạng Bình Chọn</h3>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Những tựa game nhận được nhiều lượt ủng hộ nhất từ cộng đồng.</p>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Những tựa game nhận được
+                nhiều lượt ủng hộ nhất từ cộng đồng.</p>
             </div>
             <div style="text-align: right;">
               <span style="font-size: 0.8rem; color: var(--text-muted);">Tổng lượt vote</span>
-              <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent-gold); font-family: var(--font-mono);" id="request-vote-total">0</div>
+              <div
+                style="font-size: 1.4rem; font-weight: 800; color: var(--accent-gold); font-family: var(--font-mono);"
+                id="request-vote-total">0</div>
             </div>
           </div>
           <div class="requests-list" id="requests-list-container">
@@ -290,7 +394,8 @@
       <div class="catalog-head">
         <div>
           <h2>Bộ Sưu Tập Của Tôi</h2>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;">Danh sách những tựa game bạn đã đánh dấu để theo dõi và cập nhật bản vá.</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;">Danh sách những tựa game bạn đã
+            đánh dấu để theo dõi và cập nhật bản vá.</p>
         </div>
         <span class="catalog-count-badge"><span id="library-total-count">0</span> game đã lưu</span>
       </div>
@@ -306,7 +411,8 @@
        ========================================================================== -->
   <div class="detail-overlay" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title">
     <div class="detail-box">
-      <button class="detail-close-btn" id="btn-close-detail" type="button" aria-label="Đóng hồ sơ"><i class="fa-solid fa-xmark"></i></button>
+      <button class="detail-close-btn" id="btn-close-detail" type="button" aria-label="Đóng hồ sơ"><i
+          class="fa-solid fa-xmark"></i></button>
 
       <!-- Hero Banner -->
       <div class="detail-hero-banner">
@@ -317,11 +423,13 @@
           <div class="detail-hero-info">
             <div class="detail-badge-group">
               <span class="card-status-badge ready" id="detail-status-badge">⚡ SẴN SÀNG TẢI</span>
-              <span class="tag-size" style="font-size:0.8rem; padding:4px 10px;"><i class="fa-solid fa-bolt"></i> <span id="detail-size-val">1.6 MB</span></span>
+              <span class="tag-size" style="font-size:0.8rem; padding:4px 10px;"><i class="fa-solid fa-bolt"></i> <span
+                  id="detail-size-val">1.6 MB</span></span>
             </div>
             <h2 class="detail-title" id="detail-title">Tên Game</h2>
             <div class="detail-original" id="detail-original">Tên Gốc</div>
-            
+            <div id="detail-community-callout"></div>
+
             <dl class="detail-meta-table">
               <div>
                 <dt>Bản Việt hóa</dt>
@@ -345,8 +453,8 @@
         <div class="download-title-row">
           <h3><i class="fa-solid fa-cloud-arrow-down"></i> TẢI XUỐNG BẢN VIỆT HÓA</h3>
           <div>
-            <button class="btn-secondary" id="btn-report-from-modal" style="font-size: 0.8rem; padding: 5px 12px;" type="button">
-              <i class="fa-solid fa-bug" style="color:var(--accent-red)"></i> Báo lỗi game này
+            <button class="btn-detail-bug" id="btn-report-from-modal" type="button" title="Báo lỗi bản dịch game này">
+              <i class="fa-solid fa-bug"></i> Báo lỗi game này
             </button>
           </div>
         </div>
@@ -389,14 +497,17 @@
        ========================================================================== -->
   <div class="detail-overlay" id="bug-report-modal" role="dialog" aria-modal="true" aria-labelledby="bug-modal-title">
     <div class="detail-box" style="max-width: 600px; padding: 32px;">
-      <button class="detail-close-btn" id="btn-close-bug-modal" type="button" aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button>
-      
+      <button class="detail-close-btn" id="btn-close-bug-modal" type="button" aria-label="Đóng"><i
+          class="fa-solid fa-xmark"></i></button>
+
       <div style="margin-bottom: 24px;">
-        <span style="font-size:0.75rem; font-weight:700; color:var(--accent-red); letter-spacing:1px; text-transform:uppercase;">
+        <span
+          style="font-size:0.75rem; font-weight:700; color:var(--accent-red); letter-spacing:1px; text-transform:uppercase;">
           <i class="fa-solid fa-bug"></i> PHẢN HỒI KỸ THUẬT
         </span>
         <h2 id="bug-modal-title" style="font-size: 1.5rem; font-weight:800; margin-top:4px;">Báo Lỗi Bản Việt Hóa</h2>
-        <p style="font-size:0.88rem; color:var(--text-secondary);">Góp ý của bạn giúp nhóm dịch hoàn thiện bản vá ngày một tốt hơn.</p>
+        <p style="font-size:0.88rem; color:var(--text-secondary);">Góp ý của bạn giúp nhóm dịch hoàn thiện bản vá ngày
+          một tốt hơn.</p>
       </div>
 
       <form id="form-bug-report">
@@ -416,15 +527,18 @@
         </div>
         <div class="form-group">
           <label for="bug-input-desc">Mô tả chi tiết vị trí lỗi <span>*</span></label>
-          <textarea id="bug-input-desc" class="form-control" required placeholder="Lỗi xuất hiện ở đoạn hội thoại nào, chương mấy, hoặc nút bấm nào trong menu..."></textarea>
+          <textarea id="bug-input-desc" class="form-control" required
+            placeholder="Lỗi xuất hiện ở đoạn hội thoại nào, chương mấy, hoặc nút bấm nào trong menu..."></textarea>
         </div>
         <div class="form-group">
-          <label for="bug-input-screenshot">Đường dẫn ảnh chụp lỗi <em>(Imgur, Google Drive hoặc Discord link)</em></label>
+          <label for="bug-input-screenshot">Đường dẫn ảnh chụp lỗi <em>(Imgur, Google Drive hoặc Discord
+              link)</em></label>
           <input type="url" id="bug-input-screenshot" class="form-control" placeholder="https://i.imgur.com/...">
         </div>
         <div class="form-group">
           <label for="bug-input-contact">Thông tin liên hệ của bạn <em>(Discord / Facebook / Email)</em></label>
-          <input type="text" id="bug-input-contact" class="form-control" placeholder="Để nhóm liên hệ khi cần thêm thông tin test">
+          <input type="text" id="bug-input-contact" class="form-control"
+            placeholder="Để nhóm liên hệ khi cần thêm thông tin test">
         </div>
         <button type="submit" class="btn-primary" style="width:100%; justify-content:center; margin-top:8px;">
           <i class="fa-solid fa-paper-plane"></i> Gửi Báo Cáo Sự Cố
@@ -438,20 +552,33 @@
        ========================================================================== -->
   <div class="admin-overlay" id="admin-studio-modal" role="dialog" aria-modal="true">
     <div class="admin-box">
-      <button class="detail-close-btn" id="btn-close-admin" type="button" aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button>
+      <button class="detail-close-btn" id="btn-close-admin" type="button" aria-label="Đóng"><i
+          class="fa-solid fa-xmark"></i></button>
 
       <!-- 1. Màn hình đăng nhập PIN -->
       <div class="admin-login-screen" id="admin-login-view">
-        <i class="fa-solid fa-shield-halved"></i>
+        <div class="admin-login-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
         <h2>VietHoaGame Studio</h2>
         <p>Bảng điều khiển quản trị nội bộ hệ sinh thái dự án. Vui lòng nhập mã PIN bảo mật.</p>
         <form id="form-admin-login">
-          <input type="password" id="admin-pin-field" class="admin-pin-input" placeholder="••••••••" maxlength="20" required>
-          <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+          <div class="admin-pin-wrap">
+            <input type="password" id="admin-pin-field" class="admin-pin-input" placeholder="Nhập mã PIN..."
+              maxlength="30" required autocomplete="current-password">
+            <button type="button" class="btn-toggle-pin" id="btn-toggle-pin" onclick="AdminStudio.togglePinVisibility()"
+              title="Hiện / Ẩn mật khẩu">
+              <i class="fa-regular fa-eye" id="icon-pin-eye"></i>
+            </button>
+          </div>
+          <div class="admin-pin-status" id="admin-pin-status">Chưa nhập mã PIN</div>
+          <button type="submit" class="btn-admin-hero-save"
+            style="width:100%; justify-content:center; padding:12px; font-size:0.95rem;">
             <i class="fa-solid fa-key"></i> Xác Thực Quản Trị
           </button>
         </form>
-        <small style="color:var(--text-muted); display:block; margin-top:16px;">Mã PIN mặc định: <code>viethoagame2026</code> (Đổi trong config.js)</small>
+        <small style="color:var(--text-muted); display:block; margin-top:16px;">Mã PIN mặc định:
+          <code>viethoagame2026</code> (Đổi trong config.js)</small>
       </div>
 
       <!-- 2. Bảng điều khiển Dashboard sau khi đăng nhập -->
@@ -465,22 +592,26 @@
             </div>
           </div>
           <div class="admin-tabs-nav">
-            <button class="admin-tab-btn active" data-admintab="games" type="button"><i class="fa-solid fa-gamepad"></i> Kho Game</button>
-            <button class="admin-tab-btn" data-admintab="reports" type="button"><i class="fa-solid fa-bug"></i> Báo Lỗi</button>
+            <button class="admin-tab-btn active" data-admintab="games" type="button"><i class="fa-solid fa-gamepad"></i>
+              Kho Game</button>
+            <button class="admin-tab-btn" data-admintab="reports" type="button"><i class="fa-solid fa-bug"></i> Báo
+              Lỗi</button>
           </div>
         </header>
 
         <div class="admin-body">
           <!-- Tab Quản lý Game -->
           <div class="admin-pane active" id="admin-pane-games">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+            <div
+              style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
               <div>
                 <h3 style="font-size:1.2rem; font-weight:800;">Quản lý kho game Việt hóa</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">Thêm game mới, cập nhật bài dịch, ảnh poster và link tải.</p>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Thêm game mới, cập nhật bài dịch, ảnh poster và
+                  link tải.</p>
               </div>
               <div style="display:flex; align-items:center; gap:10px;">
-                <button class="btn-primary" id="btn-admin-add-game" type="button" style="background:#10B981; border-color:#10B981;">
-                  <i class="fa-solid fa-circle-plus"></i> Thêm Game Mới
+                <button class="btn-admin-hero-add" id="btn-admin-add-game" type="button">
+                  <i class="fa-solid fa-circle-plus"></i> + Thêm Game Mới
                 </button>
                 <button class="btn-secondary" id="btn-admin-export-json" type="button">
                   <i class="fa-solid fa-download"></i> Xuất File games.json
@@ -493,6 +624,7 @@
                   <tr>
                     <th>STT</th>
                     <th>Tên Game</th>
+                    <th style="text-align:center;">Spotlight</th>
                     <th>Dung Lượng</th>
                     <th>Phiên Bản</th>
                     <th>Trạng Thái</th>
@@ -539,7 +671,8 @@
           <i class="fa-solid fa-gamepad" style="color:var(--accent-gold); font-size:1.2rem;"></i>
           <h3 id="admin-editor-heading" style="font-size:1.15rem; font-weight:800;">Thêm Bản Việt Hóa Game Mới</h3>
         </div>
-        <button class="detail-close-btn" id="btn-close-game-editor" type="button" aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button>
+        <button class="detail-close-btn" id="btn-close-game-editor" type="button" aria-label="Đóng"><i
+            class="fa-solid fa-xmark"></i></button>
       </header>
 
       <form id="form-admin-game-editor">
@@ -552,7 +685,8 @@
               <div class="form-row-2">
                 <div class="form-group">
                   <label for="edit-game-title">Tên Game (Tiếng Việt / Hiển thị) <span>*</span></label>
-                  <input type="text" id="edit-game-title" class="form-control" required placeholder="Ví dụ: Together: Moon Escape">
+                  <input type="text" id="edit-game-title" class="form-control" required
+                    placeholder="Ví dụ: Together: Moon Escape">
                 </div>
                 <div class="form-group">
                   <label for="edit-game-id">Mã Định Danh (Slug ID) <span>*</span></label>
@@ -563,7 +697,8 @@
               <div class="form-row-2">
                 <div class="form-group">
                   <label for="edit-game-original">Tên Gốc Quốc Tế</label>
-                  <input type="text" id="edit-game-original" class="form-control" placeholder="Tên tiếng Anh trên Steam">
+                  <input type="text" id="edit-game-original" class="form-control"
+                    placeholder="Tên tiếng Anh trên Steam">
                 </div>
                 <div class="form-group">
                   <label for="edit-game-status">Trạng Thái Bản Dịch</label>
@@ -594,8 +729,10 @@
               </div>
 
               <!-- 4 Tiến độ thành phần -->
-              <div style="background:rgba(255,255,255,0.02); padding:12px; border-radius:var(--radius-md); margin-bottom:16px; border:1px solid var(--border-subtle);">
-                <div style="font-size:0.85rem; font-weight:700; color:var(--accent-gold); margin-bottom:10px;">Tiến Độ 4 Chặng Sản Xuất (%)</div>
+              <div
+                style="background:rgba(255,255,255,0.02); padding:12px; border-radius:var(--radius-md); margin-bottom:16px; border:1px solid var(--border-subtle);">
+                <div style="font-size:0.85rem; font-weight:700; color:var(--accent-gold); margin-bottom:10px;">Tiến Độ 4
+                  Chặng Sản Xuất (%)</div>
                 <div class="form-row-4">
                   <div class="form-group" style="margin-bottom:0;">
                     <label for="edit-prog-trans">Dịch (%)</label>
@@ -618,25 +755,45 @@
 
               <div class="form-group">
                 <label for="edit-game-summary">Tóm Tắt Ngắn Bản Dịch</label>
-                <input type="text" id="edit-game-summary" class="form-control" placeholder="Mô tả 1-2 câu hiển thị ở thẻ card">
+                <input type="text" id="edit-game-summary" class="form-control"
+                  placeholder="Mô tả 1-2 câu hiển thị ở thẻ card">
               </div>
 
               <div class="form-group">
                 <label for="edit-game-desc">Giới Thiệu Chi Tiết</label>
-                <textarea id="edit-game-desc" class="form-control" rows="3" placeholder="Nội dung giới thiệu về bản dịch..."></textarea>
+                <textarea id="edit-game-desc" class="form-control" rows="3"
+                  placeholder="Nội dung giới thiệu về bản dịch..."></textarea>
               </div>
 
               <div class="form-group">
                 <label for="edit-game-dl-url">Link Tải Google Drive Bản Dịch</label>
-                <input type="url" id="edit-game-dl-url" class="form-control" placeholder="https://drive.google.com/file/d/...">
+                <input type="url" id="edit-game-dl-url" class="form-control"
+                  placeholder="https://drive.google.com/file/d/...">
+              </div>
+
+              <!-- Tùy chọn đưa lên Spotlight -->
+              <div class="form-group admin-spotlight-toggle-card">
+                <label class="admin-checkbox-label" for="edit-game-featured">
+                  <input type="checkbox" id="edit-game-featured">
+                  <span class="admin-checkbox-custom"><i class="fa-solid fa-check"></i></span>
+                  <span class="admin-checkbox-text">
+                    <i class="fa-solid fa-star" style="color:var(--accent-orange);"></i>
+                    <strong>Đưa game lên Spotlight Mới Cập Nhật Nổi Bật</strong>
+                  </span>
+                </label>
+                <small
+                  style="font-size:0.78rem; color:var(--text-muted); display:block; margin-top:4px; margin-left:28px;">
+                  Hiển thị tựa game này trên khung slide lớn đầu trang chủ và dải tin vắn Archive Wire chạy chữ.
+                </small>
               </div>
             </div>
 
-            <!-- Cột phải: Quản lý Poster & Ảnh bìa 3:4 -->
+            <!-- Cột phải: Quản lý Banner Game 460x215 -->
             <div class="admin-editor-sidebar">
               <div class="admin-cover-uploader">
-                <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">
-                  Ảnh Poster (Chuẩn 3:4)
+                <label
+                  style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">
+                  Ảnh Banner Game (Chuẩn Steam 460 x 215)
                 </label>
 
                 <div class="admin-cover-preview-frame" id="editor-cover-preview-frame">
@@ -656,11 +813,13 @@
 
                 <div class="form-group" style="text-align:left; margin-bottom:8px;">
                   <label for="edit-game-cover-url" style="font-size:0.75rem;">Hoặc dán URL ảnh</label>
-                  <input type="url" id="edit-game-cover-url" class="form-control" style="font-size:0.8rem; padding:6px 10px;" placeholder="https://...">
+                  <input type="url" id="edit-game-cover-url" class="form-control"
+                    style="font-size:0.8rem; padding:6px 10px;" placeholder="https://...">
                 </div>
 
                 <small style="font-size:0.72rem; color:var(--text-muted); display:block; line-height:1.3;">
-                  Tự động hiển thị xem trước. Khi kết nối Supabase, ảnh sẽ tự động tải lên Storage CDN!
+                  Tự động hiển thị xem trước theo chuẩn 460x215. Khi kết nối Supabase, ảnh sẽ tự động tải lên Cloud
+                  Storage CDN!
                 </small>
               </div>
             </div>
@@ -669,8 +828,160 @@
 
         <footer class="admin-editor-footer">
           <button type="button" class="btn-secondary" id="btn-cancel-game-editor">Hủy Bỏ</button>
-          <button type="submit" class="btn-primary" style="background:#10B981; border-color:#10B981;">
+          <button type="submit" class="btn-admin-hero-save" id="btn-submit-game-editor">
             <i class="fa-solid fa-floppy-disk"></i> Lưu Hồ Sơ Game
+          </button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       8. MODAL ĐÓNG GÓP BẢN VIỆT HÓA CỘNG ĐỒNG (COMMUNITY SUBMISSION)
+       ========================================================================== -->
+  <div class="community-modal-overlay" id="modal-community-submission" role="dialog" aria-modal="true"
+    aria-labelledby="comm-modal-title">
+    <div class="community-modal-box">
+      <header class="community-modal-header">
+        <div class="community-modal-header-title">
+          <i class="fa-solid fa-handshake-angle"></i>
+          <div>
+            <h3 id="comm-modal-title">Chia Sẻ Bản Việt Hóa Của Bạn</h3>
+            <small style="color:var(--text-secondary); font-size:0.8rem;">Góp phần làm giàu kho tàng game tiếng Việt
+              cùng cộng đồng.</small>
+          </div>
+        </div>
+        <button class="detail-close-btn" id="btn-close-comm-modal" type="button" aria-label="Đóng"><i
+            class="fa-solid fa-xmark"></i></button>
+      </header>
+
+      <form id="form-community-submit">
+        <div class="community-modal-body">
+
+          <div class="comm-notice-box">
+            <i class="fa-solid fa-circle-info"></i>
+            <div>
+              <strong>Quy chuẩn chia sẻ Tạp Hóa Việt:</strong>
+              <div>Chúng tôi chỉ sử dụng link tải <b>Google Drive</b> trực tiếp để bảo đảm an toàn và tốc độ cao cho
+                người chơi, không chứa link rút gọn hay quảng cáo gây phiền toái. Bản dịch phải tôn trọng công sức nhóm
+                dịch gốc!</div>
+            </div>
+          </div>
+
+          <div class="comm-form-grid">
+            <div class="form-group">
+              <label for="comm-input-title">Tên Tựa Game (Tiếng Việt) <span>*</span></label>
+              <input type="text" id="comm-input-title" class="form-control" required
+                placeholder="Ví dụ: Black Myth: Wukong">
+            </div>
+
+            <div class="form-group">
+              <label for="comm-input-original">Tên Gốc Steam / Quốc Tế</label>
+              <input type="text" id="comm-input-original" class="form-control" placeholder="Black Myth: Wukong">
+            </div>
+
+            <div class="form-group">
+              <label for="comm-input-author">Tên Tác Giả / Nhóm Dịch <span>*</span></label>
+              <input type="text" id="comm-input-author" class="form-control" required
+                placeholder="Ví dụ: The Red Team, Cánh Cụt Team, Nam Phong...">
+            </div>
+
+            <div class="form-group">
+              <label for="comm-input-author-link">Link Fanpage / Discord / Kênh của nhóm</label>
+              <input type="url" id="comm-input-author-link" class="form-control"
+                placeholder="https://facebook.com/..., https://discord.gg/...">
+            </div>
+
+            <div class="form-group comm-form-col-full">
+              <label for="comm-input-gdrive">Link Tải Google Drive Bản Dịch <span>* (Bắt buộc Google
+                  Drive)</span></label>
+              <input type="url" id="comm-input-gdrive" class="form-control" required
+                placeholder="https://drive.google.com/file/d/.../view?usp=sharing">
+              <small style="color:var(--text-muted); font-size:0.75rem; margin-top:3px; display:block;">
+                Đảm bảo đã bật quyền "Bất kỳ ai có đường liên kết đều có thể xem" trên Google Drive.
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="comm-input-size">Dung Lượng File Tải</label>
+              <input type="text" id="comm-input-size" class="form-control" placeholder="Ví dụ: 125 MB, 1.4 GB">
+            </div>
+
+            <div class="form-group">
+              <label for="comm-input-ver">Phiên Bản Bản Dịch (Patch Version)</label>
+              <input type="text" id="comm-input-ver" class="form-control" placeholder="v1.0.0 hoặc v2.1">
+            </div>
+
+            <div class="form-group comm-form-col-full">
+              <label for="comm-select-status">Trạng Thái Bản Dịch</label>
+              <select id="comm-select-status" class="form-control">
+                <option value="ready">Hoàn tất 100% (Sẵn sàng chơi)</option>
+                <option value="in-progress">Bản thử nghiệm / Đang hoàn thiện tiếp</option>
+              </select>
+            </div>
+
+            <!-- Cover Image 460 x 215 -->
+            <div class="form-group comm-form-col-full">
+              <label>Ảnh Bìa Game (Chuẩn Steam Capsule 460 x 215)</label>
+              <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+                <div style="flex:1; min-width:240px;">
+                  <div style="margin-bottom:8px;">
+                    <label class="btn-upload-file"
+                      style="display:inline-flex; align-items:center; gap:8px; padding:8px 16px; background:var(--bg-surface); border:1.5px solid var(--border-strong); border-radius:8px; font-weight:700; cursor:pointer; font-size:0.85rem;">
+                      <i class="fa-solid fa-upload"></i> Tải Ảnh Từ Máy
+                      <input type="file" id="comm-cover-file" accept="image/*" style="display:none;">
+                    </label>
+                  </div>
+                  <input type="url" id="comm-input-cover-url" class="form-control"
+                    placeholder="Hoặc dán URL ảnh bìa Steam (https://...)">
+                  <small style="color:var(--text-muted); font-size:0.75rem; margin-top:4px; display:block;">
+                    Tự động căn chỉnh xem trước chuẩn tỉ lệ 460 x 215.
+                  </small>
+                </div>
+                <div class="comm-cover-preview-wrap">
+                  <div class="comm-cover-preview-empty" id="comm-cover-empty-prompt">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Khung xem trước 460 x 215</span>
+                  </div>
+                  <img id="comm-cover-preview-img" src="" alt="Preview" style="display:none;">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group comm-form-col-full">
+              <label for="comm-input-summary">Tóm Tắt Ngắn (1-2 câu hiển thị trên thẻ bài)</label>
+              <input type="text" id="comm-input-summary" class="form-control"
+                placeholder="Bản dịch trau chuốt 100% cốt truyện và giao diện...">
+            </div>
+
+            <div class="form-group comm-form-col-full">
+              <label for="comm-input-desc">Giới Thiệu Chi Tiết Về Bản Dịch</label>
+              <textarea id="comm-input-desc" class="form-control" rows="3"
+                placeholder="Chia sẻ thêm về quá trình dịch, phong cách câu từ, lưu ý cho người chơi..."></textarea>
+            </div>
+
+            <div class="form-group comm-form-col-full">
+              <label style="font-weight:800; color:var(--accent-orange);"><i class="fa-solid fa-list-check"></i> Hướng
+                Dẫn Cài Đặt 3 Bước Nhanh</label>
+              <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+                <input type="text" id="comm-input-step1" class="form-control"
+                  placeholder="Bước 1: Tải tệp zip từ link Google Drive">
+                <input type="text" id="comm-input-step2" class="form-control"
+                  placeholder="Bước 2: Giải nén và chép đè vào thư mục cài game">
+                <input type="text" id="comm-input-step3" class="form-control"
+                  placeholder="Bước 3: Mở game và chọn ngôn ngữ Tiếng Việt">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <footer class="community-modal-footer">
+          <button type="button" class="btn-secondary" id="btn-cancel-comm-modal"
+            style="padding:10px 20px; font-weight:700;">Hủy Bỏ</button>
+          <button type="submit" class="btn-submit-community" id="btn-submit-comm-form"
+            style="padding:12px 28px; font-size:0.95rem; font-weight:800;">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Đăng Chia Sẻ Bản Dịch
           </button>
         </footer>
       </form>
@@ -684,7 +995,7 @@
   </div>
 
   <!-- ==========================================================================
-       7. GLOBAL FOOTER
+       9. GLOBAL FOOTER
        ========================================================================== -->
   <footer class="main-footer">
     <div class="container">
@@ -694,13 +1005,15 @@
             <div class="logo-icon"><i class="fa-solid fa-store"></i></div>
             <span class="logo-text">TẠP HÓA <span>VIỆT</span></span>
           </div>
-          <p>Thư viện phi thương mại lưu trữ và chia sẻ các bản dịch game PC từ hệ thống VietHoaGame. Chúng tôi khuyến khích người chơi luôn mua game bản quyền trên Steam, GOG hoặc Epic Games để ủng hộ nhà phát triển.</p>
+          <p>Thư viện phi thương mại lưu trữ và chia sẻ các bản dịch game PC từ hệ thống VietHoaGame. Chúng tôi khuyến
+            khích người chơi luôn mua game bản quyền trên Steam, GOG hoặc Epic Games để ủng hộ nhà phát triển.</p>
         </div>
         <div class="footer-col">
           <h4>Điều Hướng</h4>
           <ul>
             <li><a href="#catalog" data-tab="catalog">Kho Sưu Tập Game</a></li>
             <li><a href="#progress" data-tab="progress">Xưởng Dịch & Tiến Độ</a></li>
+            <li><a href="#community" data-tab="community">Góc Dịch Cộng Đồng</a></li>
             <li><a href="#requests" data-tab="requests">Sổ Đề Xuất Dịch</a></li>
             <li><a href="#library" data-tab="library">Bộ Sưu Tập Cá Nhân</a></li>
           </ul>
@@ -708,14 +1021,18 @@
         <div class="footer-col">
           <h4>Quản Trị & Cộng Đồng</h4>
           <ul>
-            <li><a href="https://discord.com" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i> Discord VietHoaGame</a></li>
-            <li><a href="javascript:void(0)" onclick="BugReporter.openModal()"><i class="fa-solid fa-bug"></i> Báo Lỗi Bản Dịch</a></li>
-            <li><a href="#admin" onclick="AdminStudio.open()"><i class="fa-solid fa-sliders"></i> Studio Quản Trị (Admin)</a></li>
+            <li><a href="https://discord.com" target="_blank" rel="noopener noreferrer"><i
+                  class="fa-brands fa-discord"></i> Discord VietHoaGame</a></li>
+            <li><a href="javascript:void(0)" onclick="BugReporter.openModal()"><i class="fa-solid fa-bug"></i> Báo Lỗi
+                Bản Dịch</a></li>
+            <li><a href="#admin" onclick="AdminStudio.open()"><i class="fa-solid fa-sliders"></i> Studio Quản Trị
+                (Admin)</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <div>&copy; 2026 Tạp Hóa Việt / VietHoaGame Repository. Bản quyền các hình ảnh và thương hiệu thuộc về nhà phát hành game tương ứng.</div>
+        <div>&copy; 2026 Tạp Hóa Việt / VietHoaGame Repository. Bản quyền các hình ảnh và thương hiệu thuộc về nhà phát
+          hành game tương ứng.</div>
         <div>Tự hào xây dựng vì cộng đồng game thủ Việt Nam.</div>
       </div>
     </div>
@@ -730,10 +1047,12 @@
   <script src="js/library.js"></script>
   <script src="js/catalog.js"></script>
   <script src="js/progress.js"></script>
+  <script src="js/community.js"></script>
   <script src="js/requests.js"></script>
   <script src="js/bug_reporter.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/app.js"></script>
 
 </body>
+
 </html>

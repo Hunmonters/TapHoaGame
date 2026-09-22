@@ -27,6 +27,7 @@ const App = {
     if (window.Library) Library.init(this.games);
     if (window.Catalog) Catalog.init(this.games);
     if (window.Progress) Progress.init(this.games);
+    if (window.Community) Community.init(this.games);
     if (window.Requests) Requests.init(this.requests);
     if (window.BugReporter) BugReporter.init(this.games);
     if (window.AdminStudio) AdminStudio.init(this.games);
@@ -142,6 +143,8 @@ const App = {
       Library.render();
     } else if (tabId === "progress" && window.Progress) {
       Progress.render();
+    } else if (tabId === "community" && window.Community) {
+      Community.render();
     } else if (tabId === "requests" && window.Requests) {
       Requests.render();
     }
@@ -172,7 +175,7 @@ const App = {
       return;
     }
 
-    if (["catalog", "progress", "requests", "library"].includes(hash)) {
+    if (["catalog", "progress", "community", "requests", "library"].includes(hash)) {
       this.switchTab(hash);
       return;
     }
@@ -201,6 +204,27 @@ const App = {
     // Thông tin cơ bản
     document.getElementById("detail-title").textContent = game.title;
     document.getElementById("detail-original").textContent = game.original_title;
+
+    // Callout tác giả nếu là bản dịch cộng đồng
+    const commCallout = document.getElementById("detail-community-callout");
+    if (commCallout) {
+      if (game.is_community) {
+        commCallout.innerHTML = `
+          <div class="detail-author-callout">
+            <i class="fa-solid fa-users"></i>
+            <div class="detail-author-callout-text">
+              Bản dịch đóng góp bởi: <strong>${game.author || "Cộng Đồng"}</strong>
+              ${game.author_link ? `<a href="${game.author_link}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ghé thăm nhóm</a>` : ""}
+            </div>
+          </div>
+        `;
+        commCallout.style.display = "block";
+      } else {
+        commCallout.innerHTML = "";
+        commCallout.style.display = "none";
+      }
+    }
+
     const engineBadge = document.getElementById("detail-engine-badge");
     if (engineBadge) engineBadge.textContent = game.engine || "";
     document.getElementById("detail-version-val").textContent = game.patch_version;

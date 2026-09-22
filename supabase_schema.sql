@@ -34,6 +34,9 @@ CREATE TABLE IF NOT EXISTS public.games (
     badge TEXT,
     cover_color TEXT DEFAULT '#111822',
     cover_image TEXT,
+    is_community BOOLEAN DEFAULT false,
+    author TEXT,
+    author_link TEXT,
     created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
 );

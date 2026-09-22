@@ -37,7 +37,32 @@ const AdminStudio = {
       document.getElementById("admin-login-view").style.display = "block";
       document.getElementById("admin-dashboard-view").style.display = "none";
       const pinInput = document.getElementById("admin-pin-field");
-      if (pinInput) pinInput.focus();
+      const pinStatus = document.getElementById("admin-pin-status");
+      if (pinInput) {
+        pinInput.value = "";
+        pinInput.type = "password";
+        const eyeIcon = document.getElementById("icon-pin-eye");
+        if (eyeIcon) eyeIcon.className = "fa-regular fa-eye";
+        pinInput.focus();
+      }
+      if (pinStatus) {
+        pinStatus.textContent = "Chưa nhập mã PIN";
+        pinStatus.style.color = "var(--text-muted)";
+      }
+    }
+  },
+
+  togglePinVisibility() {
+    const pinInput = document.getElementById("admin-pin-field");
+    const eyeIcon = document.getElementById("icon-pin-eye");
+    if (!pinInput) return;
+
+    if (pinInput.type === "password") {
+      pinInput.type = "text";
+      if (eyeIcon) eyeIcon.className = "fa-regular fa-eye-slash";
+    } else {
+      pinInput.type = "password";
+      if (eyeIcon) eyeIcon.className = "fa-regular fa-eye";
     }
   },
 
@@ -76,12 +101,27 @@ const AdminStudio = {
         <td><b>${idx + 1}</b></td>
         <td>
           <div style="display:flex; align-items:center; gap:10px;">
-            <img src="${coverSrc}" alt="" style="width:34px; height:45px; object-fit:cover; border-radius:4px; border:1px solid var(--border-subtle);" onerror="this.style.display='none'">
+            <img src="${coverSrc}" alt="" style="width:52px; height:24px; object-fit:cover; border-radius:4px; border:1px solid #121316;" onerror="this.style.display='none'">
             <div>
-              <strong style="color:var(--text-primary); display:block; line-height:1.2;">${g.title}</strong>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <strong style="color:var(--text-primary); line-height:1.2;">${g.title}</strong>
+                ${g.is_community ? `
+                  <span style="font-size:0.68rem; background:#7C3AED; color:#FFF; padding:1px 6px; border-radius:4px; font-weight:800; white-space:nowrap;">
+                    <i class="fa-solid fa-users"></i> ${g.author || "Cộng Đồng"}
+                  </span>
+                ` : ""}
+              </div>
               <small style="color:var(--text-muted); font-size:0.75rem;">${g.original_title || g.id}</small>
             </div>
           </div>
+        </td>
+        <td style="text-align:center;">
+          <button class="btn-admin-star ${g.featured ? "active" : ""}" 
+                  type="button"
+                  title="${g.featured ? "Đang ghim Spotlight (Bấm để gỡ)" : "Bấm để đưa lên Spotlight Nổi Bật"}" 
+                  onclick="AdminStudio.toggleSpotlight('${g.id}')">
+            <i class="${g.featured ? "fa-solid" : "fa-regular"} fa-star"></i>
+          </button>
         </td>
         <td><span class="tag-size" style="font-size:0.75rem; padding:3px 8px;"><i class="fa-solid fa-bolt"></i> ${g.size || "Gọn nhẹ"}</span></td>
         <td><small style="font-family:var(--font-mono);">${g.game_version || "1.0"}</small></td>
@@ -173,6 +213,9 @@ const AdminStudio = {
     document.getElementById("edit-game-dl-url").value = "";
     document.getElementById("edit-game-cover-url").value = "";
 
+    const featBox = document.getElementById("edit-game-featured");
+    if (featBox) featBox.checked = true;
+
     // Reset preview
     this.selectedCoverFile = null;
     this.selectedCoverBase64 = null;
@@ -221,6 +264,9 @@ const AdminStudio = {
     
     const dl = (game.download_links && game.download_links[0]) ? game.download_links[0].url : "";
     document.getElementById("edit-game-dl-url").value = dl;
+
+    const featBoxEdit = document.getElementById("edit-game-featured");
+    if (featBoxEdit) featBoxEdit.checked = !!game.featured;
 
     const cover = game.cover_image || `assets/covers/${game.id}.jpg`;
     document.getElementById("edit-game-cover-url").value = game.cover_image || "";
@@ -334,6 +380,8 @@ const AdminStudio = {
     gameObj.cover_image = coverImage;
     gameObj.summary = document.getElementById("edit-game-summary").value.trim();
     gameObj.description = document.getElementById("edit-game-desc").value.trim();
+    const featBox = document.getElementById("edit-game-featured");
+    gameObj.featured = featBox ? featBox.checked : false;
 
     gameObj.progress = {
       overall: overall,
@@ -381,6 +429,7 @@ const AdminStudio = {
     this.renderGamesTable();
     if (window.Catalog) Catalog.init(this.games);
     if (window.Progress) Progress.init(this.games);
+    if (window.Community) Community.init(this.games);
     if (window.Library) Library.init(this.games);
 
     this.closeGameModal();
@@ -413,9 +462,41 @@ const AdminStudio = {
     this.renderGamesTable();
     if (window.Catalog) Catalog.init(this.games);
     if (window.Progress) Progress.init(this.games);
+    if (window.Community) Community.init(this.games);
     if (window.Library) Library.init(this.games);
 
     App.showToast(`Đã xóa "${game.title}" khỏi hệ thống.`);
+  },
+
+  async toggleSpotlight(gameId) {
+    const game = this.games.find(g => g.id === gameId);
+    if (!game) return;
+
+    game.featured = !game.featured;
+
+    // Lưu vào Supabase Cloud nếu khả dụng
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      try {
+        await SupabaseClient.upsertGame(game);
+      } catch (err) {
+        console.warn("[Admin] Lỗi cập nhật Spotlight lên Supabase:", err);
+      }
+    }
+
+    try {
+      localStorage.setItem("thv_custom_games", JSON.stringify(this.games));
+    } catch (e) {}
+
+    // Đồng bộ lại UI toàn bộ trang web
+    App.games = this.games;
+    this.renderGamesTable();
+    if (window.Catalog) Catalog.init(this.games);
+
+    if (game.featured) {
+      App.showToast(`⭐ Đã đưa "${game.title}" lên Spotlight Mới Cập Nhật!`);
+    } else {
+      App.showToast(`Đã gỡ "${game.title}" khỏi Spotlight.`);
+    }
   },
 
   editGame(gameId) {
@@ -474,6 +555,23 @@ const AdminStudio = {
         e.preventDefault();
         const pin = document.getElementById("admin-pin-field").value;
         this.login(pin);
+      };
+    }
+
+    const pinField = document.getElementById("admin-pin-field");
+    const pinStatus = document.getElementById("admin-pin-status");
+    if (pinField) {
+      pinField.oninput = (e) => {
+        const len = e.target.value.length;
+        if (pinStatus) {
+          if (len === 0) {
+            pinStatus.textContent = "Chưa nhập mã PIN";
+            pinStatus.style.color = "var(--text-muted)";
+          } else {
+            pinStatus.textContent = `Đã nhập: ${len} ký tự`;
+            pinStatus.style.color = "var(--accent-orange)";
+          }
+        }
       };
     }
 

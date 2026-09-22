@@ -1,0 +1,780 @@
+/* ==========================================================================
+   TẠP HÓA VIỆT / COMMUNITY HUB STYLESHEET (community.css)
+   Phong cách Retro Neubrutalist Editorial Kem & Cam (Cream & Orange)
+   Chuẩn tỉ lệ Banner Steam 460 x 215, Viền đen #121316, Đổ bóng đặc trưng
+   ========================================================================== */
+
+/* ==========================================================================
+   1. COMMUNITY MASTHEAD (HERO BANNER)
+   ========================================================================== */
+.community-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.community-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  background: var(--bg-card, #FFFFFF);
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-lg, 16px);
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md, 4px 4px 0px #121316);
+  position: relative;
+  overflow: hidden;
+}
+
+.community-masthead::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #EA4828, #F59E0B, #10B981, #0284C7, #7C3AED);
+}
+
+.community-masthead-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.community-masthead-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--accent-orange, #EA4828);
+  background: rgba(234, 72, 40, 0.1);
+  padding: 4px 12px;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid rgba(234, 72, 40, 0.25);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.community-masthead-title {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: var(--text-primary, #121316);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.community-masthead-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary, #57534E);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+.community-masthead-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-submit-community {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent-orange, #EA4828);
+  color: #FFFFFF !important;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: var(--radius-md, 10px);
+  border: 2px solid var(--border-strong, #121316);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.btn-submit-community:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--border-strong, #121316);
+  background: var(--accent-orange-hover, #CE3214);
+}
+
+.btn-submit-community:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+}
+
+/* Masthead Metrics */
+.community-metrics {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.comm-metric-item {
+  background: var(--bg-surface, #EFE9DC);
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-md, 12px);
+  padding: 14px 20px;
+  text-align: center;
+  min-width: 120px;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+}
+
+.comm-metric-item dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted, #888275);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.comm-metric-item dd {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text-primary, #121316);
+  margin: 0;
+  font-family: var(--font-mono, monospace);
+  line-height: 1;
+}
+
+/* ==========================================================================
+   2. COMMUNITY TOOLBAR (SEARCH & FILTERS)
+   ========================================================================== */
+.community-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.comm-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+}
+
+.comm-search-wrap i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted, #888275);
+  font-size: 0.95rem;
+}
+
+.comm-search-input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #FFFFFF;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-full, 9999px);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  color: var(--text-primary, #121316);
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.comm-search-input:focus {
+  border-color: var(--accent-orange, #EA4828);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+}
+
+.comm-filters-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.comm-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface, #EFE9DC);
+  padding: 4px;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid var(--border-subtle, #E2DAC8);
+}
+
+.comm-pill {
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: var(--radius-full, 9999px);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary, #57534E);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comm-pill:hover {
+  color: var(--text-primary, #121316);
+  background: rgba(234, 72, 40, 0.08);
+}
+
+.comm-pill.active {
+  background: var(--accent-orange, #EA4828);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(234, 72, 40, 0.35);
+}
+
+.comm-sort-select {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--text-primary, #121316);
+  background: #FFFFFF;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-full, 9999px);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  cursor: pointer;
+  outline: none;
+}
+
+/* ==========================================================================
+   3. COMMUNITY GRID & GAME CARDS (460 x 215 STEAM STANDARD)
+   ========================================================================== */
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 24px;
+}
+
+.comm-card {
+  background: #FFFFFF;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-md, 14px);
+  overflow: hidden;
+  box-shadow: var(--shadow-md, 4px 4px 0px #121316);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.comm-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px var(--border-strong, #121316);
+}
+
+/* Poster Frame 460 x 215 */
+.comm-poster-wrap {
+  width: 100%;
+  aspect-ratio: 460 / 215;
+  position: relative;
+  overflow: hidden;
+  background: #18181B;
+  border-bottom: 2px solid var(--border-strong, #121316);
+}
+
+.comm-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.comm-card:hover .comm-poster-img {
+  transform: scale(1.04);
+}
+
+/* Top Badges on Poster */
+.comm-poster-top {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.comm-badge-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  background: #7C3AED;
+  border: 1.5px solid var(--border-strong, #121316);
+  border-radius: 6px;
+  padding: 3px 8px;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.comm-bookmark-btn {
+  pointer-events: auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-strong, #121316);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary, #57534E);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.comm-bookmark-btn:hover {
+  color: var(--accent-orange, #EA4828);
+  transform: scale(1.08);
+}
+
+.comm-bookmark-btn.active {
+  background: var(--accent-orange, #EA4828);
+  color: #FFFFFF;
+}
+
+/* Quick download bar on poster hover */
+.comm-quick-dl {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: #10B981;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border-strong, #121316);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.92;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.comm-card:hover .comm-quick-dl {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+}
+
+/* Card Body */
+.comm-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.comm-author-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.comm-author-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--accent-orange, #EA4828);
+  background: rgba(234, 72, 40, 0.08);
+  padding: 3px 9px;
+  border-radius: 6px;
+  border: 1px solid rgba(234, 72, 40, 0.2);
+}
+
+.comm-author-badge i {
+  font-size: 0.75rem;
+}
+
+.comm-author-link {
+  font-size: 0.75rem;
+  color: var(--accent-cyan, #0284C7);
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.comm-author-link:hover {
+  text-decoration: underline;
+}
+
+.comm-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary, #121316);
+  margin-bottom: 6px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.comm-summary {
+  font-size: 0.83rem;
+  color: var(--text-secondary, #57534E);
+  line-height: 1.45;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.comm-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 0.75rem;
+  color: var(--text-muted, #888275);
+}
+
+.comm-meta-pill {
+  background: var(--bg-surface, #EFE9DC);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  color: var(--text-secondary, #57534E);
+  border: 1px solid var(--border-subtle, #E2DAC8);
+}
+
+.comm-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-subtle, #E2DAC8);
+}
+
+.btn-comm-download {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #10B981;
+  color: #FFFFFF !important;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--border-strong, #121316);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-comm-download:hover {
+  background: #059669;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+}
+
+.btn-comm-detail {
+  padding: 9px 12px;
+  background: #FFFFFF;
+  color: var(--text-primary, #121316);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 2px solid var(--border-strong, #121316);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-comm-detail:hover {
+  background: var(--bg-surface, #EFE9DC);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+}
+
+/* ==========================================================================
+   4. COMMUNITY SUBMISSION MODAL
+   ========================================================================== */
+.community-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 19, 22, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.community-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.community-modal-box {
+  width: 100%;
+  max-width: 760px;
+  height: 88vh;
+  max-height: 88vh;
+  background: #FFFFFF;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: 6px 6px 0px var(--border-strong, #121316);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.community-modal-header {
+  padding: 18px 24px;
+  background: var(--bg-surface, #EFE9DC);
+  border-bottom: 2px solid var(--border-strong, #121316);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.community-modal-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.community-modal-header-title i {
+  width: 38px;
+  height: 38px;
+  background: var(--accent-orange, #EA4828);
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+}
+
+.community-modal-header-title h3 {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--text-primary, #121316);
+  margin: 0;
+}
+
+#form-community-submit {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: calc(100% - 76px);
+  overflow: hidden;
+}
+
+.community-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  min-height: 0;
+}
+
+.comm-notice-box {
+  background: rgba(234, 72, 40, 0.08);
+  border: 1.5px solid rgba(234, 72, 40, 0.25);
+  border-radius: var(--radius-md, 10px);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #57534E);
+}
+
+.comm-notice-box i {
+  color: var(--accent-orange, #EA4828);
+  font-size: 1.1rem;
+  margin-top: 2px;
+}
+
+.comm-notice-box strong {
+  color: var(--text-primary, #121316);
+}
+
+.comm-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.comm-form-col-full {
+  grid-column: 1 / -1;
+}
+
+.community-modal-footer {
+  padding: 16px 24px;
+  background: var(--bg-surface, #EFE9DC);
+  border-top: 2px solid var(--border-strong, #121316);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+  z-index: 10;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 460x215 Live Preview Inside Submission Modal */
+.comm-cover-preview-wrap {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 460 / 215;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: 8px;
+  background: #18181B;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+}
+
+.comm-cover-preview-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comm-cover-preview-empty {
+  text-align: center;
+  color: var(--text-muted, #888275);
+  font-size: 0.8rem;
+  padding: 10px;
+}
+
+.comm-cover-preview-empty i {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* ==========================================================================
+   5. DETAIL MODAL AUTHOR CALLOUT
+   ========================================================================== */
+.detail-author-callout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(124, 58, 237, 0.08);
+  border: 1.5px solid rgba(124, 58, 237, 0.3);
+  border-radius: var(--radius-md, 10px);
+  padding: 10px 16px;
+  margin-top: 12px;
+  margin-bottom: 14px;
+}
+
+.detail-author-callout i {
+  font-size: 1.2rem;
+  color: #7C3AED;
+}
+
+.detail-author-callout-text {
+  font-size: 0.88rem;
+  color: var(--text-primary, #121316);
+}
+
+.detail-author-callout-text strong {
+  color: #7C3AED;
+}
+
+.detail-author-callout a {
+  color: #7C3AED;
+  font-weight: 700;
+  text-decoration: underline;
+  margin-left: 4px;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 768px) {
+  .community-masthead {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .community-metrics {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .comm-metric-item {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 8px;
+  }
+
+  .comm-metric-item dd {
+    font-size: 1.3rem;
+  }
+
+  .comm-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   7. FLOATING ACTION BUTTON (NÚT ĐĂNG BẢN DỊCH NỔI CỐ ĐỊNH)
+

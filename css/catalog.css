@@ -546,7 +546,7 @@
 }
 
 /* ==========================================================================
-   4. GAMES GRID & GAME CARDS (Chuẩn Poster 3:4)
+   4. GAMES GRID & GAME CARDS (Chuẩn Banner Steam 460 x 215)
    ========================================================================== */
 .catalog-head {
   display: flex;
@@ -566,11 +566,75 @@
   font-family: var(--font-mono);
 }
 
+/* Phân nhóm Thư Viện Bản Dịch (Hoàn Thành & Đang Dịch) */
+.catalog-group-section {
+  margin-bottom: 48px;
+}
+
+.catalog-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-strong, #121316);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.catalog-group-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.catalog-group-title h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+  margin: 0;
+}
+
+.group-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+}
+
+.group-badge.ready {
+  background: #059669;
+  color: #FFFFFF;
+  border: 1.5px solid #121316;
+  box-shadow: 2px 2px 0px #121316;
+}
+
+.group-badge.wip {
+  background: #EA4828;
+  color: #FFFFFF;
+  border: 1.5px solid #121316;
+  box-shadow: 2px 2px 0px #121316;
+}
+
+.catalog-group-count {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   gap: 24px;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }
 
 .game-card {
@@ -595,7 +659,7 @@
 .card-poster-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 460 / 215;
   overflow: hidden;
   background: #111822;
   display: flex;

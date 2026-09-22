@@ -576,5 +576,266 @@
     "badge": "TIẾN ĐỘ 25%",
     "cover_color": "#3D372E",
     "cover_image": "assets/covers/manor-lords.jpg"
+  },
+  {
+    "id": "black-myth-wukong",
+    "title": "Black Myth: Wukong (Hắc Thần Thoại: Ngộ Không)",
+    "original_title": "Black Myth: Wukong",
+    "developer": "Game Science",
+    "publisher": "Game Science (AppID: 2358720)",
+    "engine": "Unreal Engine 5",
+    "engine_category": "ue",
+    "platforms": [
+      "PC Windows"
+    ],
+    "game_version": "v1.0.8 Shipping",
+    "patch_version": "v1.2.0 (The Red Team)",
+    "size": "1.4 GB",
+    "sha256": "b8a92e1059f3d9943dc7a5ea79c78736e4f3a9e36cfbf6f16f5c88b4081cde21",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": true,
+    "is_community": true,
+    "author": "The Red Team",
+    "author_link": "https://theredteam.vn",
+    "release_date": "2026-08-28",
+    "downloads_count": 18450,
+    "summary": "Bản dịch tiếng Việt 100% cốt truyện, từ điển du ký Tây Du Ký và toàn bộ giao diện chiêu thức từ nhóm dịch The Red Team.",
+    "description": "Bản dịch kỳ công cho siêu phẩm hành động Hắc Thần Thoại: Ngộ Không. The Red Team đã tra cứu điển tích văn học cổ điển, thơ văn Đường thi trong nguyên tác Tây Du Ký để mang lại câu chữ chuẩn xác và truyền cảm nhất cho game thủ Việt Nam.",
+    "install_guide": [
+      "Tải bộ cài đặt Việt hóa từ Google Drive về máy tính.",
+      "Giải nén và chạy file 'BlackMythWukong_VietHoa_TheRedTeam.exe', trỏ vào thư mục cài đặt game.",
+      "Bấm Cài Đặt và vào game thưởng thức bản Việt hóa trọn vẹn."
+    ],
+    "rollback_guide": [
+      "Xóa file 'b1_VietHoa_TheRedTeam.pak' trong thư mục 'b1/Content/Paks/~mods/' hoặc Verify Integrity trên Steam."
+    ],
+    "files_affected": [
+      "b1/Content/Paks/~mods/b1_VietHoa_TheRedTeam.pak"
+    ],
+    "changelog": [
+      "v1.2.0: Tương thích bản cập nhật mới nhất của Game Science, bổ sung dịch toàn bộ thần thoại Tây Du",
+      "v1.0.0: Phát hành bản dịch hoàn tất 100% hội thoại và giao diện"
+    ],
+    "credits": [
+      {
+        "name": "The Red Team",
+        "role": "Nhóm dịch & Biên dịch chính"
+      },
+      {
+        "name": "Cộng đồng The Red Team",
+        "role": "Kiểm thử QA & Hỗ trợ kỹ thuật"
+      }
+    ],
+    "download_links": [
+      {
+        "name": "Google Drive",
+        "url": "https://drive.google.com/file/d/1BM_Wukong_VietHoa_TRT/view?usp=sharing",
+        "server": "Google Drive VIP (Tốc độ cao)",
+        "note": "Bản cài đặt 1 chạm chính thức từ The Red Team"
+      }
+    ],
+    "badge": "THE RED TEAM",
+    "cover_color": "#1E1A16",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg"
+  },
+  {
+    "id": "hollow-knight",
+    "title": "Hollow Knight (Hiệp Sĩ Rỗng)",
+    "original_title": "Hollow Knight",
+    "developer": "Team Cherry",
+    "publisher": "Team Cherry (AppID: 367520)",
+    "engine": "Unity",
+    "engine_category": "unity",
+    "platforms": [
+      "PC Windows",
+      "Steam Deck"
+    ],
+    "game_version": "v1.5.78 (Steam)",
+    "patch_version": "v2.1.0 (Cánh Cụt Team)",
+    "size": "125.6 MB",
+    "sha256": "721b0ac5e9a4f4d2f8e1234907cb5ae098273618491bb48d390a4fa1458e0a29",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": false,
+    "is_community": true,
+    "author": "Cánh Cụt Team",
+    "author_link": "https://canhcut.team",
+    "release_date": "2026-07-15",
+    "downloads_count": 9820,
+    "summary": "Bản Việt hóa trau chuốt từng bài thơ, lời thoại và bia đá vương quốc Hallownest của nhóm Cánh Cụt Team.",
+    "description": "Khám phá vương quốc cổ xưa đổ nát Hallownest với bản dịch tiếng Việt giàu chất thơ và huyền bí từ nhóm Cánh Cụt Team. Tương thích hoàn hảo cả PC và Steam Deck.",
+    "install_guide": [
+      "Tải file zip bản Việt hóa Hollow Knight từ Google Drive.",
+      "Giải nén và chép thư mục 'hollow_knight_Data' đè vào thư mục gốc cài đặt game.",
+      "Khởi động game, vào Options > Language và chọn 'Tiếng Việt'."
+    ],
+    "rollback_guide": [
+      "Verify integrity of game files trên Steam để phục hồi nguyên bản tiếng Anh."
+    ],
+    "files_affected": [
+      "hollow_knight_Data/Managed/Assembly-CSharp.dll"
+    ],
+    "changelog": [
+      "v2.1.0: Tinh chỉnh font chữ nghệ thuật trên Steam Deck, sửa một số lỗi mô tả bùa chú",
+      "v2.0.0: Bản dịch hoàn tất 100% kèm toàn bộ DLC"
+    ],
+    "credits": [
+      {
+        "name": "Cánh Cụt Team",
+        "role": "Dịch thuật & Thiết kế font việt hóa"
+      }
+    ],
+    "download_links": [
+      {
+        "name": "Google Drive",
+        "url": "https://drive.google.com/file/d/1HollowKnight_CanhCut_VietHoa/view?usp=sharing",
+        "server": "Google Drive",
+        "note": "Bản vá chính thức từ Cánh Cụt Team"
+      }
+    ],
+    "badge": "CÁNH CỤT TEAM",
+    "cover_color": "#18222E",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg"
+  },
+  {
+    "id": "persona-5-royal",
+    "title": "Persona 5 Royal (Chiến Binh Persona 5)",
+    "original_title": "Persona 5 Royal",
+    "developer": "ATLUS",
+    "publisher": "SEGA (AppID: 1687950)",
+    "engine": "In-house (GMD)",
+    "engine_category": "other",
+    "platforms": [
+      "PC Windows"
+    ],
+    "game_version": "v1.0.3 (Steam)",
+    "patch_version": "v1.5.0 (Hội Game Á Châu)",
+    "size": "850.4 MB",
+    "sha256": "cf3e9204859a4b87c2b3e4f1a23849501a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": true,
+    "is_community": true,
+    "author": "Hội Game Á Châu",
+    "author_link": "https://facebook.com/HoiGameAChau",
+    "release_date": "2026-06-20",
+    "downloads_count": 14200,
+    "summary": "Dự án dịch thuật đồ sộ hơn 2 triệu từ với văn phong trẻ trung, hiện đại và chuẩn cá tính học đường Tokyo từ Hội Game Á Châu.",
+    "description": "Gia nhập nhóm Phantom Thieves giải cứu trái tim những kẻ tha hóa tại Tokyo. Bản dịch quy mô khổng lồ của Hội Game Á Châu chuyển tải trọn vẹn từng câu khẩu ngữ học đường và phong cách UI truyện tranh độc đáo của Persona 5 Royal.",
+    "install_guide": [
+      "Tải tệp nén P5R_VietHoa_HGAC.zip từ link Google Drive bên dưới.",
+      "Giải nén và chạy file 'P5R_Patch_Installer.exe', trỏ vào thư mục game Steam.",
+      "Nhấn Hoàn Tất và vào game thưởng thức giao diện tiếng Việt sành điệu."
+    ],
+    "rollback_guide": [
+      "Xóa thư mục mod trong P5R hoặc Verify Integrity trên Steam."
+    ],
+    "files_affected": [
+      "CPK/data.cpk"
+    ],
+    "changelog": [
+      "v1.5.0: Hoàn tất trọn vẹn cốt truyện mở rộng học kỳ 3 (Third Semester)",
+      "v1.0.0: Phát hành bản dịch cốt truyện chính"
+    ],
+    "credits": [
+      {
+        "name": "Hội Game Á Châu",
+        "role": "Chủ trì dự án & Biên dịch"
+      }
+    ],
+    "download_links": [
+      {
+        "name": "Google Drive",
+        "url": "https://drive.google.com/file/d/1P5R_HGAC_VietHoa_Full/view?usp=sharing",
+        "server": "Google Drive",
+        "note": "Bản phát hành chính thức từ Hội Game Á Châu"
+      }
+    ],
+    "badge": "HỘI GAME Á CHÂU",
+    "cover_color": "#3D1014",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1687950/header.jpg"
+  },
+  {
+    "id": "elden-ring",
+    "title": "Elden Ring: Bóng Tối Của Cây Vàng",
+    "original_title": "Elden Ring",
+    "developer": "FromSoftware",
+    "publisher": "Bandai Namco (AppID: 1245620)",
+    "engine": "Dantelion",
+    "engine_category": "other",
+    "platforms": [
+      "PC Windows"
+    ],
+    "game_version": "v1.14 (Steam)",
+    "patch_version": "v2.5.0 (Nam Phong)",
+    "size": "68.2 MB",
+    "sha256": "9182374650192837465019283746501928374650192837465019283746501928",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": false,
+    "is_community": true,
+    "author": "Dịch Giả Nam Phong",
+    "author_link": "https://discord.com",
+    "release_date": "2026-09-02",
+    "downloads_count": 16300,
+    "summary": "Bản dịch thuật huyền học Hán Việt xuất sắc cho vùng đất The Lands Between và Shadow Realm từ Dịch Giả Nam Phong.",
+    "description": "Bản Việt hóa sử dụng hệ thống từ vựng Hán Việt thâm trầm, chuẩn văn phong sử thi thần thoại của George R.R. Martin và Hidetaka Miyazaki. Đầy đủ cả bản gốc lẫn DLC Shadow of the Erdtree.",
+    "install_guide": [
+      "Tải tệp zip từ link Google Drive.",
+      "Giải nén thư mục 'mod' vào thư mục 'Game' của Elden Ring (kèm ModEngine2).",
+      "Khởi động bằng 'launchmod_eldenring.bat' để chơi offline an toàn tuyệt đối."
+    ],
+    "rollback_guide": [
+      "Xóa thư mục mod hoặc chạy game qua file eldenring.exe gốc."
+    ],
+    "files_affected": [
+      "Game/mod/msg/vie/"
+    ],
+    "changelog": [
+      "v2.5.0: Cập nhật trọn vẹn toàn bộ vật phẩm, vũ khí và hội thoại DLC Bóng Tối Của Cây Vàng",
+      "v2.0.0: Chuẩn hóa hệ thống danh xưng Á thần và Thần thánh"
+    ],
+    "credits": [
+      {
+        "name": "Dịch Giả Nam Phong",
+        "role": "Dịch giả độc lập & Lore Master"
+      }
+    ],
+    "download_links": [
+      {
+        "name": "Google Drive",
+        "url": "https://drive.google.com/file/d/1EldenRing_NamPhong_VietHoa/view?usp=sharing",
+        "server": "Google Drive",
+        "note": "Bản dịch độc lập của Nam Phong"
+      }
+    ],
+    "badge": "NAM PHONG",
+    "cover_color": "#2C2618",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg"
   }
 ]
