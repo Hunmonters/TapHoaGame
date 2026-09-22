@@ -104,13 +104,14 @@ const Requests = {
   /**
    * Người dùng gửi đề xuất dịch tựa game mới
    */
-  addRequest(title, url, why) {
+  addRequest(title, url, why, coverUrl) {
     const newReq = {
       id: "req-" + Date.now(),
       title: title.trim(),
       engine: "PC",
       url: (url || "").trim(),
       why: (why || "").trim() || "Cộng đồng mong muốn được thưởng thức bản dịch tiếng Việt.",
+      cover_url: (coverUrl || "").trim(),
       votes: 1
     };
 
@@ -159,26 +160,37 @@ const Requests = {
       const isTop3 = idx < 3;
       const rankClass = idx === 0 ? "rank-gold" : idx === 1 ? "rank-silver" : idx === 2 ? "rank-bronze" : "";
 
+      // Ảnh bìa nếu có (Steam header URL hoặc ảnh người dùng tải lên)
+      const coverHtml = r.cover_url ? `
+        <div style="width:100%; aspect-ratio:460/215; overflow:hidden; border-radius:8px 8px 0 0; border-bottom:2px solid var(--border-strong,#121316); position:relative; background:#111;">
+          <img src="${r.cover_url}" alt="${r.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.parentElement.style.display='none'">
+          <div style="position:absolute; bottom:0; left:0; right:0; height:60%; background:linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);"></div>
+        </div>
+      ` : "";
+
       return `
-        <div class="request-item">
-          <button class="btn-vote ${hasVoted ? "voted" : ""}" onclick="Requests.toggleVote('${r.id}')" title="${hasVoted ? "Hủy bình chọn" : "Bình chọn cho tựa game này"}">
-            <i class="fa-solid fa-arrow-up"></i>
-            <span>${r.votes || 0}</span>
-          </button>
-          <div class="req-details">
-            <div class="req-title">
-              <span class="req-rank-pill ${rankClass}">#${idx + 1}</span>
-              <strong style="font-size:1.1rem; color:var(--text-primary);">${r.title}</strong>
-              ${isTop3 ? `<span class="req-top-tag"><i class="fa-solid fa-fire"></i> Top đề cử</span>` : ""}
-            </div>
-            <p class="req-why">${r.why}</p>
-            ${r.url ? `
-              <div class="req-links">
-                <a href="${r.url}" target="_blank" rel="noopener noreferrer">
-                  <i class="fa-brands fa-steam"></i> Steam Store <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.75rem; margin-left:2px;"></i>
-                </a>
+        <div class="request-item ${r.cover_url ? 'has-cover' : ''}">
+          ${coverHtml}
+          <div class="req-inner-row">
+            <button class="btn-vote ${hasVoted ? "voted" : ""}" onclick="Requests.toggleVote('${r.id}')" title="${hasVoted ? "Hủy bình chọn" : "Bình chọn cho tựa game này"}">
+              <i class="fa-solid fa-arrow-up"></i>
+              <span>${r.votes || 0}</span>
+            </button>
+            <div class="req-details">
+              <div class="req-title">
+                <span class="req-rank-pill ${rankClass}">#${idx + 1}</span>
+                <strong style="font-size:1.1rem; color:var(--text-primary);">${r.title}</strong>
+                ${isTop3 ? `<span class="req-top-tag"><i class="fa-solid fa-fire"></i> Top đề cử</span>` : ""}
               </div>
-            ` : ""}
+              <p class="req-why">${r.why}</p>
+              ${r.url ? `
+                <div class="req-links">
+                  <a href="${r.url}" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-steam"></i> Steam Store <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.75rem; margin-left:2px;"></i>
+                  </a>
+                </div>
+              ` : ""}
+            </div>
           </div>
         </div>
       `;
@@ -194,15 +206,110 @@ const Requests = {
       const titleInput = document.getElementById("req-input-title");
       const urlInput = document.getElementById("req-input-url");
       const whyInput = document.getElementById("req-input-why");
+      const coverUrlInput = document.getElementById("req-input-cover-url");
 
       const title = titleInput ? titleInput.value : "";
       const url = urlInput ? urlInput.value : "";
       const why = whyInput ? whyInput.value : "";
+      const coverUrl = (coverUrlInput && coverUrlInput.value.trim()) ? coverUrlInput.value.trim()
+        : (this._reqCoverDataUrl || "");
 
       if (!title || !title.trim()) return;
-      this.addRequest(title, url, why);
+      this.addRequest(title, url, why, coverUrl);
       form.reset();
+      // Reset preview
+      this._reqCoverDataUrl = "";
+      const wrap = document.getElementById("req-cover-preview-wrap");
+      if (wrap) wrap.style.display = "none";
     };
+
+    // --- Preview ảnh bìa đề xuất (file upload) ---
+    const reqCoverFile = document.getElementById("req-cover-file");
+    const reqCoverUrlInput = document.getElementById("req-input-cover-url");
+    const reqCoverPreviewWrap = document.getElementById("req-cover-preview-wrap");
+    const reqCoverPreviewImg = document.getElementById("req-cover-preview-img");
+    const reqCoverClear = document.getElementById("req-cover-clear");
+
+    const showReqCover = (src) => {
+      if (!src || !reqCoverPreviewWrap || !reqCoverPreviewImg) return;
+      reqCoverPreviewImg.src = src;
+      reqCoverPreviewWrap.style.display = "block";
+    };
+    const clearReqCover = () => {
+      this._reqCoverDataUrl = "";
+      if (reqCoverPreviewWrap) reqCoverPreviewWrap.style.display = "none";
+      if (reqCoverPreviewImg) reqCoverPreviewImg.src = "";
+      if (reqCoverFile) reqCoverFile.value = "";
+      if (reqCoverUrlInput) reqCoverUrlInput.value = "";
+    };
+
+    if (reqCoverFile) {
+      reqCoverFile.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          this._reqCoverDataUrl = ev.target.result;
+          showReqCover(ev.target.result);
+        };
+        reader.readAsDataURL(file);
+      };
+    }
+    if (reqCoverUrlInput) {
+      let reqUrlTimer;
+      reqCoverUrlInput.oninput = () => {
+        clearTimeout(reqUrlTimer);
+        reqUrlTimer = setTimeout(() => {
+          const v = reqCoverUrlInput.value.trim();
+          if (v) showReqCover(v); else clearReqCover();
+        }, 700);
+      };
+    }
+    if (reqCoverClear) {
+      reqCoverClear.onclick = clearReqCover;
+    }
+
+    // --- Preview ảnh chụp lỗi Bug Reporter ---
+    const bugFile = document.getElementById("bug-screenshot-file");
+    const bugUrlInput = document.getElementById("bug-input-screenshot");
+    const bugPreviewWrap = document.getElementById("bug-screenshot-preview-wrap");
+    const bugPreviewImg = document.getElementById("bug-screenshot-preview-img");
+    const bugClear = document.getElementById("bug-screenshot-clear");
+
+    const showBugPreview = (src) => {
+      if (!src || !bugPreviewWrap || !bugPreviewImg) return;
+      bugPreviewImg.src = src;
+      bugPreviewWrap.style.display = "block";
+    };
+    const clearBugPreview = () => {
+      if (bugPreviewWrap) bugPreviewWrap.style.display = "none";
+      if (bugPreviewImg) bugPreviewImg.src = "";
+      if (bugFile) bugFile.value = "";
+      if (bugUrlInput) bugUrlInput.value = "";
+    };
+
+    if (bugFile) {
+      bugFile.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => showBugPreview(ev.target.result);
+        reader.readAsDataURL(file);
+      };
+    }
+    if (bugUrlInput) {
+      let bugUrlTimer;
+      bugUrlInput.oninput = () => {
+        clearTimeout(bugUrlTimer);
+        bugUrlTimer = setTimeout(() => {
+          const v = bugUrlInput.value.trim();
+          if (v) showBugPreview(v); else clearBugPreview();
+        }, 700);
+      };
+    }
+    if (bugClear) {
+      bugClear.onclick = clearBugPreview;
+    }
   }
 };
 

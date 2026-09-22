@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="3" dy="3" stdDeviation="0" flood-color="#121316" />
+    </filter>
+  </defs>
+  <!-- Background Neubrutalist Card -->
+  <rect x="5" y="5" width="52" height="52" rx="14" fill="#EA4828" stroke="#121316" stroke-width="3" filter="url(#shadow)" />
+  <!-- Storefront Icon (Clean White Silhouette) -->
+  <g fill="#FFFFFF">
+    <!-- Roof / Awning -->
+    <path d="M15 28 L18 19 L46 19 L49 28 Z" />
+    <!-- Awning Scallops -->
+    <path d="M15 28 C15 31 19 31 19 28 C19 31 23 31 23 28 C23 31 27 31 27 28 C27 31 31 31 31 28 C31 31 35 31 35 28 C35 31 39 31 39 28 C39 31 43 31 43 28 C43 31 47 31 47 28 C47 31 49 31 49 28 Z" />
+    <!-- Shop Walls & Door -->
+    <path d="M17 31 L17 44 C17 45.1 17.9 46 19 46 L45 46 C46.1 46 47 45.1 47 44 L47 31 Z" />
+    <!-- Door Cutout (Orange) -->
+    <path d="M28 46 L28 35 C28 34.4 28.4 34 29 34 L35 34 C35.6 34 36 34.4 36 35 L36 46 Z" fill="#EA4828" />
+    <!-- Window Cutout (Orange) -->
+    <rect x="20" y="34" width="5" height="5" rx="1" fill="#EA4828" />
+    <rect x="39" y="34" width="5" height="5" rx="1" fill="#EA4828" />
+  </g>
+</svg>

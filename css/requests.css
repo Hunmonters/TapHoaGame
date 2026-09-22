@@ -131,11 +131,19 @@ textarea.form-control {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.request-item .req-inner-row {
   padding: 18px 20px;
   display: flex;
   align-items: center;
   gap: 20px;
-  transition: border-color 0.2s ease;
+}
+
+.request-item:not(.has-cover) .req-inner-row {
+  padding: 18px 20px;
 }
 
 .request-item:hover {
