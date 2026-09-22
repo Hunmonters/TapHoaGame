@@ -364,21 +364,25 @@
             <div class="form-group">
               <label>Ảnh bìa / Poster game <em>(không bắt buộc)</em></label>
               <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
-                <label class="btn-upload-file" style="display:inline-flex; align-items:center; gap:7px; padding:7px 14px; background:var(--bg-surface,#FAF6EE); border:2px solid var(--border-strong,#121316); border-radius:8px; font-weight:700; cursor:pointer; font-size:0.82rem; box-shadow:2px 2px 0px #121316; white-space:nowrap; flex-shrink:0;">
+                <label class="btn-upload-file"
+                  style="display:inline-flex; align-items:center; gap:7px; padding:7px 14px; background:var(--bg-surface,#FAF6EE); border:2px solid var(--border-strong,#121316); border-radius:8px; font-weight:700; cursor:pointer; font-size:0.82rem; box-shadow:2px 2px 0px #121316; white-space:nowrap; flex-shrink:0;">
                   <i class="fa-solid fa-upload"></i> Tải ảnh
                   <input type="file" id="req-cover-file" accept="image/*" style="display:none;">
                 </label>
                 <input type="url" id="req-input-cover-url" class="form-control" style="flex:1; min-width:160px;"
                   placeholder="Hoặc dán URL ảnh Steam (https://...)">
               </div>
-              <div id="req-cover-preview-wrap" style="display:none; margin-top:8px; border:2px solid var(--border-strong,#121316); border-radius:10px; overflow:hidden; box-shadow:2px 2px 0px #121316; aspect-ratio:460/215; position:relative;">
-                <img id="req-cover-preview-img" src="" alt="Ảnh bìa" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div id="req-cover-preview-wrap"
+                style="display:none; margin-top:8px; border:2px solid var(--border-strong,#121316); border-radius:10px; overflow:hidden; box-shadow:2px 2px 0px #121316; aspect-ratio:460/215; position:relative;">
+                <img id="req-cover-preview-img" src="" alt="Ảnh bìa"
+                  style="width:100%; height:100%; object-fit:cover; display:block;">
                 <button type="button" id="req-cover-clear"
                   style="position:absolute; top:6px; right:6px; width:26px; height:26px; background:#E11D48; border:2px solid #121316; border-radius:6px; color:#fff; font-size:0.8rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">
                   <i class="fa-solid fa-xmark"></i>
                 </button>
               </div>
-              <small style="color:var(--text-muted); font-size:0.72rem; margin-top:3px; display:block;">Ảnh sẽ hiển thị dạng banner Steam (460×215) trên bảng xếp hạng.</small>
+              <small style="color:var(--text-muted); font-size:0.72rem; margin-top:3px; display:block;">Ảnh sẽ hiển thị
+                dạng banner Steam (460×215) trên bảng xếp hạng.</small>
             </div>
             <div class="form-group">
               <label for="req-input-why">Lý do nên Việt hóa game này? <span>*</span></label>
@@ -526,17 +530,22 @@
         style="top: 16px; right: 16px;"><i class="fa-solid fa-xmark"></i></button>
 
       <!-- Header Nổi Bật Màu Đỏ -->
-      <div style="background:linear-gradient(135deg,#E11D48 0%,#9F1239 100%); padding:28px 32px 24px; border-bottom:2px solid #121316;">
+      <div
+        style="background:linear-gradient(135deg,#E11D48 0%,#9F1239 100%); padding:28px 32px 24px; border-bottom:2px solid #121316;">
         <div style="display:flex; align-items:center; gap:14px;">
-          <div style="width:52px; height:52px; background:rgba(255,255,255,0.15); border:2px solid rgba(255,255,255,0.4); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:#fff; box-shadow:3px 3px 0px rgba(0,0,0,0.25); flex-shrink:0;">
+          <div
+            style="width:52px; height:52px; background:rgba(255,255,255,0.15); border:2px solid rgba(255,255,255,0.4); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:#fff; box-shadow:3px 3px 0px rgba(0,0,0,0.25); flex-shrink:0;">
             <i class="fa-solid fa-bug"></i>
           </div>
           <div>
-            <div style="font-size:0.72rem; font-weight:700; color:rgba(255,255,255,0.75); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px;">
+            <div
+              style="font-size:0.72rem; font-weight:700; color:rgba(255,255,255,0.75); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px;">
               🔧 PHẢN HỒI KỸ THUẬT
             </div>
-            <h2 id="bug-modal-title" style="font-size:1.55rem; font-weight:900; color:#fff; margin:0; line-height:1.2;">Báo Lỗi Bản Việt Hóa</h2>
-            <p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin:6px 0 0;">Góp ý của bạn giúp nhóm dịch hoàn thiện bản vá tốt hơn mỗi ngày.</p>
+            <h2 id="bug-modal-title" style="font-size:1.55rem; font-weight:900; color:#fff; margin:0; line-height:1.2;">
+              Báo Lỗi Bản Việt Hóa</h2>
+            <p style="font-size:0.85rem; color:rgba(255,255,255,0.8); margin:6px 0 0;">Góp ý của bạn giúp nhóm dịch hoàn
+              thiện bản vá tốt hơn mỗi ngày.</p>
           </div>
         </div>
       </div>
@@ -566,22 +575,25 @@
         <div class="form-group">
           <label>Ảnh chụp màn hình lỗi <em>(Không bắt buộc)</em></label>
           <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
-            <label class="btn-upload-file" style="display:inline-flex; align-items:center; gap:8px; padding:8px 16px; background:var(--bg-surface,#FAF6EE); border:2px solid var(--border-strong,#121316); border-radius:8px; font-weight:700; cursor:pointer; font-size:0.85rem; box-shadow:2px 2px 0px #121316; white-space:nowrap; flex-shrink:0;">
+            <label class="btn-upload-file"
+              style="display:inline-flex; align-items:center; gap:8px; padding:8px 16px; background:var(--bg-surface,#FAF6EE); border:2px solid var(--border-strong,#121316); border-radius:8px; font-weight:700; cursor:pointer; font-size:0.85rem; box-shadow:2px 2px 0px #121316; white-space:nowrap; flex-shrink:0;">
               <i class="fa-solid fa-upload"></i> Tải ảnh từ máy
               <input type="file" id="bug-screenshot-file" accept="image/*" style="display:none;">
             </label>
-            <input type="url" id="bug-input-screenshot" class="form-control"
-              style="flex:1; min-width:180px;"
+            <input type="url" id="bug-input-screenshot" class="form-control" style="flex:1; min-width:180px;"
               placeholder="Hoặc dán link ảnh (Imgur, Drive, Discord...)">
           </div>
-          <div id="bug-screenshot-preview-wrap" style="display:none; margin-top:8px; border:2px solid var(--border-strong,#121316); border-radius:10px; overflow:hidden; box-shadow:2px 2px 0px #121316; max-height:200px; position:relative;">
-            <img id="bug-screenshot-preview-img" src="" alt="Ảnh chụp lỗi" style="width:100%; max-height:200px; object-fit:contain; display:block;">
+          <div id="bug-screenshot-preview-wrap"
+            style="display:none; margin-top:8px; border:2px solid var(--border-strong,#121316); border-radius:10px; overflow:hidden; box-shadow:2px 2px 0px #121316; max-height:200px; position:relative;">
+            <img id="bug-screenshot-preview-img" src="" alt="Ảnh chụp lỗi"
+              style="width:100%; max-height:200px; object-fit:contain; display:block;">
             <button type="button" id="bug-screenshot-clear" title="Xóa ảnh"
               style="position:absolute; top:8px; right:8px; width:28px; height:28px; background:#E11D48; border:2px solid #121316; border-radius:6px; color:#fff; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">
               <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
-          <small style="color:var(--text-muted); font-size:0.75rem; margin-top:4px; display:block;">Ảnh chụp rõ lỗi sẽ giúp nhóm dịch xử lý nhanh hơn rất nhiều.</small>
+          <small style="color:var(--text-muted); font-size:0.75rem; margin-top:4px; display:block;">Ảnh chụp rõ lỗi sẽ
+            giúp nhóm dịch xử lý nhanh hơn rất nhiều.</small>
         </div>
 
         <div class="form-group">
@@ -627,7 +639,7 @@
           </button>
         </form>
         <small style="color:var(--text-muted); display:block; margin-top:16px;">Mã PIN mặc định:
-          <code>viethoagame2026</code> (Đổi trong config.js)</small>
+          <code>020402</code> (Đổi trong config.js)</small>
       </div>
 
       <!-- 2. Bảng điều khiển Dashboard sau khi đăng nhập -->
