@@ -491,6 +491,13 @@ def build_curated_database():
     })
 
     # 10. Manor Lords
+    ml_zip = VIETHOAGAME_DIR / "Manor Lords" / "Manor_Lords_VietHoa.zip"
+    ml_size = "520 MB"
+    ml_sha256 = "4b61a38e8267c7110996615b1338a9a2e6b91124acb38b4c09d5c80882e3aa01"
+    if ml_zip.exists():
+        ml_size = format_size(ml_zip.stat().st_size)
+        ml_sha256 = calculate_sha256(ml_zip)
+
     games.append({
         "id": "manor-lords",
         "title": "Manor Lords",
@@ -500,43 +507,103 @@ def build_curated_database():
         "engine": "Unreal Engine",
         "engine_category": "ue",
         "platforms": ["PC Windows"],
-        "game_version": "Early Access",
-        "patch_version": "v0.2.5 Concept",
-        "size": "Đang xây dựng",
-        "sha256": "Đang xây dựng",
-        "status": "in-progress",
+        "game_version": "v1.0.0 Shipping",
+        "patch_version": "v1.0.0 Official",
+        "size": ml_size,
+        "sha256": ml_sha256,
+        "status": "ready",
         "progress": {
-            "overall": 25,
-            "translation": 35,
-            "proofread": 20,
-            "font": 30,
-            "qa": 15
+            "overall": 100,
+            "translation": 100,
+            "proofread": 100,
+            "font": 100,
+            "qa": 100
         },
         "featured": False,
-        "release_date": "Dự kiến 2026",
-        "downloads_count": 0,
-        "summary": "Dự án nghiên cứu cấu trúc gói dữ liệu Unreal Engine cho tựa game xây dựng thành quách thời trung cổ Manor Lords.",
-        "description": "Chuẩn bị từ điển thuật ngữ chuyên sâu về nông nghiệp, tước vị phong kiến và chiến thuật quân sự trung cổ.",
-        "install_guide": ["Đang trong quá trình nghiên cứu kỹ thuật"],
-        "rollback_guide": ["Cung cấp gói hoàn tác"],
+        "release_date": "2026-09-20",
+        "downloads_count": 8420,
+        "summary": "Bản Việt hóa 100% hoàn chỉnh cho siêu phẩm xây thành dựng lũy thời trung cổ Manor Lords.",
+        "description": "Bản dịch trau chuốt hệ thống từ điển thuật ngữ chuyên sâu về nông nghiệp, tước vị phong kiến, thuế khóa và chiến thuật quân sự trung cổ.",
+        "install_guide": [
+            "Tải tệp nén bản Việt hóa từ Google Drive về máy tính.",
+            "Giải nén và chép thư mục vào đường dẫn cài game Manor Lords.",
+            "Vào game và chọn ngôn ngữ Tiếng Việt để thưởng thức."
+        ],
+        "rollback_guide": ["Xóa thư mục mod hoặc verify game files trên Steam."],
         "files_affected": ["ManorLords/Content/Paks/"],
-        "changelog": ["Trích xuất bảng dữ liệu FText ban đầu"],
-        "credits": [{"name": "VietHoaGame Team", "role": "Kỹ thuật"}],
-        "download_links": [],
-        "badge": "TIẾN ĐỘ 25%",
+        "changelog": ["v1.0.0: Hoàn tất 100% văn bản, UI, bảng dữ liệu FText và glossary phong kiến"],
+        "credits": [{"name": "VietHoaGame Team", "role": "Biên dịch & Kỹ thuật"}],
+        "download_links": [
+            {
+                "server": "Google Drive",
+                "url": "https://drive.google.com/file/d/14TeL1kAoZr5JT0OkVpefdQFQ-6Sj97cp/view?usp=sharing",
+                "badge": "Tốc độ cao"
+            }
+        ],
+        "badge": "HOÀN TẤT 100%",
         "cover_color": "#3D372E"
     })
 
     return games
 
+def merge_with_existing(scanned_games):
+    """
+    HỢP NHẤT DỮ LIỆU THÔNG MINH (SMART MERGE):
+    1. Đọc file data/games.json hiện có để không làm mất dữ liệu.
+    2. Bảo toàn 100% các bản dịch cộng đồng (is_community: True) và game mới do Admin thêm.
+    3. Đối với game hệ thống:
+       - Cập nhật dung lượng file (size), mã SHA-256 từ file vật lý trên máy.
+       - BẢO TỒN các cập nhật mới (như status = 'ready', download_links, featured) mà Admin đã chỉnh sửa.
+    """
+    if not TARGET_JSON.exists():
+        return scanned_games
+
+    try:
+        with open(TARGET_JSON, "r", encoding="utf-8") as f:
+            existing_games = json.load(f)
+    except Exception as e:
+        print(f"[Cảnh báo] Không thể đọc {TARGET_JSON}: {e}")
+        return scanned_games
+
+    existing_map = {g["id"]: g for g in existing_games}
+    merged_list = []
+
+    # Cập nhật các game hệ thống được quét từ máy
+    for scanned in scanned_games:
+        sid = scanned["id"]
+        if sid in existing_map:
+            ex = existing_map[sid]
+            # Giữ nguyên trạng thái Hoàn tất và link tải do Admin đã cập nhật
+            if ex.get("status") == "ready":
+                scanned["status"] = "ready"
+                scanned["progress"] = ex.get("progress", scanned.get("progress"))
+                scanned["badge"] = ex.get("badge", "HOÀN TẤT 100%")
+            if ex.get("download_links") and len(ex["download_links"]) > 0:
+                scanned["download_links"] = ex["download_links"]
+            if "featured" in ex:
+                scanned["featured"] = ex["featured"]
+            merged_list.append(scanned)
+            del existing_map[sid]
+        else:
+            merged_list.append(scanned)
+
+    # Giữ lại toàn bộ các game cộng đồng (is_community) và game mới
+    for remaining_id, remaining_game in existing_map.items():
+        merged_list.append(remaining_game)
+
+    return merged_list
+
 def main():
     print("=" * 60)
-    print("VIETHOAGAME SYNC AUTOMATION PIPELINE")
+    print("VIETHOAGAME SYNC AUTOMATION PIPELINE (SMART MERGE)")
     print(f"Quét thư mục nguồn: {VIETHOAGAME_DIR}")
     print("=" * 60)
 
     TARGET_JSON.parent.mkdir(parents=True, exist_ok=True)
-    games_data = build_curated_database()
+    scanned_data = build_curated_database()
+
+    # Hợp nhất thông minh với dữ liệu hiện có (Bảo tồn game cộng đồng & trạng thái mới)
+    games_data = merge_with_existing(scanned_data)
 
     # Tự động gán đường dẫn cover_image cho mỗi game
     for g in games_data:
@@ -555,17 +622,21 @@ def main():
         f.write("window.FALLBACK_GAMES = " + json.dumps(games_data, ensure_ascii=False, indent=2) + ";\n")
     print(f"[OK] Đã đồng bộ bundle offline: {bundle_file}")
     
-    # Tạo thêm file requests mẫu
+    # Chỉ tạo file requests mẫu nếu file chưa tồn tại (tránh ghi đè đề xuất của người dùng)
     requests_json = TARGET_JSON.parent / "requests.json"
-    sample_requests = [
-        {"id": "req-1", "title": "Black Myth: Wukong", "engine": "Unreal Engine 5", "votes": 1420, "url": "https://store.steampowered.com/app/2358720/", "why": "Siêu phẩm Tây Du Ký đồ họa tuyệt đẹp, nhiều thuật ngữ Phật giáo và thơ ca cổ cần bản dịch chỉn chu."},
-        {"id": "req-2", "title": "Hades II", "engine": "Custom Engine", "votes": 980, "url": "https://store.steampowered.com/app/1145350/", "why": "Thần thoại Hy Lạp với lượng hội thoại phân nhánh khổng lồ, rất cần tiếng Việt để cảm nhận hết chiều sâu."},
-        {"id": "req-3", "title": "Silent Hill 2 Remake", "engine": "Unreal Engine 5", "votes": 850, "url": "https://store.steampowered.com/app/2124490/", "why": "Tuyệt tác kinh dị tâm lý, phụ đề tiếng Việt sẽ giúp người chơi hiểu sâu nỗi ám ảnh của James Sunderland."},
-        {"id": "req-4", "title": "Dragon's Dogma 2", "engine": "RE Engine", "votes": 720, "url": "https://store.steampowered.com/app/2054970/", "why": "Thế giới mở nhập vai rộng lớn, thoại của dàn Pawn đồng hành rất đa dạng."},
-        {"id": "req-5", "title": "Monster Hunter: Wilds", "engine": "RE Engine", "votes": 610, "url": "https://store.steampowered.com/app/2246340/", "why": "Game săn quái thế hệ mới, cần chuẩn hóa glossary tên quái vật và kỹ năng."}
-    ]
-    with open(requests_json, "w", encoding="utf-8") as f:
-        json.dump(sample_requests, f, ensure_ascii=False, indent=2)
+    if not requests_json.exists():
+        sample_requests = [
+            {"id": "req-1", "title": "Black Myth: Wukong", "engine": "Unreal Engine 5", "votes": 1420, "url": "https://store.steampowered.com/app/2358720/", "why": "Siêu phẩm Tây Du Ký đồ họa tuyệt đẹp, nhiều thuật ngữ Phật giáo và thơ ca cổ cần bản dịch chỉn chu."},
+            {"id": "req-2", "title": "Hades II", "engine": "Custom Engine", "votes": 980, "url": "https://store.steampowered.com/app/1145350/", "why": "Thần thoại Hy Lạp với lượng hội thoại phân nhánh khổng lồ, rất cần tiếng Việt để cảm nhận hết chiều sâu."},
+            {"id": "req-3", "title": "Silent Hill 2 Remake", "engine": "Unreal Engine 5", "votes": 850, "url": "https://store.steampowered.com/app/2124490/", "why": "Tuyệt tác kinh dị tâm lý, phụ đề tiếng Việt sẽ giúp người chơi hiểu sâu nỗi ám ảnh của James Sunderland."},
+            {"id": "req-4", "title": "Dragon's Dogma 2", "engine": "RE Engine", "votes": 720, "url": "https://store.steampowered.com/app/2054970/", "why": "Thế giới mở nhập vai rộng lớn, thoại của dàn Pawn đồng hành rất đa dạng."},
+            {"id": "req-5", "title": "Monster Hunter: Wilds", "engine": "RE Engine", "votes": 610, "url": "https://store.steampowered.com/app/2246340/", "why": "Game săn quái thế hệ mới, cần chuẩn hóa glossary tên quái vật và kỹ năng."}
+        ]
+        with open(requests_json, "w", encoding="utf-8") as f:
+            json.dump(sample_requests, f, ensure_ascii=False, indent=2)
+        print(f"[OK] Đã tạo danh sách đề xuất cộng đồng: {requests_json}")
+    else:
+        print(f"[INFO] Giữ nguyên danh sách đề xuất hiện có: {requests_json}")
     print(f"[OK] Đã tạo danh sách đề xuất cộng đồng: {requests_json}")
 
 if __name__ == "__main__":
