@@ -352,6 +352,7 @@ const App = {
               ${screenshots.map((s, idx) => `
                 <div class="detail-gallery-thumb ${idx === 0 ? "active" : ""}" 
                      onclick="App.selectGalleryImage(${idx})"
+                     onmouseenter="App.selectGalleryImage(${idx})"
                      title="Xem ảnh ${idx + 1}">
                   <img src="${s}" alt="Thumbnail ${idx + 1}" loading="lazy" onerror="this.parentElement.style.display='none'">
                 </div>

@@ -8,6 +8,7 @@ const AdminStudio = {
   games: [],
   selectedCoverFile: null,
   selectedCoverBase64: null,
+  currentScreenshots: [],
 
   init(gamesData) {
     this.games = gamesData || [];
@@ -32,6 +33,7 @@ const AdminStudio = {
       document.getElementById("admin-login-view").style.display = "none";
       document.getElementById("admin-dashboard-view").style.display = "block";
       this.renderGamesTable();
+      this.renderRequestsTable();
       this.renderReportsTable();
     } else {
       document.getElementById("admin-login-view").style.display = "block";
@@ -83,6 +85,7 @@ const AdminStudio = {
       document.getElementById("admin-login-view").style.display = "none";
       document.getElementById("admin-dashboard-view").style.display = "block";
       this.renderGamesTable();
+      this.renderRequestsTable();
       this.renderReportsTable();
       App.showToast("Đăng nhập Studio Quản Trị thành công!");
     } else {
@@ -179,6 +182,176 @@ const AdminStudio = {
     `).join("");
   },
 
+  renderRequestsTable() {
+    const tbody = document.getElementById("admin-requests-tbody");
+    const badge = document.getElementById("admin-req-count");
+    if (!tbody) return;
+
+    const reqs = (window.Requests && Requests.requests) ? Requests.requests : [];
+    if (badge) badge.textContent = reqs.length;
+
+    // Sắp xếp theo số vote giảm dần
+    const sorted = [...reqs].sort((a, b) => (b.votes || 0) - (a.votes || 0));
+
+    if (!sorted.length) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:28px; color:var(--text-muted); font-size:0.9rem;"><i class="fa-solid fa-inbox" style="font-size:1.5rem; display:block; margin-bottom:8px; opacity:0.5;"></i>Chưa có đề xuất nào được gửi lên.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = sorted.map((r, idx) => {
+      const coverHtml = r.cover_url
+        ? `<div style="width:70px; height:38px; border-radius:4px; overflow:hidden; border:1px solid #121316; background:#000;"><img src="${r.cover_url}" alt="${r.title}" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.style.display='none'"></div>`
+        : `<span style="font-size:0.75rem; color:var(--text-muted);">Không có</span>`;
+
+      return `
+        <tr>
+          <td><strong style="font-family:var(--font-mono); color:var(--accent-orange);">#${idx + 1}</strong></td>
+          <td>
+            <strong style="display:block; font-size:0.95rem; color:var(--text-primary);">${r.title}</strong>
+            ${r.url ? `<a href="${r.url}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem; color:var(--text-muted); display:inline-flex; align-items:center; gap:4px; margin-top:2px;"><i class="fa-brands fa-steam"></i> Steam Store ↗</a>` : ""}
+          </td>
+          <td>${coverHtml}</td>
+          <td style="max-width:280px; font-size:0.85rem; color:var(--text-secondary); line-height:1.4;">${r.why || "Chưa có ghi chú lý do."}</td>
+          <td style="text-align:center;">
+            <span style="font-family:var(--font-mono); font-weight:800; font-size:1.05rem; color:var(--accent-gold); background:rgba(245,158,11,0.12); padding:3px 8px; border-radius:6px; border:1px solid rgba(245,158,11,0.3);">
+              ▲ ${r.votes || 0}
+            </span>
+          </td>
+          <td style="text-align:center;">
+            <div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap;">
+              <button class="btn-admin-action" type="button" title="Đưa tựa game này vào xưởng dịch" onclick="AdminStudio.convertRequestToGame('${r.id}')" style="background:var(--accent-orange); color:#fff; border-color:#121316;">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Vào xưởng dịch
+              </button>
+              <button class="btn-admin-action" type="button" title="Xóa đề xuất này" style="color:var(--accent-red); border-color:rgba(239,68,68,0.3);" onclick="AdminStudio.deleteRequest('${r.id}')">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  },
+
+  convertRequestToGame(reqId) {
+    const reqs = (window.Requests && Requests.requests) ? Requests.requests : [];
+    const r = reqs.find(item => item.id === reqId);
+    if (!r) return;
+
+    // Mở form thêm game mới
+    this.openAddGameModal();
+
+    // Điền trước thông tin từ đề xuất
+    const titleInput = document.getElementById("edit-game-title");
+    const idInput = document.getElementById("edit-game-id");
+    const statusSelect = document.getElementById("edit-game-status");
+    const summaryInput = document.getElementById("edit-game-summary");
+    const descInput = document.getElementById("edit-game-desc");
+    const coverUrlInput = document.getElementById("edit-game-cover-url");
+
+    if (titleInput) {
+      titleInput.value = r.title;
+      if (idInput) {
+        idInput.value = r.title
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/đ/g, "d")
+          .replace(/[^a-z0-9]/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+      }
+    }
+
+    if (statusSelect) {
+      statusSelect.value = "in-progress";
+      const t = document.getElementById("edit-prog-trans");
+      const p = document.getElementById("edit-prog-proof");
+      const f = document.getElementById("edit-prog-font");
+      const q = document.getElementById("edit-prog-qa");
+      if (t) t.value = 15;
+      if (p) p.value = 10;
+      if (f) f.value = 20;
+      if (q) q.value = 0;
+    }
+
+    if (summaryInput) {
+      summaryInput.value = `Dự án khởi xướng theo đề xuất từ cộng đồng (${r.votes || 1} lượt ủng hộ).`;
+    }
+
+    if (descInput) {
+      descInput.value = `Tựa game được đưa vào xưởng dịch Tạp Hóa Việt theo nguyện vọng từ cộng đồng game thủ.\nLý do đề xuất: ${r.why || "Cộng đồng mong muốn có bản dịch tiếng Việt chuẩn mực."}`;
+    }
+
+    if (r.cover_url) {
+      if (coverUrlInput) coverUrlInput.value = r.cover_url;
+      const imgEl = document.getElementById("editor-cover-img");
+      const emptyPrompt = document.getElementById("editor-cover-empty-prompt");
+      if (imgEl) {
+        imgEl.src = r.cover_url;
+        imgEl.style.display = "block";
+      }
+      if (emptyPrompt) emptyPrompt.style.display = "none";
+      if (!this.currentScreenshots.includes(r.cover_url)) {
+        this.currentScreenshots.push(r.cover_url);
+        this.renderScreenshotsManager();
+      }
+    }
+
+    App.showToast(`🚀 Đã chuyển đề xuất "${r.title}" vào xưởng dịch! Hãy điền thêm thông tin và bấm Lưu.`);
+  },
+
+  async deleteRequest(reqId) {
+    const reqs = (window.Requests && Requests.requests) ? Requests.requests : [];
+    const r = reqs.find(item => item.id === reqId);
+    if (!r) return;
+
+    if (!confirm(`Bạn có chắc muốn xóa vĩnh viễn đề xuất "${r.title}" khỏi hệ thống?`)) return;
+
+    // 1. Xóa khỏi Supabase Cloud nếu có kết nối
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      await SupabaseClient.deleteRequest(reqId);
+    }
+
+    // 2. Xóa khỏi Requests.requests
+    if (window.Requests) {
+      Requests.requests = Requests.requests.filter(item => item.id !== reqId);
+    }
+
+    // 3. Xóa khỏi localStorage
+    try {
+      let userRequests = JSON.parse(localStorage.getItem("thv_user_requests") || "[]");
+      userRequests = userRequests.filter(item => item.id !== reqId);
+      localStorage.setItem("thv_user_requests", JSON.stringify(userRequests));
+    } catch (e) {}
+
+    // 4. Render lại giao diện
+    this.renderRequestsTable();
+    if (window.Requests) Requests.render();
+    App.showToast(`Đã xóa đề xuất "${r.title}".`);
+  },
+
+  async clearAllRequests() {
+    if (!confirm("CẢNH BÁO QUẢN TRỊ: Bạn có chắc chắn muốn dọn sạch TOÀN BỘ danh sách đề xuất & bình chọn?")) return;
+
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      await SupabaseClient.clearAllRequests();
+    }
+
+    if (window.Requests) {
+      Requests.requests = [];
+      Requests.userVotes = new Set();
+    }
+
+    try {
+      localStorage.removeItem("thv_user_requests");
+      localStorage.removeItem("thv_user_votes");
+    } catch (e) {}
+
+    this.renderRequestsTable();
+    if (window.Requests) Requests.render();
+    App.showToast("Đã dọn sạch toàn bộ bảng xếp hạng đề xuất!");
+  },
+
   /* ==========================================================================
      MODAL FORM THÊM & SỬA GAME (EDITOR)
      ========================================================================== */
@@ -226,6 +399,10 @@ const AdminStudio = {
     const emptyPrompt = document.getElementById("editor-cover-empty-prompt");
     if (imgEl) imgEl.style.display = "none";
     if (emptyPrompt) emptyPrompt.style.display = "flex";
+
+    // Khởi tạo danh sách ảnh minh họa rỗng
+    this.currentScreenshots = [];
+    this.renderScreenshotsManager();
 
     modal.classList.add("active");
   },
@@ -305,12 +482,74 @@ const AdminStudio = {
       if (emptyPrompt) emptyPrompt.style.display = "none";
     }
 
+    // Nạp danh sách ảnh minh họa Việt hóa của game
+    this.currentScreenshots = Array.isArray(game.screenshots) ? [...game.screenshots] : [];
+    this.renderScreenshotsManager();
+
     modal.classList.add("active");
   },
 
   closeGameModal() {
     const modal = document.getElementById("admin-game-form-modal");
     if (modal) modal.classList.remove("active");
+  },
+
+  renderScreenshotsManager() {
+    const countEl = document.getElementById("editor-screenshots-count");
+    const listEl = document.getElementById("editor-screenshots-list");
+    if (!listEl) return;
+
+    if (countEl) countEl.textContent = `${this.currentScreenshots.length} ảnh`;
+
+    if (!this.currentScreenshots.length) {
+      listEl.innerHTML = `
+        <div style="grid-column: 1/-1; text-align:center; padding:12px; font-size:0.75rem; color:var(--text-muted); border:1.5px dashed var(--border-subtle); border-radius:8px;">
+          Chưa có ảnh minh họa nào. Bạn hãy tải ảnh từ máy hoặc dán link bên dưới!
+        </div>
+      `;
+      return;
+    }
+
+    listEl.innerHTML = this.currentScreenshots.map((src, idx) => `
+      <div style="position:relative; aspect-ratio:16/9; border-radius:6px; overflow:hidden; border:1.5px solid #121316; background:#000; box-shadow:2px 2px 0px #121316;">
+        <img src="${src}" alt="Screenshot ${idx + 1}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.parentElement.style.opacity='0.4'">
+        <button type="button" onclick="AdminStudio.removeScreenshot(${idx})" title="Xóa ảnh này" style="position:absolute; top:3px; right:3px; width:20px; height:20px; border-radius:4px; background:#E11D48; color:#fff; border:1px solid #121316; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:0.68rem; box-shadow:1px 1px 0px #121316;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    `).join("");
+  },
+
+  removeScreenshot(idx) {
+    this.currentScreenshots.splice(idx, 1);
+    this.renderScreenshotsManager();
+  },
+
+  addScreenshotFromUrl() {
+    const input = document.getElementById("editor-screenshot-url-input");
+    if (!input) return;
+    const url = input.value.trim();
+    if (!url) {
+      App.showToast("Vui lòng nhập link ảnh hợp lệ!");
+      return;
+    }
+    this.currentScreenshots.push(url);
+    input.value = "";
+    this.renderScreenshotsManager();
+  },
+
+  handleScreenshotFiles(files) {
+    if (!files || !files.length) return;
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target.result) {
+          this.currentScreenshots.push(e.target.result);
+          this.renderScreenshotsManager();
+        }
+      };
+      reader.readAsDataURL(file);
+    });
   },
 
   handleCoverFile(file) {
@@ -414,6 +653,11 @@ const AdminStudio = {
     gameObj.description = document.getElementById("edit-game-desc").value.trim();
     const featBox = document.getElementById("edit-game-featured");
     gameObj.featured = featBox ? featBox.checked : false;
+
+    // Ảnh minh họa Việt hóa in-game
+    gameObj.screenshots = (this.currentScreenshots && this.currentScreenshots.length > 0)
+      ? [...this.currentScreenshots]
+      : (coverImage ? [coverImage] : []);
 
     gameObj.progress = {
       overall: overall,
@@ -753,6 +997,16 @@ const AdminStudio = {
             imgEl.style.display = "block";
           }
           if (emptyPrompt) emptyPrompt.style.display = "none";
+        }
+      };
+    }
+
+    // Xử lý chọn file ảnh minh họa in-game (hỗ trợ chọn nhiều ảnh)
+    const ssFileInput = document.getElementById("editor-screenshot-file-input");
+    if (ssFileInput) {
+      ssFileInput.onchange = (e) => {
+        if (e.target.files && e.target.files.length) {
+          this.handleScreenshotFiles(e.target.files);
         }
       };
     }

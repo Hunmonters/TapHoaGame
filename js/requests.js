@@ -185,26 +185,24 @@ const Requests = {
       const isTop3 = idx < 3;
       const rankClass = idx === 0 ? "rank-gold" : idx === 1 ? "rank-silver" : idx === 2 ? "rank-bronze" : "";
 
-      // Ảnh bìa nếu có (Steam header URL hoặc ảnh người dùng tải lên)
       const coverHtml = r.cover_url ? `
-        <div style="width:100%; aspect-ratio:460/215; overflow:hidden; border-radius:8px 8px 0 0; border-bottom:2px solid var(--border-strong,#121316); position:relative; background:#111;">
-          <img src="${r.cover_url}" alt="${r.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.parentElement.style.display='none'">
-          <div style="position:absolute; bottom:0; left:0; right:0; height:60%; background:linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);"></div>
+        <div class="req-thumb-box">
+          <img src="${r.cover_url}" alt="${r.title}" loading="lazy" onerror="this.parentElement.style.display='none'">
         </div>
       ` : "";
 
       return `
-        <div class="request-item ${r.cover_url ? 'has-cover' : ''}">
-          ${coverHtml}
+        <div class="request-item">
           <div class="req-inner-row">
             <button class="btn-vote ${hasVoted ? "voted" : ""}" onclick="Requests.toggleVote('${r.id}')" title="${hasVoted ? "Hủy bình chọn" : "Bình chọn cho tựa game này"}">
               <i class="fa-solid fa-arrow-up"></i>
               <span>${r.votes || 0}</span>
             </button>
+            ${coverHtml}
             <div class="req-details">
               <div class="req-title">
                 <span class="req-rank-pill ${rankClass}">#${idx + 1}</span>
-                <strong style="font-size:1.1rem; color:var(--text-primary);">${r.title}</strong>
+                <strong style="font-size:1.08rem; color:var(--text-primary);">${r.title}</strong>
                 ${isTop3 ? `<span class="req-top-tag"><i class="fa-solid fa-fire"></i> Top đề cử</span>` : ""}
               </div>
               <p class="req-why">${r.why}</p>

@@ -184,6 +184,44 @@ const SupabaseClient = {
   },
 
   /**
+   * Xóa một đề xuất trên Cloud
+   */
+  async deleteRequest(requestId) {
+    if (!this.hasCloud()) return false;
+    try {
+      const { error } = await this.client
+        .from("requests")
+        .delete()
+        .eq("id", requestId);
+
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error("[Supabase] Lỗi xóa đề xuất:", err);
+      return false;
+    }
+  },
+
+  /**
+   * Xóa toàn bộ đề xuất trên Cloud
+   */
+  async clearAllRequests() {
+    if (!this.hasCloud()) return false;
+    try {
+      const { error } = await this.client
+        .from("requests")
+        .delete()
+        .neq("id", "__keep_none__");
+
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error("[Supabase] Lỗi dọn sạch đề xuất:", err);
+      return false;
+    }
+  },
+
+  /**
    * Đăng ký kênh Supabase Realtime để đồng bộ trực tiếp khi CSDL thay đổi
    */
   subscribeTable(tableName, onInsert, onUpdate, onDelete) {

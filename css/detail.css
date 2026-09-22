@@ -848,25 +848,27 @@
 /* Hàng thumbnail nhỏ phía dưới */
 .detail-gallery-thumbs {
   display: flex;
-  gap: 10px;
-  margin-top: 12px;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
   overflow-x: auto;
-  padding: 4px 2px 8px;
+  padding: 4px 6px 10px;
   scrollbar-width: thin;
 }
 
 .detail-gallery-thumb {
-  flex: 0 0 calc(25% - 8px);
-  min-width: 90px;
-  max-width: 140px;
+  flex: 0 0 calc(25% - 10px);
+  min-width: 95px;
+  max-width: 145px;
   aspect-ratio: 16 / 9;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   border: 2px solid #D6CEBE;
   cursor: pointer;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   background: #000;
+  box-shadow: 2px 2px 0px rgba(18, 19, 22, 0.15);
 }
 
 .detail-gallery-thumb img {
@@ -875,22 +877,23 @@
   object-fit: cover;
   display: block;
   opacity: 0.65;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .detail-gallery-thumb:hover {
-  border-color: var(--border-strong, #121316);
+  border-color: var(--accent-orange, #EA4828);
   transform: translateY(-2px);
-  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  box-shadow: 2.5px 2.5px 0px var(--border-strong, #121316);
 }
 
 .detail-gallery-thumb:hover img {
-  opacity: 0.9;
+  opacity: 0.95;
+  transform: scale(1.03);
 }
 
 .detail-gallery-thumb.active {
   border: 2.5px solid var(--accent-orange, #EA4828);
-  box-shadow: 2.5px 2.5px 0px var(--border-strong, #121316);
+  box-shadow: 0 0 12px rgba(234, 72, 40, 0.4), 2.5px 2.5px 0px var(--border-strong, #121316);
   transform: translateY(-2px);
 }
 

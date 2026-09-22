@@ -665,6 +665,8 @@
           <div class="admin-tabs-nav">
             <button class="admin-tab-btn active" data-admintab="games" type="button"><i class="fa-solid fa-gamepad"></i>
               Kho Game</button>
+            <button class="admin-tab-btn" data-admintab="requests" type="button"><i class="fa-solid fa-paper-plane"></i>
+              Đề Xuất (<span id="admin-req-count">0</span>)</button>
             <button class="admin-tab-btn" data-admintab="reports" type="button"><i class="fa-solid fa-bug"></i> Báo
               Lỗi</button>
           </div>
@@ -704,6 +706,37 @@
                   </tr>
                 </thead>
                 <tbody id="admin-games-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab Quản lý Đề Xuất Dịch Game -->
+          <div class="admin-pane" id="admin-pane-requests">
+            <div
+              style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+              <div>
+                <h3 style="font-size:1.2rem; font-weight:800;">Quản lý đề xuất & bình chọn dịch game</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Theo dõi tín hiệu cộng đồng, 1-click đưa game vào xưởng dịch hoặc xóa đề xuất vi phạm.</p>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <button class="btn-secondary" id="btn-admin-clear-requests" type="button" onclick="AdminStudio.clearAllRequests()">
+                  <i class="fa-solid fa-trash-can"></i> Dọn Sạch Đề Xuất
+                </button>
+              </div>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th style="width:50px;">Hạng</th>
+                    <th>Tựa Game Đề Xuất</th>
+                    <th style="width:110px;">Ảnh Bìa</th>
+                    <th>Lý Do Đề Xuất</th>
+                    <th style="text-align:center; width:90px;">Lượt Vote</th>
+                    <th style="text-align:center; width:220px;">Thao Tác Quản Trị</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-requests-tbody"></tbody>
               </table>
             </div>
           </div>
@@ -892,6 +925,35 @@
                   Tự động hiển thị xem trước theo chuẩn 460x215. Khi kết nối Supabase, ảnh sẽ tự động tải lên Cloud
                   Storage CDN!
                 </small>
+              </div>
+
+              <!-- Quản lý Bộ Sưu Tập Ảnh Minh Họa Việt Hóa (Screenshots) -->
+              <div class="admin-screenshots-uploader" style="margin-top:18px; padding:16px; background:var(--bg-surface,#FAF6EE); border:2px solid var(--border-strong,#121316); border-radius:12px; box-shadow:2px 2px 0px var(--border-strong,#121316);">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+                  <label style="font-size:0.85rem; font-weight:800; color:var(--text-primary); margin:0;">
+                    <i class="fa-solid fa-images" style="color:var(--accent-orange,#EA4828);"></i> Ảnh Minh Họa In-Game
+                  </label>
+                  <span id="editor-screenshots-count" style="font-size:0.75rem; font-weight:700; background:var(--accent-orange,#EA4828); color:#fff; padding:2px 8px; border-radius:10px; border:1px solid #121316;">0 ảnh</span>
+                </div>
+                <small style="font-size:0.72rem; color:var(--text-secondary); display:block; margin-bottom:10px; line-height:1.35;">
+                  Ảnh chụp trong game đã Việt hóa. Hiển thị dạng album kèm thumbnail nhỏ dưới hồ sơ game để game thủ soi rõ chữ.
+                </small>
+
+                <!-- Khung hiển thị danh sách ảnh nhỏ & nút xóa -->
+                <div id="editor-screenshots-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(90px, 1fr)); gap:8px; margin-bottom:12px; max-height:160px; overflow-y:auto; padding:2px;">
+                  <!-- Render động bởi AdminStudio -->
+                </div>
+
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                  <label class="btn-upload-file" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:#fff; border:2px solid #121316; border-radius:8px; font-weight:700; cursor:pointer; font-size:0.76rem; box-shadow:2px 2px 0px #121316; white-space:nowrap; flex-shrink:0;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Chọn ảnh từ máy
+                    <input type="file" id="editor-screenshot-file-input" accept="image/*" multiple style="display:none;">
+                  </label>
+                  <input type="url" id="editor-screenshot-url-input" class="form-control" style="flex:1; min-width:110px; font-size:0.76rem; padding:6px 8px;" placeholder="Dán link ảnh (https://...)">
+                  <button type="button" class="btn-secondary" id="btn-add-screenshot-url" style="padding:6px 10px; font-size:0.76rem; white-space:nowrap;" onclick="AdminStudio.addScreenshotFromUrl()">
+                    <i class="fa-solid fa-plus"></i> Thêm
+                  </button>
+                </div>
               </div>
             </div>
           </div>
