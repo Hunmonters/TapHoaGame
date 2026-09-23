@@ -12,25 +12,10 @@ const ThemeManager = {
       saved = localStorage.getItem("thv_theme");
     } catch (e) {}
 
-    // Nếu chưa lưu thiết lập, tự động nhận diện từ hệ điều hành người dùng
-    if (!saved) {
-      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        saved = "dark";
-      } else {
-        saved = "cream";
-      }
-    }
-
-    this.applyTheme(saved);
-
-    // Lắng nghe nếu người dùng thay đổi chế độ sáng/tối của hệ thống (Windows / macOS)
-    if (window.matchMedia) {
-      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-        if (!localStorage.getItem("thv_theme_manual")) {
-          this.applyTheme(e.matches ? "dark" : "cream");
-        }
-      });
-    }
+    // Mặc định luôn là giao diện Kem & Cam ("cream") cho người dùng mới vào trang
+    // Chỉ kích hoạt Dark Mode nếu người dùng đã tự tay bấm nút chuyển đổi ("dark") trước đó
+    const initialTheme = saved === "dark" ? "dark" : "cream";
+    this.applyTheme(initialTheme);
   },
 
   applyTheme(theme) {

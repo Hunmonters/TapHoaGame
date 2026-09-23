@@ -30,12 +30,12 @@
   <link rel="stylesheet" href="css/community.css">
   <script>
     (function() {
+      // Mặc định luôn là giao diện Kem & Cam. Chỉ kích hoạt Chế Độ Ban Đêm nếu người dùng chủ động lưu "dark"
       var saved = localStorage.getItem("thv_theme");
-      if (!saved && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        saved = "dark";
-      }
       if (saved === "dark") {
         document.documentElement.setAttribute("data-theme", "dark");
+      } else {
+        document.documentElement.setAttribute("data-theme", "cream");
       }
     })();
   </script>
