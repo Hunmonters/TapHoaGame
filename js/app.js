@@ -192,6 +192,11 @@ const App = {
       return;
     }
 
+    if (hash === "donate" || hash === "ungho") {
+      if (window.DonateModal) DonateModal.open();
+      return;
+    }
+
     if (["catalog", "progress", "community", "requests", "library"].includes(hash)) {
       this.switchTab(hash);
       return;
@@ -509,10 +514,15 @@ const App = {
     this.selectGalleryImage(this.currentGalleryIndex + delta);
   },
 
-  openLightbox() {
-    if (!this.currentGalleryImages || !this.currentGalleryImages.length) return;
+  openLightbox(customSrc) {
     const lightbox = document.getElementById("gallery-lightbox");
     const lbImg = document.getElementById("lightbox-img");
+    if (customSrc) {
+      if (lbImg) lbImg.src = customSrc;
+      if (lightbox) lightbox.classList.add("active");
+      return;
+    }
+    if (!this.currentGalleryImages || !this.currentGalleryImages.length) return;
     if (lbImg) lbImg.src = this.currentGalleryImages[this.currentGalleryIndex];
     if (lightbox) lightbox.classList.add("active");
   },

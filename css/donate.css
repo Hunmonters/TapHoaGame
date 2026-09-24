@@ -1,0 +1,593 @@
+/* ==========================================================================
+   TẠP HÓA VIỆT / DONATE & SUPPORT STYLESHEET (donate.css)
+   Phong cách Neubrutalist Retro Kem & Cam (Cream & Orange)
+   Tối ưu hóa hiển thị mã VietQR TPBank, sao chép 1 chạm và hỗ trợ đa nền tảng
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. NÚT ỦNG HỘ TRÊN THANH HEADER & CÁC VỊ TRÍ
+   -------------------------------------------------------------------------- */
+.btn-header-donate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFBEB;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-full, 9999px);
+  padding: 8px 16px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #B45309;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  position: relative;
+}
+
+.btn-header-donate i {
+  color: #EF4444;
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-header-donate:hover {
+  background: #FEF3C7;
+  color: #92400E;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--border-strong, #121316);
+}
+
+.btn-header-donate:hover i {
+  transform: scale(1.25);
+  animation: heartPulse 0.8s infinite alternate ease-in-out;
+}
+
+.btn-header-donate:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--border-strong, #121316);
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(1.1); }
+  100% { transform: scale(1.35); }
+}
+
+/* Nút Ủng hộ trong Modal Chi Tiết Game */
+.btn-detail-donate {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFBEB;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-md, 8px);
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #B45309;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.btn-detail-donate i {
+  color: #EF4444;
+}
+
+.btn-detail-donate:hover {
+  background: #FEF3C7;
+  color: #92400E;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+}
+
+/* Khung Kêu Gọi Ủng Hộ ở Chân Trang (Footer Banner) */
+.footer-donate-card {
+  margin-top: 14px;
+  background: var(--bg-card, #FFFFFF);
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-md, 12px);
+  padding: 14px 18px;
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.footer-donate-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0px var(--border-strong, #121316);
+  border-color: var(--accent-orange, #EA4828);
+}
+
+.footer-donate-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-donate-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #FEE2E2;
+  border: 1.5px solid var(--border-strong, #121316);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #EF4444;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+}
+
+.footer-donate-text h5 {
+  margin: 0 0 2px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--text-primary, #121316);
+}
+
+.footer-donate-text p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-secondary, #57534E);
+  line-height: 1.3;
+}
+
+.btn-footer-donate-mini {
+  background: var(--accent-orange, #EA4828);
+  color: #FFFFFF !important;
+  border: 1.5px solid var(--border-strong, #121316);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   2. DONATE MODAL CONTAINER & POPUP
+   -------------------------------------------------------------------------- */
+.donate-modal-box {
+  width: 100%;
+  max-width: 680px;
+  max-height: 92vh;
+  background: var(--bg-card, #FFFFFF);
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: 8px 8px 0px var(--border-strong, #121316);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  animation: donatePopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes donatePopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal Header */
+.donate-modal-header {
+  background: linear-gradient(135deg, #EA4828 0%, #D97706 100%);
+  padding: 24px 28px 20px;
+  border-bottom: 2px solid var(--border-strong, #121316);
+  position: relative;
+  color: #FFFFFF;
+}
+
+.donate-header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-right: 40px;
+}
+
+.donate-header-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #FFFFFF;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.donate-header-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 4px;
+}
+
+.donate-modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.25;
+  color: #FFFFFF;
+}
+
+.donate-modal-subtitle {
+  margin: 5px 0 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+}
+
+/* Modal Body */
+.donate-modal-body {
+  padding: 24px 28px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+/* 2 Cột: Bên Trái QR, Bên Phải Thông Tin */
+.donate-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Khung hiển thị mã QR */
+.donate-qr-card {
+  background: #FFFFFF;
+  border: 2px solid var(--border-strong, #121316);
+  border-radius: var(--radius-md, 12px);
+  padding: 12px;
+  box-shadow: 4px 4px 0px var(--border-strong, #121316);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.donate-qr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #7C3AED;
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border-strong, #121316);
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.donate-qr-img-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 1.5px solid var(--border-subtle, #E2DAC8);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.donate-qr-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.donate-qr-img-wrap:hover .donate-qr-img {
+  transform: scale(1.03);
+}
+
+.donate-qr-hint {
+  margin: 10px 0 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-secondary, #57534E);
+  line-height: 1.35;
+}
+
+/* Cột thông tin chi tiết */
+.donate-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.donate-info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.donate-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted, #888275);
+}
+
+.donate-value-box {
+  background: var(--bg-surface, #FAF6EE);
+  border: 1.5px solid var(--border-strong, #121316);
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.donate-bank-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-primary, #121316);
+}
+
+.bank-tag-tpb {
+  background: #6B21A8;
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong, #121316);
+  box-shadow: 1.5px 1.5px 0px var(--border-strong, #121316);
+}
+
+.donate-owner-name {
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: var(--text-primary, #121316);
+  letter-spacing: 0.5px;
+}
+
+/* Khung ô sao chép STK & Memo */
+.donate-copy-field {
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface, #FAF6EE);
+  border: 1.5px solid var(--border-strong, #121316);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+}
+
+.donate-input-code {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 14px;
+  font-family: var(--font-mono, monospace);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--accent-orange, #EA4828);
+  outline: none;
+  letter-spacing: 0.5px;
+}
+
+.btn-copy-donate {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card, #FFFFFF);
+  border: none;
+  border-left: 1.5px solid var(--border-strong, #121316);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-primary, #121316);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-copy-donate:hover {
+  background: var(--accent-orange, #EA4828);
+  color: #FFFFFF;
+}
+
+.btn-copy-donate:active {
+  transform: scale(0.96);
+}
+
+/* Các mốc tiếp sức tượng trưng */
+.donate-presets-wrap {
+  margin-top: 4px;
+}
+
+.donate-preset-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.donate-pill {
+  background: var(--bg-surface, #FAF6EE);
+  border: 1.5px solid var(--border-strong, #121316);
+  border-radius: var(--radius-full, 9999px);
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-primary, #121316);
+  box-shadow: 1.5px 1.5px 0px var(--border-strong, #121316);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.donate-pill:hover {
+  background: var(--accent-orange, #EA4828);
+  color: #FFFFFF;
+  transform: translate(-1px, -1px);
+  box-shadow: 2.5px 2.5px 0px var(--border-strong, #121316);
+}
+
+.donate-pill:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0.5px 0.5px 0px var(--border-strong, #121316);
+}
+
+/* Lời cảm ơn và cam kết chân thành */
+.donate-footer-note {
+  margin-top: 20px;
+  background: rgba(234, 72, 40, 0.08);
+  border: 1.5px solid rgba(234, 72, 40, 0.25);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.82rem;
+  color: var(--text-secondary, #57534E);
+  line-height: 1.45;
+}
+
+.donate-footer-note i {
+  color: var(--accent-orange, #EA4828);
+  font-size: 1.2rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. DARK MODE SUPPORT CHO DONATE COMPONENT
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .btn-header-donate {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: var(--border-subtle, #333942);
+  color: #FBBF24;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .btn-header-donate:hover {
+  background: rgba(245, 158, 11, 0.25);
+  border-color: var(--accent-orange);
+  color: #FFFFFF;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .btn-detail-donate {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: var(--border-subtle);
+  color: #FBBF24;
+}
+
+[data-theme="dark"] .btn-detail-donate:hover {
+  background: rgba(245, 158, 11, 0.25);
+  color: #FFFFFF;
+  border-color: var(--accent-orange);
+}
+
+[data-theme="dark"] .footer-donate-card {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .footer-donate-icon {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .donate-modal-box {
+  background: var(--bg-card);
+  border-color: var(--border-strong);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .donate-value-box,
+[data-theme="dark"] .donate-copy-field,
+[data-theme="dark"] .donate-pill {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .btn-copy-donate {
+  background: var(--bg-card);
+  border-left-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .donate-footer-note {
+  background: rgba(234, 72, 40, 0.12);
+  border-color: rgba(234, 72, 40, 0.35);
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   4. RESPONSIVE (MOBILE & TABLET)
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .donate-modal-header {
+    padding: 20px 20px 16px;
+  }
+
+  .donate-modal-title {
+    font-size: 1.25rem;
+  }
+
+  .donate-header-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+  }
+
+  .donate-modal-body {
+    padding: 18px 16px;
+  }
+
+  .donate-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .donate-qr-card {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .footer-donate-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .footer-donate-info {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -29,8 +29,9 @@
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="css/community.css">
   <link rel="stylesheet" href="css/effects3d.css">
+  <link rel="stylesheet" href="css/donate.css">
   <script>
-    (function() {
+    (function () {
       // Mặc định luôn là giao diện Kem & Cam. Chỉ kích hoạt Chế Độ Ban Đêm nếu người dùng chủ động lưu "dark"
       var saved = localStorage.getItem("thv_theme");
       if (saved === "dark") {
@@ -80,13 +81,22 @@
       <div class="header-actions">
 
         <!-- Nút chuyển đổi Giao diện Ban Đêm / Ban Ngày -->
-        <button class="btn-theme-toggle" id="btn-theme-toggle" type="button" onclick="App.toggleTheme()" title="Chuyển chế độ Giao diện Ban Đêm / Ban Ngày" aria-label="Đổi giao diện">
+        <button class="btn-theme-toggle" id="btn-theme-toggle" type="button" onclick="App.toggleTheme()"
+          title="Chuyển chế độ Giao diện Ban Đêm / Ban Ngày" aria-label="Đổi giao diện">
           <i class="fa-solid fa-moon" id="icon-theme"></i>
         </button>
 
         <!-- Nút bật/tắt Âm thanh Tương tác Cơ học -->
-        <button class="btn-sound-toggle" id="btn-sound-toggle" type="button" onclick="AudioManager.toggleSound()" title="Bật/Tắt âm thanh tương tác cơ học" aria-label="Đổi âm thanh">
+        <button class="btn-sound-toggle" id="btn-sound-toggle" type="button" onclick="AudioManager.toggleSound()"
+          title="Bật/Tắt âm thanh tương tác cơ học" aria-label="Đổi âm thanh">
           <i class="fa-solid fa-volume-high" id="icon-sound"></i>
+        </button>
+
+        <!-- Nút Ủng Hộ Nhóm Dịch -->
+        <button class="btn-header-donate" id="btn-header-donate" type="button" onclick="DonateModal.open()"
+          title="Ủng hộ nhóm dịch Tạp Hóa Việt">
+          <i class="fa-solid fa-heart"></i>
+          <span>Ủng Hộ</span>
         </button>
 
         <button class="btn-bookmark-tab" data-tab="library" type="button" title="Mở bộ sưu tập của bạn">
@@ -504,7 +514,10 @@
       <div class="detail-download-box">
         <div class="download-title-row">
           <h3><i class="fa-solid fa-cloud-arrow-down"></i> TẢI XUỐNG BẢN VIỆT HÓA</h3>
-          <div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <button class="btn-detail-donate" onclick="DonateModal.open()" type="button" title="Ủng hộ nhóm dịch game">
+              <i class="fa-solid fa-mug-hot"></i> Mời Cà Phê
+            </button>
             <button class="btn-detail-bug" id="btn-report-from-modal" type="button" title="Báo lỗi bản dịch game này">
               <i class="fa-solid fa-bug"></i> Báo lỗi game này
             </button>
@@ -545,7 +558,8 @@
   </div>
 
   <!-- Lightbox xem ảnh minh họa toàn màn hình -->
-  <div class="gallery-lightbox-overlay" id="gallery-lightbox" onclick="App.closeLightbox()" role="dialog" aria-modal="true" aria-label="Phóng to ảnh">
+  <div class="gallery-lightbox-overlay" id="gallery-lightbox" onclick="App.closeLightbox()" role="dialog"
+    aria-modal="true" aria-label="Phóng to ảnh">
     <div class="gallery-lightbox-box" onclick="event.stopPropagation()">
       <button class="gallery-lightbox-close" type="button" onclick="App.closeLightbox()" title="Đóng phóng to">
         <i class="fa-solid fa-xmark"></i>
@@ -642,6 +656,120 @@
   </div>
 
   <!-- ==========================================================================
+       5.1 MODAL ỦNG HỘ NHÓM DỊCH (DONATE / SUPPORT)
+       ========================================================================== -->
+  <div class="detail-overlay" id="donate-modal" role="dialog" aria-modal="true" aria-labelledby="donate-modal-title">
+    <div class="donate-modal-box">
+      <button class="detail-close-btn" onclick="DonateModal.close()" type="button" aria-label="Đóng"
+        style="top: 16px; right: 16px;"><i class="fa-solid fa-xmark"></i></button>
+
+      <!-- Header Ấm Áp Màu Cam & Hổ Phách -->
+      <div class="donate-modal-header">
+        <div class="donate-header-content">
+          <div class="donate-header-icon">
+            <i class="fa-solid fa-mug-hot"></i>
+          </div>
+          <div>
+            <div class="donate-header-tag">☕ TIẾP SỨC TẠP HÓA VIỆT</div>
+            <h2 id="donate-modal-title" class="donate-modal-title">Ủng Hộ Nhóm Dịch</h2>
+            <p class="donate-modal-subtitle">Mỗi ly cà phê hay đóng góp nhỏ của bạn là nguồn động viên to lớn giúp nhóm
+              duy trì máy chủ tải nhanh và thực hiện nhiều bản dịch mới.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thân Modal: 2 Cột QR & Thông Tin Chi Tiết -->
+      <div class="donate-modal-body">
+        <div class="donate-grid">
+          <!-- Cột Trái: Ảnh Mã QR VietQR TPBank -->
+          <div class="donate-qr-col">
+            <div class="donate-qr-card">
+              <div class="donate-qr-badge"><i class="fa-solid fa-qrcode"></i> QUÉT MÃ VIETQR</div>
+              <div class="donate-qr-img-wrap" onclick="App.openLightbox('assets/donate_qr.png')"
+                title="Nhấp để xem kích thước lớn">
+                <img src="assets/donate_qr.png" alt="Mã QR Chuyển Khoản TPBank TRAN MINH KHA" class="donate-qr-img" />
+              </div>
+              <p class="donate-qr-hint">
+                <i class="fa-solid fa-bolt" style="color:var(--accent-orange)"></i> Chuyển khoản ngay, xác nhận sau vài
+                giây!
+              </p>
+            </div>
+          </div>
+
+          <!-- Cột Phải: Thông Tin Chi Tiết & Nút Sao Chép -->
+          <div class="donate-info-col">
+            <!-- Ngân Hàng -->
+            <div class="donate-info-group">
+              <span class="donate-label">Ngân Hàng Tiếp Nhận</span>
+              <div class="donate-value-box">
+                <div class="donate-bank-badge">
+                  <span class="bank-tag-tpb">TPBank</span>
+                  <strong>Ngân hàng TMCP Tiên Phong</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Số Tài Khoản -->
+            <div class="donate-info-group">
+              <span class="donate-label">Số Tài Khoản (STK)</span>
+              <div class="donate-copy-field">
+                <input type="text" readonly value="00006456922" id="donate-stk-val" class="donate-input-code" />
+                <button class="btn-copy-donate" type="button" onclick="DonateModal.copySTK()"
+                  title="Sao chép số tài khoản">
+                  <i class="fa-regular fa-copy"></i>
+                  <span>Sao chép</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Chủ Tài Khoản -->
+            <div class="donate-info-group">
+              <span class="donate-label">Chủ Tài Khoản</span>
+              <div class="donate-value-box">
+                <span class="donate-owner-name">TRAN MINH KHA</span>
+              </div>
+            </div>
+
+            <!-- Nội Dung Chuyển Khoản -->
+            <div class="donate-info-group">
+              <span class="donate-label">Nội Dung Chuyển Khoản Gợi Ý</span>
+              <div class="donate-copy-field">
+                <input type="text" readonly value="Ung ho Tap Hoa Viet" id="donate-memo-val"
+                  class="donate-input-code" />
+                <button class="btn-copy-donate" type="button" onclick="DonateModal.copyMemo()"
+                  title="Sao chép nội dung chuyển khoản">
+                  <i class="fa-regular fa-copy"></i>
+                  <span>Sao chép</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Gợi Ý Các Mốc Tiếp Sức -->
+            <div class="donate-presets-wrap">
+              <span class="donate-label">Gợi ý mốc tiếp sức:</span>
+              <div class="donate-preset-pills">
+                <span class="donate-pill" onclick="DonateModal.selectPreset(10000, 'Cốc trà đá')">☕ 10.000đ</span>
+                <span class="donate-pill" onclick="DonateModal.selectPreset(20000, 'Ly cà phê')">🧋 20.000đ</span>
+                <span class="donate-pill" onclick="DonateModal.selectPreset(50000, 'Bát phở bò')">🍜 50.000đ</span>
+                <span class="donate-pill" onclick="DonateModal.selectPreset(100000, 'Bữa tối ấm cúng')">🍕
+                  100.000đ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lời Cam Kết & Cảm Ơn -->
+        <div class="donate-footer-note">
+          <i class="fa-solid fa-heart-circle-check"></i>
+          <span>Toàn bộ đóng góp được sử dụng 100% để chi trả máy chủ lưu trữ Google Drive tốc độ cao, băng thông không
+            giới hạn và hỗ trợ kinh phí cho các dự án Việt hóa game. Trân trọng cảm ơn tấm lòng của bạn!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
        6. STUDIO DASHBOARD QUẢN TRỊ NỘI BỘ (ADMIN MODAL)
        ========================================================================== -->
   <div class="admin-overlay" id="admin-studio-modal" role="dialog" aria-modal="true">
@@ -709,14 +837,20 @@
                 <button class="btn-admin-hero-add" id="btn-admin-add-game" type="button">
                   <i class="fa-solid fa-circle-plus"></i> + Thêm Game Mới
                 </button>
-                <button class="btn-secondary" id="btn-admin-backup-all" type="button" onclick="AdminStudio.exportFullBackup()" title="Tải về tệp sao lưu toàn bộ kho game, cộng đồng và đề xuất">
+                <button class="btn-secondary" id="btn-admin-backup-all" type="button"
+                  onclick="AdminStudio.exportFullBackup()"
+                  title="Tải về tệp sao lưu toàn bộ kho game, cộng đồng và đề xuất">
                   <i class="fa-solid fa-file-export"></i> Sao Lưu Hệ Thống (.json)
                 </button>
-                <label class="btn-secondary" style="cursor:pointer; display:inline-flex; align-items:center; gap:6px; margin:0;" title="Nhập tệp sao lưu để khôi phục dữ liệu khi đổi tên miền">
+                <label class="btn-secondary"
+                  style="cursor:pointer; display:inline-flex; align-items:center; gap:6px; margin:0;"
+                  title="Nhập tệp sao lưu để khôi phục dữ liệu khi đổi tên miền">
                   <i class="fa-solid fa-file-import"></i> Phục Hồi Dữ Liệu
-                  <input type="file" id="admin-restore-file-input" accept=".json" style="display:none;" onchange="AdminStudio.importFullBackup(event)">
+                  <input type="file" id="admin-restore-file-input" accept=".json" style="display:none;"
+                    onchange="AdminStudio.importFullBackup(event)">
                 </label>
-                <button class="btn-secondary" id="btn-admin-export-json" type="button" title="Xuất file games.json để cập nhật vào thư mục data/">
+                <button class="btn-secondary" id="btn-admin-export-json" type="button"
+                  title="Xuất file games.json để cập nhật vào thư mục data/">
                   <i class="fa-solid fa-download"></i> Xuất games.json
                 </button>
               </div>
@@ -746,10 +880,12 @@
               style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
               <div>
                 <h3 style="font-size:1.2rem; font-weight:800;">Quản lý đề xuất & bình chọn dịch game</h3>
-                <p style="font-size:0.85rem; color:var(--text-muted);">Theo dõi tín hiệu cộng đồng, 1-click đưa game vào xưởng dịch hoặc xóa đề xuất vi phạm.</p>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Theo dõi tín hiệu cộng đồng, 1-click đưa game vào
+                  xưởng dịch hoặc xóa đề xuất vi phạm.</p>
               </div>
               <div style="display:flex; align-items:center; gap:10px;">
-                <button class="btn-secondary" id="btn-admin-clear-requests" type="button" onclick="AdminStudio.clearAllRequests()">
+                <button class="btn-secondary" id="btn-admin-clear-requests" type="button"
+                  onclick="AdminStudio.clearAllRequests()">
                   <i class="fa-solid fa-trash-can"></i> Dọn Sạch Đề Xuất
                 </button>
               </div>
@@ -958,29 +1094,41 @@
               </div>
 
               <!-- Quản lý Bộ Sưu Tập Ảnh Minh Họa Việt Hóa (Screenshots) -->
-              <div class="admin-screenshots-uploader" style="margin-top:18px; padding:16px; background:var(--bg-surface,#FAF6EE); border:2px solid var(--border-strong,#121316); border-radius:12px; box-shadow:2px 2px 0px var(--border-strong,#121316);">
+              <div class="admin-screenshots-uploader"
+                style="margin-top:18px; padding:16px; background:var(--bg-surface,#FAF6EE); border:2px solid var(--border-strong,#121316); border-radius:12px; box-shadow:2px 2px 0px var(--border-strong,#121316);">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
                   <label style="font-size:0.85rem; font-weight:800; color:var(--text-primary); margin:0;">
                     <i class="fa-solid fa-images" style="color:var(--accent-orange,#EA4828);"></i> Ảnh Minh Họa In-Game
                   </label>
-                  <span id="editor-screenshots-count" style="font-size:0.75rem; font-weight:700; background:var(--accent-orange,#EA4828); color:#fff; padding:2px 8px; border-radius:10px; border:1px solid #121316;">0 ảnh</span>
+                  <span id="editor-screenshots-count"
+                    style="font-size:0.75rem; font-weight:700; background:var(--accent-orange,#EA4828); color:#fff; padding:2px 8px; border-radius:10px; border:1px solid #121316;">0
+                    ảnh</span>
                 </div>
-                <small style="font-size:0.72rem; color:var(--text-secondary); display:block; margin-bottom:10px; line-height:1.35;">
-                  Ảnh chụp trong game đã Việt hóa. Hiển thị dạng album kèm thumbnail nhỏ dưới hồ sơ game để game thủ soi rõ chữ.
+                <small
+                  style="font-size:0.72rem; color:var(--text-secondary); display:block; margin-bottom:10px; line-height:1.35;">
+                  Ảnh chụp trong game đã Việt hóa. Hiển thị dạng album kèm thumbnail nhỏ dưới hồ sơ game để game thủ soi
+                  rõ chữ.
                 </small>
 
                 <!-- Khung hiển thị danh sách ảnh nhỏ & nút xóa -->
-                <div id="editor-screenshots-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(90px, 1fr)); gap:8px; margin-bottom:12px; max-height:160px; overflow-y:auto; padding:2px;">
+                <div id="editor-screenshots-list"
+                  style="display:grid; grid-template-columns:repeat(auto-fill, minmax(90px, 1fr)); gap:8px; margin-bottom:12px; max-height:160px; overflow-y:auto; padding:2px;">
                   <!-- Render động bởi AdminStudio -->
                 </div>
 
                 <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                  <label class="btn-upload-file" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:#fff; border:2px solid #121316; border-radius:8px; font-weight:700; cursor:pointer; font-size:0.76rem; box-shadow:2px 2px 0px #121316; white-space:nowrap; flex-shrink:0;">
+                  <label class="btn-upload-file"
+                    style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:#fff; border:2px solid #121316; border-radius:8px; font-weight:700; cursor:pointer; font-size:0.76rem; box-shadow:2px 2px 0px #121316; white-space:nowrap; flex-shrink:0;">
                     <i class="fa-solid fa-cloud-arrow-up"></i> Chọn ảnh từ máy
-                    <input type="file" id="editor-screenshot-file-input" accept="image/*" multiple style="display:none;">
+                    <input type="file" id="editor-screenshot-file-input" accept="image/*" multiple
+                      style="display:none;">
                   </label>
-                  <input type="url" id="editor-screenshot-url-input" class="form-control" style="flex:1; min-width:110px; font-size:0.76rem; padding:6px 8px;" placeholder="Dán link ảnh (https://...)">
-                  <button type="button" class="btn-secondary" id="btn-add-screenshot-url" style="padding:6px 10px; font-size:0.76rem; white-space:nowrap;" onclick="AdminStudio.addScreenshotFromUrl()">
+                  <input type="url" id="editor-screenshot-url-input" class="form-control"
+                    style="flex:1; min-width:110px; font-size:0.76rem; padding:6px 8px;"
+                    placeholder="Dán link ảnh (https://...)">
+                  <button type="button" class="btn-secondary" id="btn-add-screenshot-url"
+                    style="padding:6px 10px; font-size:0.76rem; white-space:nowrap;"
+                    onclick="AdminStudio.addScreenshotFromUrl()">
                     <i class="fa-solid fa-plus"></i> Thêm
                   </button>
                 </div>
@@ -1170,6 +1318,18 @@
           </div>
           <p>Thư viện phi thương mại lưu trữ và chia sẻ các bản dịch game PC từ hệ thống VietHoaGame. Chúng tôi khuyến
             khích người chơi luôn mua game bản quyền trên Steam, GOG hoặc Epic Games để ủng hộ nhà phát triển.</p>
+
+          <!-- Card Tiếp Sức / Ủng Hộ Nhóm Dịch -->
+          <div class="footer-donate-card" onclick="DonateModal.open()" title="Mở hộp thoại ủng hộ nhóm dịch">
+            <div class="footer-donate-info">
+              <div class="footer-donate-icon"><i class="fa-solid fa-mug-hot"></i></div>
+              <div class="footer-donate-text">
+                <h5>Tiếp Sức Tạp Hóa Việt</h5>
+                <p>Mời một ly cà phê duy trì server tải nhanh miễn phí</p>
+              </div>
+            </div>
+            <span class="btn-footer-donate-mini"><i class="fa-solid fa-heart"></i> Ủng Hộ</span>
+          </div>
         </div>
         <div class="footer-col">
           <h4>Điều Hướng</h4>
@@ -1184,12 +1344,13 @@
         <div class="footer-col">
           <h4>Quản Trị & Cộng Đồng</h4>
           <ul>
+            <li><a href="javascript:void(0)" onclick="DonateModal.open()"><i class="fa-solid fa-heart"
+                  style="color:#EF4444"></i> Ủng Hộ Nhóm Dịch</a></li>
             <li><a href="https://discord.com" target="_blank" rel="noopener noreferrer"><i
                   class="fa-brands fa-discord"></i> Discord VietHoaGame</a></li>
             <li><a href="javascript:void(0)" onclick="BugReporter.openModal()"><i class="fa-solid fa-bug"></i> Báo Lỗi
                 Bản Dịch</a></li>
-            <li><a href="#admin" onclick="AdminStudio.open()"><i class="fa-solid fa-sliders"></i> Studio Quản Trị
-                (Admin)</a></li>
+
           </ul>
         </div>
       </div>
@@ -1216,6 +1377,7 @@
   <script src="js/admin.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/effects3d.js"></script>
+  <script src="js/donate.js"></script>
   <script src="js/app.js"></script>
 
 </body>
