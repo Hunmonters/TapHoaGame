@@ -28,9 +28,11 @@ const Library = {
 
     if (this.savedIds.has(id)) {
       this.savedIds.delete(id);
+      if (window.AudioManager) AudioManager.playClick();
       App.showToast(`Đã bỏ ${game.title} khỏi bộ sưu tập`);
     } else {
       this.savedIds.add(id);
+      if (window.AudioManager) AudioManager.playDing();
       App.showToast(`Đã lưu ${game.title} vào bộ sưu tập!`);
     }
 

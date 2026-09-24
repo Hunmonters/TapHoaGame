@@ -1,0 +1,237 @@
+/* ==========================================================================
+   TẠP HÓA VIỆT / THREEUI 3D PARALLAX & GLINT EFFECTS (effects3d.css)
+   Lấy cảm hứng từ ThreeUI: 3D Card Tilt, Holographic Glare & Parallax Depth
+   Tối ưu hóa 100% bằng CSS 3D Transforms siêu nhẹ (60+ FPS, Zero GPU Lag)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. BASE 3D PERSPECTIVE WRAPPER & CARDS
+   -------------------------------------------------------------------------- */
+.has-3d-tilt {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.has-3d-tilt.is-tilting,
+[data-theme="cream"] .game-card.has-3d-tilt.is-tilting,
+[data-theme="cream"] .comm-card.has-3d-tilt.is-tilting,
+[data-theme="dark"] .game-card.has-3d-tilt.is-tilting,
+[data-theme="dark"] .comm-card.has-3d-tilt.is-tilting {
+  transition: transform 0.08s ease-out, box-shadow 0.08s ease-out !important;
+  transform: perspective(1200px)
+             rotateX(var(--tilt-rx, 0deg))
+             rotateY(var(--tilt-ry, 0deg))
+             translateY(-6px)
+             scale3d(1.025, 1.025, 1.025) !important;
+  z-index: 8;
+}
+
+/* --------------------------------------------------------------------------
+   2. SHADOW DISPLACEMENT (ĐỔ BÓNG 3D VẬT LÝ NEUBRUTALIST)
+   -------------------------------------------------------------------------- */
+/* Giao diện Kem & Cam (Light Mode): Đổ bóng đen khối chuyển dịch theo góc nghiêng */
+[data-theme="cream"] .game-card.has-3d-tilt.is-tilting,
+[data-theme="cream"] .comm-card.has-3d-tilt.is-tilting {
+  box-shadow: calc(6px + var(--tilt-ry-num, 0) * -0.35px)
+              calc(6px + var(--tilt-rx-num, 0) * 0.35px)
+              0px #121316,
+              0 14px 28px rgba(18, 19, 22, 0.12) !important;
+}
+
+/* Giao diện Ban Đêm (Dark Mode): Chiều sâu quang học & ánh cam neon */
+[data-theme="dark"] .game-card.has-3d-tilt.is-tilting,
+[data-theme="dark"] .comm-card.has-3d-tilt.is-tilting {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75),
+              0 0 25px rgba(255, 87, 51, 0.28),
+              calc(var(--tilt-ry-num, 0) * -0.3px)
+              calc(var(--tilt-rx-num, 0) * 0.3px)
+              12px rgba(245, 158, 11, 0.18) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. HOLOGRAPHIC GLARE REFLECTION (ÁNH SÁNG PHẢN QUANG THREEUI)
+   -------------------------------------------------------------------------- */
+.card-glare-effect {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 12;
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: radial-gradient(
+    circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(234, 72, 40, 0.16) 40%,
+    transparent 75%
+  );
+  mix-blend-mode: overlay;
+}
+
+.is-tilting .card-glare-effect {
+  opacity: 1;
+}
+
+/* Phản quang rực rỡ hơn trong chế độ Dark Mode */
+[data-theme="dark"] .card-glare-effect {
+  background: radial-gradient(
+    circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 150, 60, 0.38) 0%,
+    rgba(245, 158, 11, 0.18) 45%,
+    transparent 75%
+  );
+  mix-blend-mode: screen;
+}
+
+/* --------------------------------------------------------------------------
+   4. LAYER PARALLAX (TÁCH LỚP KHÔNG GIAN 3D ĐỘC LẬP)
+   -------------------------------------------------------------------------- */
+.game-card.has-3d-tilt,
+.comm-card.has-3d-tilt {
+  transform-style: preserve-3d;
+}
+
+/* Poster lùi nhẹ vào chiều sâu */
+.has-3d-tilt .card-poster-wrap,
+.has-3d-tilt .comm-poster-wrap {
+  transform: translateZ(10px);
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease;
+}
+
+/* Các chi tiết nổi bật bay về phía trước (Pop-out 3D) */
+.has-3d-tilt.is-tilting .card-status-badge,
+.has-3d-tilt.is-tilting .comm-author-badge {
+  transform: translateZ(24px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.has-3d-tilt.is-tilting .card-bookmark-btn {
+  transform: translateZ(28px);
+}
+
+.has-3d-tilt.is-tilting .card-quick-download {
+  transform: translateZ(32px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.has-3d-tilt.is-tilting .card-title,
+.has-3d-tilt.is-tilting .comm-title {
+  transform: translateZ(15px);
+  transition: transform 0.2s ease;
+}
+
+/* --------------------------------------------------------------------------
+   5. SPOTLIGHT MEDIA 3D PARALLAX (BANNER SHOWCASE NỔI BẬT)
+   -------------------------------------------------------------------------- */
+.spotlight-media-wrap.has-3d-tilt,
+.spotlight-media-box.has-3d-tilt {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.spotlight-media-wrap.has-3d-tilt.is-tilting,
+.spotlight-media-box.has-3d-tilt.is-tilting {
+  transform: perspective(1200px)
+             rotateX(var(--tilt-rx, 0deg))
+             rotateY(var(--tilt-ry, 0deg))
+             scale3d(1.02, 1.02, 1.02) !important;
+}
+
+.spotlight-media-wrap.has-3d-tilt.is-tilting .spotlight-media-box {
+  box-shadow: calc(10px + var(--tilt-ry-num, 0) * -0.5px)
+              calc(10px + var(--tilt-rx-num, 0) * 0.5px)
+              0px rgba(18, 19, 22, 0.25),
+              0 20px 40px rgba(0, 0, 0, 0.22);
+}
+
+/* Góc trang trí bay ra trước trong không gian 3D */
+.spotlight-media-wrap.has-3d-tilt.is-tilting .spotlight-corner-tl {
+  transform: translateZ(28px) translate(-3px, -3px);
+  transition: transform 0.12s ease-out;
+}
+
+.spotlight-media-wrap.has-3d-tilt.is-tilting .spotlight-corner-br {
+  transform: translateZ(28px) translate(3px, 3px);
+  transition: transform 0.12s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   6. SPOTLIGHT HERO INTERACTIVE PARTICLES (HẠT BỤI ÁNH SÁNG THREEUI)
+   -------------------------------------------------------------------------- */
+.spotlight-container {
+  position: relative;
+}
+
+.spotlight-top-bar,
+.spotlight-body {
+  position: relative;
+  z-index: 2;
+}
+
+.spotlight-particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] .spotlight-particles-canvas {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   8. NÚT BẬT/TẮT ÂM THANH TRÊN HEADER
+   -------------------------------------------------------------------------- */
+.btn-sound-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--bg-surface);
+  border: 2px solid var(--border-strong, #121316);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--border-strong, #121316);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--text-primary);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.btn-sound-toggle:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--border-strong, #121316);
+  border-color: var(--accent-orange, #EA4828);
+  color: var(--accent-orange, #EA4828);
+}
+
+/* --------------------------------------------------------------------------
+   9. HỖ TRỢ NGƯỜI DÙNG GIẢM CHUYỂN ĐỘNG (ACCESSIBILITY)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .has-3d-tilt,
+  .has-3d-tilt.is-tilting {
+    transform: none !important;
+    transition: none !important;
+  }
+  .card-glare-effect {
+    display: none !important;
+  }
+  .spotlight-particles-canvas {
+    display: none !important;
+  }
+}
+
+

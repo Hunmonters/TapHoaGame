@@ -637,7 +637,6 @@ def main():
         print(f"[OK] Đã tạo danh sách đề xuất cộng đồng: {requests_json}")
     else:
         print(f"[INFO] Giữ nguyên danh sách đề xuất hiện có: {requests_json}")
-    print(f"[OK] Đã tạo danh sách đề xuất cộng đồng: {requests_json}")
 
 if __name__ == "__main__":
     main()

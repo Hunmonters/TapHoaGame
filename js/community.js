@@ -227,7 +227,7 @@ const Community = {
 
     if (!filtered.length) {
       grid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align:center; padding: 60px 20px; background:#FFFFFF; border:2px solid #121316; border-radius:14px; box-shadow:4px 4px 0px #121316;">
+        <div style="grid-column: 1 / -1; text-align:center; padding: 60px 20px; background:var(--bg-card); border:2px solid var(--border-strong); border-radius:14px; box-shadow:4px 4px 0px var(--border-strong);">
           <i class="fa-solid fa-people-carry-box" style="font-size:3rem; color:var(--text-muted); margin-bottom:12px;"></i>
           <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:6px;">Chưa có bản dịch nào khớp với tìm kiếm</h3>
           <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:16px;">Bạn có bản dịch muốn đóng góp? Hãy chia sẻ ngay với cộng đồng game thủ!</p>

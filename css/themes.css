@@ -125,16 +125,68 @@ body[data-theme="dark"] {
   color: var(--text-primary);
 }
 
+[data-theme="dark"] .comm-card,
+[data-theme="dark"] .comm-card-body,
 [data-theme="dark"] .community-card,
 [data-theme="dark"] .community-card-body,
+[data-theme="dark"] .community-masthead,
 [data-theme="dark"] .community-hub-header,
-[data-theme="dark"] .community-hero-card {
+[data-theme="dark"] .community-hero-card,
+[data-theme="dark"] .progress-masthead {
   background: var(--bg-card);
   border-color: var(--border-subtle);
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .community-stat-box {
+[data-theme="dark"] .comm-title {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .comm-search-input,
+[data-theme="dark"] .comm-sort-select {
+  background: var(--bg-input);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .comm-bookmark-btn {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .comm-bookmark-btn:hover {
+  background: var(--accent-orange);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .btn-comm-detail {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .btn-comm-detail:hover {
+  background: var(--bg-card);
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+[data-theme="dark"] .comm-meta-pill,
+[data-theme="dark"] .comm-pill-group {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .comm-notice-box {
+  background: rgba(234, 72, 40, 0.12);
+  border-color: rgba(234, 72, 40, 0.35);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .community-stat-box,
+[data-theme="dark"] .masthead-metrics,
+[data-theme="dark"] .production-legend {
   background: var(--bg-surface);
   border-color: var(--border-subtle);
 }
@@ -142,6 +194,12 @@ body[data-theme="dark"] {
 [data-theme="dark"] .spotlight-container {
   background: var(--bg-card);
   border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .spotlight-nav-btn {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
 }
 
 [data-theme="dark"] .archive-wire {
@@ -171,18 +229,21 @@ body[data-theme="dark"] {
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .filter-pill {
+[data-theme="dark"] .filter-pill,
+[data-theme="dark"] .prog-pill {
   background: var(--bg-surface);
   border-color: var(--border-subtle);
   color: var(--text-secondary);
 }
 
-[data-theme="dark"] .filter-pill:hover {
+[data-theme="dark"] .filter-pill:hover,
+[data-theme="dark"] .prog-pill:hover {
   border-color: var(--accent-orange);
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .filter-pill.active {
+[data-theme="dark"] .filter-pill.active,
+[data-theme="dark"] .prog-pill.active {
   background: var(--accent-orange);
   color: #FFF;
   border-color: var(--accent-orange);
@@ -197,7 +258,7 @@ body[data-theme="dark"] {
   color: var(--text-primary);
 }
 
-/* Modals */
+/* Modals & Dialogs */
 [data-theme="dark"] .detail-box,
 [data-theme="dark"] .community-modal-box,
 [data-theme="dark"] .admin-editor-box,
@@ -205,6 +266,51 @@ body[data-theme="dark"] {
   background: var(--bg-card);
   border-color: var(--border-strong);
   color: var(--text-primary);
+}
+
+[data-theme="dark"] .detail-close-btn {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .detail-close-btn:hover {
+  background: var(--accent-orange);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .detail-meta-table,
+[data-theme="dark"] .detail-gallery-wrap {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .detail-gallery-counter {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .detail-gallery-title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .gallery-nav-btn {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .gallery-nav-btn:hover {
+  background: var(--accent-orange);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .catalog-empty,
+[data-theme="dark"] .requests-empty-state {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
 }
 
 [data-theme="dark"] .detail-tabs-bar,

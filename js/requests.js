@@ -92,10 +92,12 @@ const Requests = {
     if (this.userVotes.has(id)) {
       this.userVotes.delete(id);
       item.votes = Math.max(0, (item.votes || 0) - 1);
+      if (window.AudioManager) AudioManager.playClick();
       if (window.App) App.showToast(`Đã hủy ủng hộ cho ${item.title}`);
     } else {
       this.userVotes.add(id);
       item.votes = (item.votes || 0) + 1;
+      if (window.AudioManager) AudioManager.playDing();
       if (window.App) App.showToast(`⚡ Đã bình chọn 1 phiếu cho "${item.title}"!`);
     }
 
@@ -167,12 +169,12 @@ const Requests = {
 
     if (!sorted.length) {
       listContainer.innerHTML = `
-        <div style="text-align:center; padding:60px 24px; background:#FFFFFF; border:2px solid var(--border-strong,#121316); border-radius:12px; box-shadow:4px 4px 0px var(--border-strong,#121316);">
-          <div style="width:58px; height:58px; margin:0 auto 16px; background:var(--bg-surface,#FAF6EE); border:2px solid #121316; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:var(--accent-orange,#EA4828); box-shadow:2px 2px 0px #121316;">
+        <div class="requests-empty-state" style="text-align:center; padding:60px 24px; background:var(--bg-card); border:2px solid var(--border-strong); border-radius:12px; box-shadow:4px 4px 0px var(--border-strong);">
+          <div style="width:58px; height:58px; margin:0 auto 16px; background:var(--bg-surface); border:2px solid var(--border-strong); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:var(--accent-orange); box-shadow:2px 2px 0px var(--border-strong);">
             <i class="fa-solid fa-square-poll-vertical"></i>
           </div>
-          <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-primary,#121316); margin-bottom:8px;">Bảng Xếp Hạng Đang Trống</h3>
-          <p style="font-size:0.9rem; color:var(--text-secondary,#555); max-width:440px; margin:0 auto; line-height:1.5;">
+          <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:8px;">Bảng Xếp Hạng Đang Trống</h3>
+          <p style="font-size:0.9rem; color:var(--text-secondary); max-width:440px; margin:0 auto; line-height:1.5;">
             Chưa có tựa game nào trong danh sách bình chọn. Hãy là người đầu tiên gửi đề xuất tựa game bạn mong muốn nhóm Việt hóa tiếp theo ở biểu mẫu bên cạnh!
           </p>
         </div>

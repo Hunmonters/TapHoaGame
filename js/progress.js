@@ -61,7 +61,7 @@ const Progress = {
 
     if (!displayList.length) {
       listContainer.innerHTML = `
-        <div style="text-align:center; padding:50px 20px; background:#FFFFFF; border:2px solid #121316; border-radius:var(--radius-md); box-shadow:4px 4px 0px #121316;">
+        <div style="text-align:center; padding:50px 20px; background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-md); box-shadow:4px 4px 0px var(--border-strong);">
           <i class="fa-solid fa-hammer" style="font-size:2.5rem; color:var(--text-muted); margin-bottom:12px;"></i>
           <h3 style="font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:6px;">Chưa có dự án nào trong mục này</h3>
           <p style="font-size:0.9rem; color:var(--text-secondary);">Bạn có thể gửi đề xuất game mới tại tab Đề Xuất để nhóm đưa vào xưởng dịch!</p>

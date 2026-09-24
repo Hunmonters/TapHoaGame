@@ -337,7 +337,7 @@ const Catalog = {
 
     if (!filtered.length) {
       container.innerHTML = `
-        <div class="catalog-empty" style="text-align:center; padding:60px 20px; background:#FFFFFF; border:2px solid #121316; border-radius:var(--radius-md); box-shadow:4px 4px 0px #121316;">
+        <div class="catalog-empty" style="text-align:center; padding:60px 20px; background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-md); box-shadow:4px 4px 0px var(--border-strong);">
           <i class="fa-solid fa-box-open" style="font-size:2.8rem; color:var(--text-muted); margin-bottom:12px;"></i>
           <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:6px;">Không tìm thấy bản Việt hóa nào phù hợp</h3>
           <p style="color:var(--text-secondary); font-size:0.9rem;">Thử tìm kiếm với từ khóa khác hoặc chọn xem Tất Cả Game.</p>

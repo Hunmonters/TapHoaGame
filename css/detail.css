@@ -717,7 +717,7 @@
    ========================================================================== */
 .detail-gallery-wrap {
   margin: 22px 0 20px;
-  background: #FFFFFF;
+  background: var(--bg-card, #FFFFFF);
   border: 2px solid var(--border-strong, #121316);
   border-radius: var(--radius-md, 12px);
   padding: 16px;
@@ -818,7 +818,7 @@
   width: 40px;
   height: 40px;
   border-radius: 8px;
-  background: #FFFFFF;
+  background: var(--bg-surface, #FFFFFF);
   border: 2px solid var(--border-strong, #121316);
   color: var(--text-primary, #121316);
   box-shadow: 2px 2px 0px var(--border-strong, #121316);
@@ -963,3 +963,37 @@
 .gallery-lightbox-close:hover {
   transform: scale(1.1) rotate(90deg);
 }
+
+/* ==========================================================================
+   DARK MODE OVERRIDES (Screenshot Gallery)
+   ========================================================================== */
+[data-theme="dark"] .detail-gallery-wrap {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .detail-gallery-title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .detail-gallery-counter {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  box-shadow: 1.5px 1.5px 0px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .gallery-nav-btn {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .gallery-nav-btn:hover {
+  background: var(--accent-orange);
+  color: #FFFFFF;
+  border-color: var(--accent-orange);
+}
+

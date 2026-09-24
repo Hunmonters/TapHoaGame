@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="css/detail.css">
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="css/community.css">
+  <link rel="stylesheet" href="css/effects3d.css">
   <script>
     (function() {
       // Mặc định luôn là giao diện Kem & Cam. Chỉ kích hoạt Chế Độ Ban Đêm nếu người dùng chủ động lưu "dark"
@@ -83,6 +84,11 @@
           <i class="fa-solid fa-moon" id="icon-theme"></i>
         </button>
 
+        <!-- Nút bật/tắt Âm thanh Tương tác Cơ học -->
+        <button class="btn-sound-toggle" id="btn-sound-toggle" type="button" onclick="AudioManager.toggleSound()" title="Bật/Tắt âm thanh tương tác cơ học" aria-label="Đổi âm thanh">
+          <i class="fa-solid fa-volume-high" id="icon-sound"></i>
+        </button>
+
         <button class="btn-bookmark-tab" data-tab="library" type="button" title="Mở bộ sưu tập của bạn">
           <i class="fa-solid fa-bookmark" style="color:var(--accent-red)"></i>
           <span>Bộ sưu tập</span>
@@ -116,6 +122,7 @@
            ========================================================================== -->
       <section class="spotlight-showcase" id="spotlight-showcase" aria-label="Bản Việt hóa mới cập nhật nổi bật">
         <div class="spotlight-container">
+          <canvas id="spotlight-particles" class="spotlight-particles-canvas" aria-hidden="true"></canvas>
 
           <!-- Top bar: Pagination dashes & Release Date -->
           <header class="spotlight-top-bar">
@@ -1207,6 +1214,8 @@
   <script src="js/requests.js"></script>
   <script src="js/bug_reporter.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects3d.js"></script>
   <script src="js/app.js"></script>
 
 </body>

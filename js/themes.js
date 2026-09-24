@@ -39,6 +39,10 @@ const ThemeManager = {
     } catch (e) {}
     this.applyTheme(nextTheme);
 
+    if (window.AudioManager) {
+      AudioManager.playWoosh();
+    }
+
     if (window.App && App.showToast) {
       App.showToast(nextTheme === "dark" ? "🌙 Đã kích hoạt Chế Độ Ban Đêm (Dark Mode)" : "☀️ Đã chuyển sang Giao Diện Kem & Cam");
     }
