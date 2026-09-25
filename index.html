@@ -799,8 +799,7 @@
             <i class="fa-solid fa-key"></i> Xác Thực Quản Trị
           </button>
         </form>
-        <small style="color:var(--text-muted); display:block; margin-top:16px;">Mã PIN mặc định:
-          <code>020402</code> (Đổi trong config.js)</small>
+
       </div>
 
       <!-- 2. Bảng điều khiển Dashboard sau khi đăng nhập -->
@@ -940,7 +939,8 @@
                   </span>
                   <h3 class="analytics-headline">Bản Số Liệu Người Truy Cập Web</h3>
                 </div>
-                <p class="analytics-subheadline">Thống kê chi tiết lưu lượng truy cập, khách độc nhất, thiết bị và hành vi tải game thời gian thực.</p>
+                <p class="analytics-subheadline">Thống kê chi tiết lưu lượng truy cập, khách độc nhất, thiết bị và hành
+                  vi tải game thời gian thực.</p>
               </div>
 
               <div class="analytics-actions-group">
@@ -951,10 +951,12 @@
                   <button type="button" class="analytics-time-btn" data-timeframe="all">Toàn Bộ</button>
                 </div>
 
-                <button type="button" class="btn-analytics-action" id="btn-refresh-analytics" onclick="AdminStudio.refreshAnalytics()" title="Cập nhật số liệu mới nhất">
+                <button type="button" class="btn-analytics-action" id="btn-refresh-analytics"
+                  onclick="AdminStudio.refreshAnalytics()" title="Cập nhật số liệu mới nhất">
                   <i class="fa-solid fa-arrows-rotate"></i> Làm mới
                 </button>
-                <button type="button" class="btn-analytics-action" id="btn-export-analytics" onclick="AdminStudio.exportAnalyticsReport()" title="Tải xuống tệp báo cáo số liệu CSV">
+                <button type="button" class="btn-analytics-action" id="btn-export-analytics"
+                  onclick="AdminStudio.exportAnalyticsReport()" title="Tải xuống tệp báo cáo số liệu CSV">
                   <i class="fa-solid fa-file-arrow-down"></i> Xuất CSV
                 </button>
               </div>
@@ -970,7 +972,8 @@
                 </div>
                 <div class="kpi-value-row">
                   <span class="kpi-number" id="an-total-views">0</span>
-                  <span class="kpi-trend neutral" id="an-views-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay: 0</span>
+                  <span class="kpi-trend neutral" id="an-views-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay:
+                    0</span>
                 </div>
                 <span class="kpi-footer-text">Lượt hiển thị trang toàn hệ thống</span>
               </div>
@@ -983,7 +986,8 @@
                 </div>
                 <div class="kpi-value-row">
                   <span class="kpi-number" id="an-unique-visitors">0</span>
-                  <span class="kpi-trend neutral" id="an-uv-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay: 0</span>
+                  <span class="kpi-trend neutral" id="an-uv-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay:
+                    0</span>
                 </div>
                 <span class="kpi-footer-text">Người dùng phân biệt theo thiết bị</span>
               </div>
@@ -1009,7 +1013,8 @@
                 </div>
                 <div class="kpi-value-row">
                   <span class="kpi-number" id="an-total-downloads">0</span>
-                  <span class="kpi-trend neutral" id="an-dl-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay: 0</span>
+                  <span class="kpi-trend neutral" id="an-dl-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay:
+                    0</span>
                 </div>
                 <span class="kpi-footer-text">Lượt click link tải Google Drive</span>
               </div>
@@ -1032,8 +1037,10 @@
             <div class="analytics-chart-box">
               <div class="chart-box-header">
                 <div>
-                  <h4 class="chart-box-title"><i class="fa-solid fa-chart-column"></i> Xu Hướng Lưu Lượng Truy Cập Theo Ngày</h4>
-                  <span class="chart-box-desc">So sánh tương quan giữa tổng lượt xem và số lượng khách truy cập độc nhất</span>
+                  <h4 class="chart-box-title"><i class="fa-solid fa-chart-column"></i> Xu Hướng Lưu Lượng Truy Cập Theo
+                    Ngày</h4>
+                  <span class="chart-box-desc">So sánh tương quan giữa tổng lượt xem và số lượng khách truy cập độc
+                    nhất</span>
                 </div>
                 <div class="chart-legend">
                   <span class="legend-item"><span class="legend-dot dot-views"></span> Lượt xem trang (Pageviews)</span>
@@ -1051,7 +1058,8 @@
               <div class="analytics-panel-card">
                 <div class="panel-card-header">
                   <div>
-                    <h4 class="panel-card-title"><i class="fa-solid fa-ranking-star"></i> Top Game Được Quan Tâm & Tải Nhiều Nhất</h4>
+                    <h4 class="panel-card-title"><i class="fa-solid fa-ranking-star"></i> Top Game Được Quan Tâm & Tải
+                      Nhiều Nhất</h4>
                     <span class="panel-card-desc">Bảng xếp hạng hiệu suất tải và tương tác bản dịch</span>
                   </div>
                   <span class="panel-card-tag">Xếp hạng</span>
@@ -1078,7 +1086,8 @@
               <div class="analytics-panel-card">
                 <div class="panel-card-header">
                   <div>
-                    <h4 class="panel-card-title"><i class="fa-solid fa-laptop-code"></i> Thiết Bị, Trình Duyệt & Nguồn Đến</h4>
+                    <h4 class="panel-card-title"><i class="fa-solid fa-laptop-code"></i> Thiết Bị, Trình Duyệt & Nguồn
+                      Đến</h4>
                     <span class="panel-card-desc">Tỷ lệ phân bố nền tảng phần cứng và kênh tiếp cận</span>
                   </div>
                   <span class="panel-card-tag">Phân bố</span>
@@ -1098,7 +1107,8 @@
                   <!-- Section Nguồn truy cập -->
                   <div class="breakdown-group" style="margin-top:20px;">
                     <div class="breakdown-title-row">
-                      <span class="breakdown-label"><i class="fa-solid fa-compass"></i> Nguồn Truy Cập (Referrers)</span>
+                      <span class="breakdown-label"><i class="fa-solid fa-compass"></i> Nguồn Truy Cập
+                        (Referrers)</span>
                       <span class="breakdown-subtitle">Nơi người chơi tìm thấy web</span>
                     </div>
                     <div class="breakdown-bars-list" id="analytics-referrers-list">
@@ -1113,8 +1123,10 @@
             <div class="analytics-panel-card" style="margin-top:24px;">
               <div class="panel-card-header" style="justify-content:space-between;">
                 <div>
-                  <h4 class="panel-card-title"><i class="fa-solid fa-clock-rotate-left"></i> Nhật Ký Hoạt Động Thời Gian Thực (Live Activity Log)</h4>
-                  <span class="panel-card-desc">Ghi nhận các thao tác mở trang, xem bản dịch và bấm link tải mới nhất</span>
+                  <h4 class="panel-card-title"><i class="fa-solid fa-clock-rotate-left"></i> Nhật Ký Hoạt Động Thời Gian
+                    Thực (Live Activity Log)</h4>
+                  <span class="panel-card-desc">Ghi nhận các thao tác mở trang, xem bản dịch và bấm link tải mới
+                    nhất</span>
                 </div>
                 <span class="live-activity-counter" id="an-log-count">0 sự kiện gần nhất</span>
               </div>
