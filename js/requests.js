@@ -99,6 +99,9 @@ const Requests = {
       item.votes = (item.votes || 0) + 1;
       if (window.AudioManager) AudioManager.playDing();
       if (window.App) App.showToast(`⚡ Đã bình chọn 1 phiếu cho "${item.title}"!`);
+      if (window.Analytics) {
+        Analytics.trackAction("vote", "Bình Chọn Đề Xuất", item.title);
+      }
     }
 
     try {
@@ -128,6 +131,9 @@ const Requests = {
     };
 
     this.userVotes.add(newReq.id);
+    if (window.Analytics) {
+      Analytics.trackAction("request_submit", "Gửi Đề Xuất Mới", newReq.title);
+    }
     this.requests.unshift(newReq);
 
     // Lưu vào localStorage

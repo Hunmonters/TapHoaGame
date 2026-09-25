@@ -816,6 +816,8 @@
           <div class="admin-tabs-nav">
             <button class="admin-tab-btn active" data-admintab="games" type="button"><i class="fa-solid fa-gamepad"></i>
               Kho Game</button>
+            <button class="admin-tab-btn" data-admintab="analytics" type="button"><i class="fa-solid fa-chart-line"></i>
+              Số Liệu Truy Cập</button>
             <button class="admin-tab-btn" data-admintab="requests" type="button"><i class="fa-solid fa-paper-plane"></i>
               Đề Xuất (<span id="admin-req-count">0</span>)</button>
             <button class="admin-tab-btn" data-admintab="reports" type="button"><i class="fa-solid fa-bug"></i> Báo
@@ -923,6 +925,216 @@
                 </thead>
                 <tbody id="admin-reports-tbody"></tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- ================= TAB: SỐ LIỆU NGƯỜI TRUY CẬP WEB (ANALYTICS) ================= -->
+          <div class="admin-pane" id="admin-pane-analytics">
+            <!-- Toolbar -->
+            <div class="analytics-toolbar">
+              <div class="analytics-title-group">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span class="analytics-live-beacon" title="Hệ thống phân tích lưu lượng trực tiếp">
+                    <span class="beacon-dot"></span>
+                    <span>LIVE REALTIME</span>
+                  </span>
+                  <h3 class="analytics-headline">Bản Số Liệu Người Truy Cập Web</h3>
+                </div>
+                <p class="analytics-subheadline">Thống kê chi tiết lưu lượng truy cập, khách độc nhất, thiết bị và hành vi tải game thời gian thực.</p>
+              </div>
+
+              <div class="analytics-actions-group">
+                <div class="analytics-timeframe-picker" role="group" aria-label="Khoảng thời gian">
+                  <button type="button" class="analytics-time-btn" data-timeframe="today">24 Giờ</button>
+                  <button type="button" class="analytics-time-btn active" data-timeframe="7days">7 Ngày Qua</button>
+                  <button type="button" class="analytics-time-btn" data-timeframe="30days">30 Ngày</button>
+                  <button type="button" class="analytics-time-btn" data-timeframe="all">Toàn Bộ</button>
+                </div>
+
+                <button type="button" class="btn-analytics-action" id="btn-refresh-analytics" onclick="AdminStudio.refreshAnalytics()" title="Cập nhật số liệu mới nhất">
+                  <i class="fa-solid fa-arrows-rotate"></i> Làm mới
+                </button>
+                <button type="button" class="btn-analytics-action" id="btn-export-analytics" onclick="AdminStudio.exportAnalyticsReport()" title="Tải xuống tệp báo cáo số liệu CSV">
+                  <i class="fa-solid fa-file-arrow-down"></i> Xuất CSV
+                </button>
+              </div>
+            </div>
+
+            <!-- KPI Cards Grid -->
+            <div class="analytics-kpi-grid">
+              <!-- KPI 1 -->
+              <div class="analytics-kpi-card">
+                <div class="kpi-header">
+                  <span class="kpi-label">Tổng Lượt Xem (Views)</span>
+                  <div class="kpi-icon-wrap orange"><i class="fa-solid fa-eye"></i></div>
+                </div>
+                <div class="kpi-value-row">
+                  <span class="kpi-number" id="an-total-views">0</span>
+                  <span class="kpi-trend neutral" id="an-views-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay: 0</span>
+                </div>
+                <span class="kpi-footer-text">Lượt hiển thị trang toàn hệ thống</span>
+              </div>
+
+              <!-- KPI 2 -->
+              <div class="analytics-kpi-card">
+                <div class="kpi-header">
+                  <span class="kpi-label">Khách Truy Cập (UVs)</span>
+                  <div class="kpi-icon-wrap blue"><i class="fa-solid fa-users"></i></div>
+                </div>
+                <div class="kpi-value-row">
+                  <span class="kpi-number" id="an-unique-visitors">0</span>
+                  <span class="kpi-trend neutral" id="an-uv-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay: 0</span>
+                </div>
+                <span class="kpi-footer-text">Người dùng phân biệt theo thiết bị</span>
+              </div>
+
+              <!-- KPI 3 -->
+              <div class="analytics-kpi-card highlight-live">
+                <div class="kpi-header">
+                  <span class="kpi-label">Đang Trực Tuyến</span>
+                  <div class="kpi-icon-wrap green"><i class="fa-solid fa-signal"></i></div>
+                </div>
+                <div class="kpi-value-row">
+                  <span class="kpi-number text-green" id="an-live-users">1</span>
+                  <span class="kpi-status-badge"><span class="live-dot"></span> Đang xem web</span>
+                </div>
+                <span class="kpi-footer-text">Hoạt động trong 3 phút qua</span>
+              </div>
+
+              <!-- KPI 4 -->
+              <div class="analytics-kpi-card">
+                <div class="kpi-header">
+                  <span class="kpi-label">Lượt Bấm Tải Bản Dịch</span>
+                  <div class="kpi-icon-wrap purple"><i class="fa-solid fa-cloud-arrow-down"></i></div>
+                </div>
+                <div class="kpi-value-row">
+                  <span class="kpi-number" id="an-total-downloads">0</span>
+                  <span class="kpi-trend neutral" id="an-dl-trend"><i class="fa-solid fa-calendar-day"></i> Hôm nay: 0</span>
+                </div>
+                <span class="kpi-footer-text">Lượt click link tải Google Drive</span>
+              </div>
+
+              <!-- KPI 5 -->
+              <div class="analytics-kpi-card">
+                <div class="kpi-header">
+                  <span class="kpi-label">Tỷ Lệ Tải Game</span>
+                  <div class="kpi-icon-wrap gold"><i class="fa-solid fa-bullseye"></i></div>
+                </div>
+                <div class="kpi-value-row">
+                  <span class="kpi-number" id="an-conversion-rate">0.0%</span>
+                  <span class="kpi-badge-gold" id="an-conversion-badge">Thực tế 100%</span>
+                </div>
+                <span class="kpi-footer-text">Khách xem chi tiết chuyển sang tải</span>
+              </div>
+            </div>
+
+            <!-- Biểu đồ xu hướng SVG -->
+            <div class="analytics-chart-box">
+              <div class="chart-box-header">
+                <div>
+                  <h4 class="chart-box-title"><i class="fa-solid fa-chart-column"></i> Xu Hướng Lưu Lượng Truy Cập Theo Ngày</h4>
+                  <span class="chart-box-desc">So sánh tương quan giữa tổng lượt xem và số lượng khách truy cập độc nhất</span>
+                </div>
+                <div class="chart-legend">
+                  <span class="legend-item"><span class="legend-dot dot-views"></span> Lượt xem trang (Pageviews)</span>
+                  <span class="legend-item"><span class="legend-dot dot-uv"></span> Khách truy cập (Visitors)</span>
+                </div>
+              </div>
+              <div class="chart-canvas-wrapper" id="analytics-chart-container">
+                <!-- Render động SVG Bar Chart -->
+              </div>
+            </div>
+
+            <!-- Two-Column Breakdown -->
+            <div class="analytics-split-grid">
+              <!-- Cột 1: Top Games Leaderboard -->
+              <div class="analytics-panel-card">
+                <div class="panel-card-header">
+                  <div>
+                    <h4 class="panel-card-title"><i class="fa-solid fa-ranking-star"></i> Top Game Được Quan Tâm & Tải Nhiều Nhất</h4>
+                    <span class="panel-card-desc">Bảng xếp hạng hiệu suất tải và tương tác bản dịch</span>
+                  </div>
+                  <span class="panel-card-tag">Xếp hạng</span>
+                </div>
+                <div class="analytics-table-wrap">
+                  <table class="analytics-mini-table">
+                    <thead>
+                      <tr>
+                        <th style="width:36px; text-align:center;">#</th>
+                        <th>Tựa Game</th>
+                        <th style="text-align:right;">Lượt Xem</th>
+                        <th style="text-align:right;">Lượt Tải</th>
+                        <th style="width:110px; text-align:center;">Tỷ Lệ Tải</th>
+                      </tr>
+                    </thead>
+                    <tbody id="analytics-top-games-tbody">
+                      <!-- Render động -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Cột 2: Thiết Bị & Nguồn Đến -->
+              <div class="analytics-panel-card">
+                <div class="panel-card-header">
+                  <div>
+                    <h4 class="panel-card-title"><i class="fa-solid fa-laptop-code"></i> Thiết Bị, Trình Duyệt & Nguồn Đến</h4>
+                    <span class="panel-card-desc">Tỷ lệ phân bố nền tảng phần cứng và kênh tiếp cận</span>
+                  </div>
+                  <span class="panel-card-tag">Phân bố</span>
+                </div>
+                <div class="analytics-breakdowns-container">
+                  <!-- Section Thiết bị -->
+                  <div class="breakdown-group">
+                    <div class="breakdown-title-row">
+                      <span class="breakdown-label"><i class="fa-solid fa-desktop"></i> Hệ Điều Hành / Thiết Bị</span>
+                      <span class="breakdown-subtitle">PC vs Mobile vs Steam Deck</span>
+                    </div>
+                    <div class="breakdown-bars-list" id="analytics-devices-list">
+                      <!-- Render động -->
+                    </div>
+                  </div>
+
+                  <!-- Section Nguồn truy cập -->
+                  <div class="breakdown-group" style="margin-top:20px;">
+                    <div class="breakdown-title-row">
+                      <span class="breakdown-label"><i class="fa-solid fa-compass"></i> Nguồn Truy Cập (Referrers)</span>
+                      <span class="breakdown-subtitle">Nơi người chơi tìm thấy web</span>
+                    </div>
+                    <div class="breakdown-bars-list" id="analytics-referrers-list">
+                      <!-- Render động -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nhật Ký Thời Gian Thực -->
+            <div class="analytics-panel-card" style="margin-top:24px;">
+              <div class="panel-card-header" style="justify-content:space-between;">
+                <div>
+                  <h4 class="panel-card-title"><i class="fa-solid fa-clock-rotate-left"></i> Nhật Ký Hoạt Động Thời Gian Thực (Live Activity Log)</h4>
+                  <span class="panel-card-desc">Ghi nhận các thao tác mở trang, xem bản dịch và bấm link tải mới nhất</span>
+                </div>
+                <span class="live-activity-counter" id="an-log-count">0 sự kiện gần nhất</span>
+              </div>
+              <div class="analytics-table-wrap">
+                <table class="analytics-mini-table">
+                  <thead>
+                    <tr>
+                      <th style="width:130px;">Thời Gian</th>
+                      <th style="width:150px;">Loại Hành Động</th>
+                      <th>Nội Dung Tương Tác / Tựa Game</th>
+                      <th style="width:170px;">Thiết Bị & Trình Duyệt</th>
+                      <th style="width:140px; text-align:center;">Vị Trí</th>
+                      <th style="width:90px; text-align:center;">Trạng Thái</th>
+                    </tr>
+                  </thead>
+                  <tbody id="analytics-logs-tbody">
+                    <!-- Render động -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -1374,6 +1586,7 @@
   <script src="js/community.js"></script>
   <script src="js/requests.js"></script>
   <script src="js/bug_reporter.js"></script>
+  <script src="js/analytics.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/effects3d.js"></script>

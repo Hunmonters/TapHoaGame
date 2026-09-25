@@ -35,6 +35,7 @@ const AdminStudio = {
       this.renderGamesTable();
       this.renderRequestsTable();
       this.renderReportsTable();
+      this.renderAnalytics();
     } else {
       document.getElementById("admin-login-view").style.display = "block";
       document.getElementById("admin-dashboard-view").style.display = "none";
@@ -87,6 +88,7 @@ const AdminStudio = {
       this.renderGamesTable();
       this.renderRequestsTable();
       this.renderReportsTable();
+      this.renderAnalytics();
       App.showToast("Đăng nhập Studio Quản Trị thành công!");
     } else {
       App.showToast("Mã PIN quản trị không chính xác.");
@@ -180,6 +182,373 @@ const AdminStudio = {
         <td><small style="color:var(--text-muted); font-family:var(--font-mono);">${new Date(r.timestamp).toLocaleString("vi-VN")}</small></td>
       </tr>
     `).join("");
+  },
+
+  /* ==========================================================================
+     PHÂN TÍCH & SỐ LIỆU NGƯỜI TRUY CẬP (ANALYTICS DASHBOARD)
+     ========================================================================== */
+  analyticsTimeframe: "7days",
+
+  renderAnalytics() {
+    if (!window.Analytics) return;
+    const pane = document.getElementById("admin-pane-analytics");
+    if (!pane) return;
+
+    const data = Analytics.getDataByTimeframe(this.analyticsTimeframe || "7days");
+
+    // 1. Cập nhật 5 KPI Cards
+    const elViews = document.getElementById("an-total-views");
+    const elUV = document.getElementById("an-unique-visitors");
+    const elLive = document.getElementById("an-live-users");
+    const elDl = document.getElementById("an-total-downloads");
+    const elConv = document.getElementById("an-conversion-rate");
+
+    if (elViews) elViews.textContent = Analytics.formatNumber(data.totalViews);
+    if (elUV) elUV.textContent = Analytics.formatNumber(data.totalUV);
+    if (elLive) elLive.textContent = data.liveUsers;
+    if (elDl) elDl.textContent = Analytics.formatNumber(data.totalDownloads);
+    if (elConv) elConv.textContent = `${data.conversionRate}%`;
+
+    // Cập nhật nhãn phụ hôm nay & badge chuyển đổi thực tế
+    const store = Analytics.getStore();
+    const today = new Date().toISOString().split("T")[0];
+    const todayStats = (store.daily && store.daily[today]) ? store.daily[today] : { views: 0, uv: 0, downloads: 0 };
+
+    const elViewsTrend = document.getElementById("an-views-trend");
+    if (elViewsTrend) elViewsTrend.innerHTML = `<i class="fa-solid fa-calendar-day"></i> Hôm nay: ${Analytics.formatNumber(todayStats.views)}`;
+
+    const elUvTrend = document.getElementById("an-uv-trend");
+    if (elUvTrend) elUvTrend.innerHTML = `<i class="fa-solid fa-calendar-day"></i> Hôm nay: ${Analytics.formatNumber(todayStats.uv)}`;
+
+    const elDlTrend = document.getElementById("an-dl-trend");
+    if (elDlTrend) elDlTrend.innerHTML = `<i class="fa-solid fa-calendar-day"></i> Hôm nay: ${Analytics.formatNumber(todayStats.downloads)}`;
+
+    const elConvBadge = document.getElementById("an-conversion-badge");
+    if (elConvBadge) {
+      const cr = parseFloat(data.conversionRate) || 0;
+      if (cr >= 25) elConvBadge.textContent = "Chuyển đổi cao";
+      else if (cr >= 10) elConvBadge.textContent = "Tương tác tốt";
+      else if (cr > 0) elConvBadge.textContent = "Đang chuyển đổi";
+      else elConvBadge.textContent = "Thực tế 100%";
+    }
+
+    // 2. Vẽ biểu đồ SVG Xu Hướng
+    this.renderAnalyticsChart(data.chartData);
+
+    // 3. Render Top Games
+    this.renderAnalyticsTopGames(data.games);
+
+    // 4. Render Thiết bị & Nguồn
+    this.renderAnalyticsDevices(data.devices);
+    this.renderAnalyticsReferrers(data.referrers);
+
+    // 5. Render Nhật ký hoạt động
+    this.renderAnalyticsLogs(data.recentLogs);
+
+    // 6. Bind timeframe buttons
+    document.querySelectorAll(".analytics-time-btn").forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll(".analytics-time-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        this.analyticsTimeframe = btn.dataset.timeframe || "7days";
+        this.renderAnalytics();
+      };
+    });
+  },
+
+  renderAnalyticsChart(chartData) {
+    const container = document.getElementById("analytics-chart-container");
+    if (!container) return;
+
+    if (!chartData || !chartData.length) {
+      container.innerHTML = `<div style="text-align:center; padding:50px; color:var(--text-muted);">Chưa có đủ dữ liệu để tạo biểu đồ.</div>`;
+      return;
+    }
+
+    const svgWidth = 800;
+    const svgHeight = 240;
+    const paddingLeft = 55;
+    const paddingRight = 20;
+    const paddingTop = 25;
+    const paddingBottom = 40;
+
+    const plotWidth = svgWidth - paddingLeft - paddingRight;
+    const plotHeight = svgHeight - paddingTop - paddingBottom;
+
+    // Tìm giá trị lớn nhất cho trục tung (co giãn tỉ lệ mượt mà theo số liệu thực tế)
+    const maxVal = Math.max(5, ...chartData.map(d => Math.max(d.views, d.uv)));
+    const roundMax = maxVal <= 10 ? 10 : (maxVal <= 50 ? 50 : (maxVal <= 100 ? 100 : Math.ceil(maxVal / 50) * 50));
+
+    // Các đường lưới ngang (Gridlines)
+    const gridLinesCount = 4;
+    let gridHtml = "";
+    for (let i = 0; i <= gridLinesCount; i++) {
+      const yVal = Math.round((roundMax / gridLinesCount) * i);
+      const yPos = paddingTop + plotHeight - (plotHeight * (i / gridLinesCount));
+      gridHtml += `
+        <line x1="${paddingLeft}" y1="${yPos}" x2="${svgWidth - paddingRight}" y2="${yPos}" class="chart-grid-line" stroke="#E2DAC8" stroke-dasharray="3 3" />
+        <text x="${paddingLeft - 10}" y="${yPos + 4}" class="chart-axis-text" text-anchor="end" font-size="10" fill="var(--text-secondary)">${Analytics.formatNumber(yVal)}</text>
+      `;
+    }
+
+    // Vẽ các cột cho từng mốc thời gian
+    const groupWidth = plotWidth / chartData.length;
+    const barWidth = Math.min(22, Math.max(10, groupWidth * 0.32));
+    const barGap = 4;
+
+    let barsHtml = "";
+    chartData.forEach((d, idx) => {
+      const centerX = paddingLeft + (idx * groupWidth) + (groupWidth / 2);
+
+      // Cột Views (Cam)
+      const hViews = (d.views / roundMax) * plotHeight;
+      const yViews = paddingTop + plotHeight - hViews;
+      const xViews = centerX - barWidth - (barGap / 2);
+
+      // Cột UV (Vàng/Amber)
+      const hUV = (d.uv / roundMax) * plotHeight;
+      const yUV = paddingTop + plotHeight - hUV;
+      const xUV = centerX + (barGap / 2);
+
+      barsHtml += `
+        <g class="chart-bar-group">
+          <title>${d.date} (${d.label}):\n• Lượt xem trang: ${Analytics.formatNumber(d.views)}\n• Khách độc nhất: ${Analytics.formatNumber(d.uv)}\n• Lượt bấm tải: ${Analytics.formatNumber(d.downloads)}</title>
+          <!-- Cột Lượt xem -->
+          <rect x="${xViews}" y="${yViews}" width="${barWidth}" height="${Math.max(2, hViews)}" rx="4" class="chart-bar bar-views" fill="#EA4828" />
+          <text x="${xViews + (barWidth / 2)}" y="${yViews - 5}" class="chart-bar-val" font-size="9" fill="var(--text-primary)">${d.views > 999 ? (d.views/1000).toFixed(1) + 'k' : d.views}</text>
+          
+          <!-- Cột Khách độc nhất -->
+          <rect x="${xUV}" y="${yUV}" width="${barWidth}" height="${Math.max(2, hUV)}" rx="4" class="chart-bar bar-uv" fill="#F59E0B" />
+          
+          <!-- Nhãn trục hoành -->
+          <text x="${centerX}" y="${svgHeight - 12}" class="chart-axis-text" text-anchor="middle" font-size="11" font-weight="700">${d.label}</text>
+        </g>
+      `;
+    });
+
+    container.innerHTML = `
+      <svg class="svg-chart" viewBox="0 0 ${svgWidth} ${svgHeight}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Biểu đồ lưu lượng truy cập">
+        ${gridHtml}
+        ${barsHtml}
+        <!-- Đường trục hoành đáy -->
+        <line x1="${paddingLeft}" y1="${paddingTop + plotHeight}" x2="${svgWidth - paddingRight}" y2="${paddingTop + plotHeight}" class="chart-axis-line" stroke="#121316" stroke-width="1.5" />
+      </svg>
+    `;
+  },
+
+  renderAnalyticsTopGames(gamesStats) {
+    const tbody = document.getElementById("analytics-top-games-tbody");
+    if (!tbody) return;
+
+    const allGames = this.games || [];
+    const statsMap = gamesStats || {};
+
+    // Gộp tất cả game và tính số liệu 100% thực tế (Tuyệt đối không số liệu giả)
+    const list = allGames.map(g => {
+      const s = statsMap[g.id] || { views: 0, downloads: 0 };
+      const views = s.views || 0;
+      const downloads = s.downloads || 0;
+      const conv = views > 0 ? ((downloads / views) * 100).toFixed(1) : "0.0";
+      return {
+        id: g.id,
+        title: g.title,
+        cover: g.cover_image || `assets/covers/${g.id}.jpg`,
+        views,
+        downloads,
+        conv
+      };
+    });
+
+    // Lọc các game đã phát sinh tương tác thực tế
+    const interacted = list.filter(g => g.views > 0 || g.downloads > 0);
+    interacted.sort((a, b) => (b.downloads - a.downloads) || (b.views - a.views));
+
+    // Nếu chưa có game nào được xem/tải, hiển thị 5 game đầu với số liệu thực tế 0
+    const displayList = interacted.length > 0 ? interacted.slice(0, 6) : list.slice(0, 5);
+
+    if (!displayList.length) {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--text-muted);">Chưa có dữ liệu thống kê game.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = displayList.map((g, idx) => {
+      const rankClass = idx === 0 ? "rank-1" : (idx === 1 ? "rank-2" : (idx === 2 ? "rank-3" : "rank-other"));
+      return `
+        <tr>
+          <td style="text-align:center;"><span class="rank-pill ${rankClass}">${idx + 1}</span></td>
+          <td>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <img src="${g.cover}" alt="" style="width:42px; height:24px; object-fit:cover; border-radius:3px; border:1px solid #121316;" onerror="this.style.display='none'">
+              <span style="font-weight:700; color:var(--text-primary); font-size:0.86rem;">${g.title}</span>
+            </div>
+          </td>
+          <td style="text-align:right; font-family:var(--font-mono); font-weight:700;">${Analytics.formatNumber(g.views)}</td>
+          <td style="text-align:right; font-family:var(--font-mono); font-weight:800; color:var(--accent-orange);">${Analytics.formatNumber(g.downloads)}</td>
+          <td style="text-align:center;">
+            <span style="font-size:0.78rem; font-weight:800; font-family:var(--font-mono);">${g.conv}%</span>
+            <div class="conv-bar-wrap">
+              <div class="conv-bar-fill" style="width:${Math.min(100, Math.max(0, parseFloat(g.conv)))}%"></div>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  },
+
+  renderAnalyticsDevices(devices) {
+    const container = document.getElementById("analytics-devices-list");
+    if (!container) return;
+
+    const total = Object.values(devices || {}).reduce((a, b) => a + b, 0) || 1;
+    const entries = Object.entries(devices || {}).sort((a, b) => b[1] - a[1]);
+
+    const colors = ["", "alt-blue", "alt-purple", "alt-green", ""];
+
+    container.innerHTML = entries.map(([name, count], idx) => {
+      const pct = Math.round((count / total) * 100);
+      const colorClass = colors[idx % colors.length];
+      return `
+        <div class="breakdown-bar-item">
+          <div class="breakdown-meta">
+            <span class="breakdown-name">${name}</span>
+            <span class="breakdown-stat">${pct}% (${Analytics.formatNumber(count)})</span>
+          </div>
+          <div class="breakdown-track">
+            <div class="breakdown-fill ${colorClass}" style="width:${pct}%"></div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  },
+
+  renderAnalyticsReferrers(referrers) {
+    const container = document.getElementById("analytics-referrers-list");
+    if (!container) return;
+
+    const total = Object.values(referrers || {}).reduce((a, b) => a + b, 0) || 1;
+    const entries = Object.entries(referrers || {}).sort((a, b) => b[1] - a[1]);
+
+    const colors = ["", "alt-green", "alt-blue", "alt-purple", ""];
+
+    container.innerHTML = entries.map(([name, count], idx) => {
+      const pct = Math.round((count / total) * 100);
+      const colorClass = colors[idx % colors.length];
+      return `
+        <div class="breakdown-bar-item">
+          <div class="breakdown-meta">
+            <span class="breakdown-name">${name}</span>
+            <span class="breakdown-stat">${pct}% (${Analytics.formatNumber(count)})</span>
+          </div>
+          <div class="breakdown-track">
+            <div class="breakdown-fill ${colorClass}" style="width:${pct}%"></div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  },
+
+  renderAnalyticsLogs(logs) {
+    const tbody = document.getElementById("analytics-logs-tbody");
+    const countEl = document.getElementById("an-log-count");
+    if (!tbody) return;
+
+    const list = logs || [];
+    if (countEl) countEl.textContent = `${list.length} sự kiện gần nhất`;
+
+    if (!list.length) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-muted);">Chưa có nhật ký hoạt động nào được ghi nhận.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = list.slice(0, 15).map(item => {
+      let badgeType = "visit";
+      let icon = "fa-eye";
+      if (item.type === "download") {
+        badgeType = "download";
+        icon = "fa-cloud-arrow-down";
+      } else if (item.type === "view_game") {
+        badgeType = "view";
+        icon = "fa-gamepad";
+      } else if (item.type === "vote") {
+        badgeType = "vote";
+        icon = "fa-paper-plane";
+      }
+
+      // Format time
+      const d = new Date(item.time);
+      const timeStr = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}:${String(d.getSeconds()).padStart(2, "0")} ${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
+
+      return `
+        <tr>
+          <td style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-secondary);">${timeStr}</td>
+          <td>
+            <span class="log-action-badge ${badgeType}">
+              <i class="fa-solid ${icon}"></i> ${item.action || "Truy cập"}
+            </span>
+          </td>
+          <td><strong style="color:var(--text-primary); font-size:0.85rem;">${item.detail || ""}</strong></td>
+          <td style="font-size:0.8rem; color:var(--text-secondary);"><i class="fa-solid fa-laptop"></i> ${item.device} • ${item.browser}</td>
+          <td style="text-align:center; font-size:0.8rem; color:var(--text-muted);"><i class="fa-solid fa-location-dot" style="color:var(--accent-orange);"></i> ${item.location || "Việt Nam"}</td>
+          <td style="text-align:center;"><span class="log-status-pill">${item.status || "200 OK"}</span></td>
+        </tr>
+      `;
+    }).join("");
+  },
+
+  refreshAnalytics() {
+    this.renderAnalytics();
+    if (window.App) App.showToast("Đã làm mới số liệu người truy cập web!");
+  },
+
+  exportAnalyticsReport() {
+    if (!window.Analytics) return;
+    const store = Analytics.getStore();
+    const now = new Date();
+    const dateStr = now.toISOString().split("T")[0];
+
+    let csv = "\uFEFF"; // UTF-8 BOM
+    csv += "BÁO CÁO THỐNG KÊ LƯU LƯỢNG TRUY CẬP WEBSITE TẠP HÓA VIỆT\n";
+    csv += `Thời gian xuất:,"${now.toLocaleString('vi-VN')}"\n`;
+    csv += `Tổng Lượt Xem (Pageviews):,${store.total_pageviews}\n`;
+    csv += `Tổng Khách Độc Nhất (UVs):,${store.total_unique_visitors}\n`;
+    csv += `Tổng Lượt Tải Bản Dịch:,${store.total_downloads}\n`;
+    csv += `Số Khách Đang Trực Tuyến:,${Analytics.getLiveActiveUsers()}\n\n`;
+
+    csv += "1. XU HƯỚNG THEO NGÀY (DAILY TREND)\n";
+    csv += "Ngày,Lượt Xem (Views),Khách Độc Nhất (UVs),Lượt Tải\n";
+    Object.keys(store.daily || {}).sort().forEach(k => {
+      const row = store.daily[k];
+      csv += `"${k}",${row.views},${row.uv},${row.downloads || 0}\n`;
+    });
+
+    csv += "\n2. TOP TỰA GAME ĐƯỢC TẢI & XEM\n";
+    csv += "ID Game,Tên Game,Lượt Xem,Lượt Tải\n";
+    this.games.forEach(g => {
+      const s = store.games[g.id] || { views: 0, downloads: 0 };
+      csv += `"${g.id}","${g.title}",${s.views},${s.downloads}\n`;
+    });
+
+    csv += "\n3. PHÂN BỐ THIẾT BỊ\n";
+    csv += "Thiết Bị,Lượt Dùng\n";
+    Object.entries(store.devices || {}).forEach(([k, v]) => {
+      csv += `"${k}",${v}\n`;
+    });
+
+    csv += "\n4. NGUỒN TRUY CẬP (REFERRERS)\n";
+    csv += "Kênh Đến,Lượt Dùng\n";
+    Object.entries(store.referrers || {}).forEach(([k, v]) => {
+      csv += `"${k}",${v}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `taphoaviet_analytics_report_${dateStr}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    if (window.App) App.showToast("Đã xuất tệp báo cáo số liệu CSV thành công!");
   },
 
   renderRequestsTable() {
@@ -926,7 +1295,8 @@ const AdminStudio = {
       games: this.games || [],
       community_games: communityGames,
       requests: (window.Requests && Requests.requests) ? Requests.requests : userRequests,
-      bug_reports: bugReports
+      bug_reports: bugReports,
+      analytics: (window.Analytics ? Analytics.getStore() : null)
     };
 
     const jsonStr = JSON.stringify(backupData, null, 2);
@@ -993,10 +1363,16 @@ const AdminStudio = {
           localStorage.setItem("thv_bug_reports", JSON.stringify(data.bug_reports));
         }
 
-        // 5. Cập nhật lại UI toàn bộ trang web
+        // 5. Khôi phục số liệu Analytics nếu có
+        if (data.analytics && typeof data.analytics === "object") {
+          localStorage.setItem("thv_real_analytics_v2", JSON.stringify(data.analytics));
+        }
+
+        // 6. Cập nhật lại UI toàn bộ trang web
         this.renderGamesTable();
         this.renderRequestsTable();
         this.renderReportsTable();
+        this.renderAnalytics();
         if (window.Catalog) Catalog.init(this.games);
         if (window.Progress) Progress.init(this.games);
         if (window.Community) Community.init(this.games);
@@ -1135,6 +1511,9 @@ const AdminStudio = {
         btn.classList.add("active");
         const pane = document.getElementById(`admin-pane-${btn.dataset.admintab}`);
         if (pane) pane.classList.add("active");
+        if (btn.dataset.admintab === "analytics") {
+          this.renderAnalytics();
+        }
       };
     });
   }

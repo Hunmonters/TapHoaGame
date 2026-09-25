@@ -197,7 +197,7 @@ const Community = {
 
           <div class="comm-card-footer">
             ${isReady && gdrive ? `
-              <a href="${gdrive.url}" target="_blank" rel="noopener noreferrer" class="btn-comm-download" onclick="event.stopPropagation();">
+              <a href="${gdrive.url}" target="_blank" rel="noopener noreferrer" class="btn-comm-download" onclick="event.stopPropagation(); if(window.Analytics) Analytics.trackDownload('${g.id}', '${(g.title||'').replace(/'/g, '\\\'')}', '${gdrive.server || 'Google Drive'}');">
                 <i class="fa-brands fa-google-drive"></i> Tải Google Drive
               </a>
             ` : `

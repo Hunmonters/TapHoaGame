@@ -23,6 +23,7 @@ const App = {
    * Khởi tạo các module con
    */
   initModules() {
+    if (window.Analytics) Analytics.init();
     if (window.ThemeManager) ThemeManager.init();
     if (window.Library) Library.init(this.games);
     if (window.Catalog) Catalog.init(this.games);
@@ -190,6 +191,10 @@ const App = {
       Requests.render();
     }
 
+    if (window.Analytics) {
+      Analytics.trackAction("tab_switch", "Chuyển Mục", `Mục: ${tabId}`);
+    }
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   },
 
@@ -242,6 +247,10 @@ const App = {
 
     if (updateHash) {
       history.pushState(null, "", `#${game.id}`);
+    }
+
+    if (window.Analytics) {
+      Analytics.trackGameView(game.id, game.title);
     }
 
     const modal = document.getElementById("detail-modal");
@@ -315,8 +324,9 @@ const App = {
     if (dlGroup) {
       if (game.status === "ready" && game.download_links && game.download_links.length > 0) {
         const gdrive = game.download_links[0];
+        const safeTitle = (game.title || "").replace(/'/g, "\\'");
         dlGroup.innerHTML = `
-          <a href="${gdrive.url}" target="_blank" rel="noopener noreferrer" class="btn-gdrive-primary">
+          <a href="${gdrive.url}" target="_blank" rel="noopener noreferrer" class="btn-gdrive-primary" onclick="if(window.Analytics) Analytics.trackDownload('${game.id}', '${safeTitle}', '${gdrive.server || 'Google Drive'}')">
             <div class="gdrive-icon-wrap">
               <i class="fa-brands fa-google-drive"></i>
             </div>
