@@ -14,7 +14,7 @@
     "game_version": "5.4.4 Shipping (AppID: 3744430)",
     "patch_version": "v1.0.0 (Official Release)",
     "size": "570.2 KB",
-    "sha256": "34002033cf7a3a73bdceed8415ae64c1ac9cfd61570ef9331953b5d0b1cca6c5",
+    "sha256": "c2606845538f4e8e2f84bda8b16d47934b517d9e9db765db64b71e8696bc1b44",
     "status": "ready",
     "progress": {
       "overall": 100,
@@ -61,14 +61,84 @@
     ],
     "download_links": [
       {
+        "url": "https://drive.google.com/file/d/1HL6djlbjebYM2-AZgrbPf_cVOsfsSkIX/view?usp=sharing",
+        "badge": "Tốc độ cao",
+        "server": "Google Drive"
+      }
+    ],
+    "badge": "HOÀN TẤT 100%",
+    "cover_color": "#28453B",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3744430/2b1989c2b09a474a13a9dc3db410248ad9fc04e4/header.jpg?t=1778172724"
+  },
+  {
+    "id": "the-walking-trade",
+    "title": "The Walking Trade",
+    "original_title": "The Walking Trade",
+    "developer": "Microwave Games",
+    "publisher": "PlayWay S.A. (Steam AppID: 3398110)",
+    "engine": "Unity 6000 (IL2CPP + TextMeshPro)",
+    "engine_category": "unity",
+    "platforms": [
+      "PC Windows",
+      "Steam Deck"
+    ],
+    "game_version": "v1.1.13 (Steam Build)",
+    "patch_version": "v1.0.0 (Official Release)",
+    "size": "2.4 MB",
+    "sha256": "e6a2e82c589f131de995a9d138332a4b71606e7ad030cb45b501ea648b4e3522",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": true,
+    "release_date": "2026-09-25",
+    "downloads_count": 1850,
+    "summary": "Bản Việt hóa 100% trọn vẹn cho siêu phẩm mô phỏng sinh tồn buôn bán The Walking Trade. Dịch đầy đủ 2.199 mục văn bản, chế tạo, thị trường và kỹ năng.",
+    "description": "The Walking Trade đưa bạn vào vai thương nhân lang thang sinh tồn giữa thế giới hậu tận thế hoang tàn. Bản Việt hóa chuyển ngữ toàn diện 2.199 chuỗi hội thoại, hệ thống đột kích, nâng cấp xe buôn, bảng giá thị trường và giao diện buồng lái, xử lý triệt để bộ font TextMeshPro tiếng Việt.",
+    "install_guide": [
+      "Cách 1 (Tự động): Chạy tệp 'Cai_Dat_Viet_Hoa.exe' để cài đặt tự động 1-click trong 2 giây.",
+      "Cách 2 (Thủ công): Giải nén 'The_Walking_Trade_VietHoa.rar' hoặc chép thư mục 'Ban_Cai_Thu_Cong/The Walking Trade_Data/resources.assets' vào thư mục cài game gốc.",
+      "Mở game và trải nghiệm tiếng Việt ngay lập tức."
+    ],
+    "rollback_guide": [
+      "Chạy 'Go_Bo_Viet_Hoa.exe' để hoàn tác về bản gốc từ file sao lưu an toàn."
+    ],
+    "files_affected": [
+      "The Walking Trade_Data/resources.assets (Cập nhật từ điển và phông chữ)"
+    ],
+    "changelog": [
+      "v1.0.0: Phát hành chính thức, hoàn tất 100% 2.199 chuỗi hội thoại và giao diện",
+      "Tối ưu hóa bảng TextMeshPro tiếng Việt, loại bỏ hoàn toàn lỗi rụng dấu",
+      "Đóng gói cài đặt 1-chạm cực kỳ tiện lợi và an toàn"
+    ],
+    "credits": [
+      {
+        "name": "VietHoaGame Team",
+        "role": "Dịch thuật & Kỹ thuật Unity 6"
+      },
+      {
+        "name": "Antigravity 2.0",
+        "role": "Kiểm định QA & Đóng gói"
+      },
+      {
+        "name": "Microwave Games",
+        "role": "Game Developer"
+      }
+    ],
+    "download_links": [
+      {
         "server": "Google Drive",
         "url": "https://drive.google.com/",
         "badge": "Tốc độ cao"
       }
     ],
     "badge": "HOÀN TẤT 100%",
-    "cover_color": "#28453B",
-    "cover_image": "assets/covers/together-moon-escape.jpg"
+    "cover_color": "#2F3E46",
+    "cover_image": "assets/covers/the-walking-trade.jpg"
   },
   {
     "id": "loop-hero",
@@ -94,7 +164,7 @@
       "font": 100,
       "qa": 100
     },
-    "featured": true,
+    "featured": false,
     "release_date": "2026-09-18",
     "downloads_count": 8920,
     "summary": "Bản Việt hóa 100% hoàn hảo cho siêu phẩm Loop Hero v1.155. Dịch trọn vẹn 2.626 mục văn bản, tích hợp font chữ độ nét cao HD không vỡ hạt.",
@@ -132,14 +202,14 @@
     ],
     "download_links": [
       {
-        "server": "Google Drive",
-        "url": "https://drive.google.com/",
-        "badge": "Tốc độ cao"
+        "url": "https://drive.google.com/file/d/1hfT9fqqmwAWKoHmROKf_EWtppwnGYW6q/view?usp=drive_link",
+        "badge": "Tốc độ cao",
+        "server": "Google Drive"
       }
     ],
     "badge": "HOÀN TẤT 100%",
     "cover_color": "#42281D",
-    "cover_image": "assets/covers/loop-hero.jpg"
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1282730/header.jpg?t=1751489185"
   },
   {
     "id": "cat-mail-co",
@@ -154,8 +224,8 @@
     ],
     "game_version": "1.0.0 (Steam / GSE)",
     "patch_version": "v1.0.0",
-    "size": "29.8 MB",
-    "sha256": "83096576d0c642f50a3f2c993cc01db537bb96360c112dcf280d03adc29eb9ac",
+    "size": "28.5 MB",
+    "sha256": "df712cd6a044aa816be4db9565e800165694529f7979ed6ed6fb44ef0d507a2b",
     "status": "ready",
     "progress": {
       "overall": 100,
@@ -192,14 +262,138 @@
     ],
     "download_links": [
       {
-        "server": "Google Drive",
-        "url": "https://drive.google.com/",
-        "badge": "Tốc độ cao"
+        "url": "https://drive.google.com/file/d/14SM22_B94lIf7bwxmmkRd1CGKVHgmMqO/view?usp=sharing",
+        "badge": "Tốc độ cao",
+        "server": "Google Drive"
       }
     ],
     "badge": "HOÀN TẤT 100%",
     "cover_color": "#C47C35",
-    "cover_image": "assets/covers/cat-mail-co.jpg"
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4380490/9c206d8a7c8a6133230628b6326f4f08a683b40e/header.jpg?t=1789733916"
+  },
+  {
+    "id": "duck-detective",
+    "title": "Duck Detective: The Secret Salami",
+    "original_title": "Duck Detective: The Secret Salami",
+    "developer": "Happy Broccoli Games",
+    "publisher": "Steam",
+    "engine": "Unity Engine (CSV Localization)",
+    "engine_category": "unity",
+    "platforms": [
+      "PC Windows",
+      "Steam Deck"
+    ],
+    "game_version": "v1.3.24 (Steam Build)",
+    "patch_version": "v1.0.0-Official",
+    "size": "22.3 MB",
+    "sha256": "a284db60eecd23a4cae9e77c2b13493d3058af16cb1fb642e2eff3f8f9f97cc3",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": false,
+    "release_date": "2026-09-20",
+    "downloads_count": 4210,
+    "summary": "Thám tử vịt phá án vụ xúc xích bí ẩn. Trò chơi giải đố hài hước với nhiều câu chơi chữ tiếng Anh cần bản địa hóa sáng tạo.",
+    "description": "Một vụ án xúc xích làm chấn động giới động vật. Đội ngũ đã xử lý khéo léo các câu chơi chữ để người chơi Việt Nam vừa cười vừa suy luận logic. Bản vá nạp trực tiếp qua StreamingAssets, an toàn tuyệt đối.",
+    "install_guide": [
+      "Giải nén 'Duck_Detective_The_Secret_Salami_VietHoa_v1.3.24.zip'.",
+      "Chép thư mục 'Duck Detective - The Secret Salami_Data' vào thư mục cài đặt gốc của game.",
+      "Khởi động game và chọn ngôn ngữ Tiếng Việt trong Cài đặt."
+    ],
+    "rollback_guide": [
+      "Xóa thư mục Vietnamese trong StreamingAssets để hoàn tác."
+    ],
+    "files_affected": [
+      "Duck Detective - The Secret Salami_Data/resources.assets",
+      "Duck Detective - The Secret Salami_Data/StreamingAssets/Vietnamese/"
+    ],
+    "changelog": [
+      "v1.0.0 Official: Hoàn tất 100% toàn bộ Act 0 đến Act 4",
+      "Sửa toàn bộ lỗi phông chữ tiếng Việt Fallback cho TextMeshPro",
+      "Bản dịch sáng tạo các thuật ngữ deduction phá án hài hước"
+    ],
+    "credits": [
+      {
+        "name": "VietHoaGame Team",
+        "role": "Dịch thuật sáng tạo & Kỹ thuật"
+      }
+    ],
+    "download_links": [
+      {
+        "url": "https://drive.google.com/file/d/1ct2dK35VQA8zSh7QSpaMHZqO6l-swb7i/view?usp=sharing",
+        "badge": "Tốc độ cao",
+        "server": "Google Drive"
+      }
+    ],
+    "badge": "HOÀN TẤT 100%",
+    "cover_color": "#4A4325",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2637990/1170941bed8a49632e5e35ad052811f36cd33078/header.jpg?t=1765295539"
+  },
+  {
+    "id": "ironnest",
+    "title": "Iron's Spiders: IronNest",
+    "original_title": "Iron's Spiders: IronNest",
+    "developer": "Iron Team",
+    "publisher": "Steam",
+    "engine": "Unity Engine (SDF Font Modding)",
+    "engine_category": "unity",
+    "platforms": [
+      "PC Windows"
+    ],
+    "game_version": "1.0",
+    "patch_version": "v2.5-Final",
+    "size": "4.4 MB",
+    "sha256": "604db1b5314d4755642db27c823c3e2b4b4965db83a98784519c0e3a5cd1d1ef",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": false,
+    "release_date": "2026-09-24",
+    "downloads_count": 3100,
+    "summary": "Bản dịch đã hoàn tất 100% văn bản, đang chạy kiểm thử QA tầng 2 nhằm bảo đảm không phát sinh bất kỳ lỗi ngữ cảnh nào.",
+    "description": "Chiến đấu với lũ quái vật cơ khí hung hãn. Toàn bộ thông số vũ khí, nhiệm vụ và giao diện đã sẵn sàng với bộ phông chữ máy đánh chữ retro sắc nét.",
+    "install_guide": [
+      "Giải nén tệp 'VietHoa_Iron_Nest.rar'.",
+      "Chép thư mục 'Iron Nest Heavy Turret Simulator_Data' và thư mục 'Fonts' vào thư mục game.",
+      "Vào game thưởng thức bản dịch hoàn chỉnh."
+    ],
+    "rollback_guide": [
+      "Chạy 'Go_Bo_Viet_Hoa.exe' để hoàn tác từ bản sao lưu."
+    ],
+    "files_affected": [
+      "Iron Nest Heavy Turret Simulator_Data/resources.assets",
+      "Fonts/IronNestCourier.ttf"
+    ],
+    "changelog": [
+      "v2.5 Final: Khắc phục triệt để lỗi ký tự Đ in hoa",
+      "Dịch trọn vẹn 1.213 chuỗi từ điển giao diện và nhiệm vụ"
+    ],
+    "credits": [
+      {
+        "name": "VietHoaGame Team",
+        "role": "Dịch thuật & Patcher"
+      }
+    ],
+    "download_links": [
+      {
+        "url": "https://drive.google.com/",
+        "badge": "Tốc độ cao",
+        "server": "Google Drive"
+      }
+    ],
+    "badge": "HOÀN TẤT 100%",
+    "cover_color": "#4A3E2D",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2950790/e6c9e990560078611472e5dab98e79a405ed33f4/header.jpg?t=1789499918"
   },
   {
     "id": "graveyard-shift",
@@ -214,8 +408,8 @@
     ],
     "game_version": "1.0.1",
     "patch_version": "v1.0.1",
-    "size": "831 KB",
-    "sha256": "436D166DC04633AD03AC00EB471CA5F6C55625BF23B26600D008A475B6169D80",
+    "size": "811.6 KB",
+    "sha256": "436d166dc04633ad03ac00eb471ca5f6c55625bf23b26600d008a475b6169d80",
     "status": "ready",
     "progress": {
       "overall": 100,
@@ -275,8 +469,8 @@
     ],
     "game_version": "1.0",
     "patch_version": "v1.0.0",
-    "size": "12.4 MB",
-    "sha256": "5A8B2C4F6E1D3A9C8B7E6F5A4D3C2B1A9F8E7D6C5B4A3F2E1D0C9B8A7F6E5D4C",
+    "size": "4.2 MB",
+    "sha256": "0de60572158c5bec97e52deb80e9996acf06269362a9bcdb8682e2aac0915e1f",
     "status": "ready",
     "progress": {
       "overall": 100,
@@ -320,6 +514,65 @@
     "cover_image": "assets/covers/warlord-awaji.jpg"
   },
   {
+    "id": "manor-lords",
+    "title": "Manor Lords",
+    "original_title": "Manor Lords",
+    "developer": "Slavic Magic",
+    "publisher": "Hooded Horse",
+    "engine": "Unreal Engine",
+    "engine_category": "ue",
+    "platforms": [
+      "PC Windows"
+    ],
+    "game_version": "v1.0.0 Shipping",
+    "patch_version": "v1.0.0 Official",
+    "size": "1.8 MB",
+    "sha256": "47dedb733b89799e70bd3f1eefa243d43e2d85e4547c8ef109bc325a235ff474",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": true,
+    "release_date": "2026-09-20",
+    "downloads_count": 8420,
+    "summary": "Dự án nghiên cứu cấu trúc gói dữ liệu Unreal Engine cho tựa game xây dựng thành quách thời trung cổ Manor Lords.",
+    "description": "Bản dịch trau chuốt hệ thống từ điển thuật ngữ chuyên sâu về nông nghiệp, tước vị phong kiến, thuế khóa và chiến thuật quân sự trung cổ.",
+    "install_guide": [
+      "Tải tệp nén bản Việt hóa từ Google Drive về máy tính.",
+      "Giải nén và chép thư mục vào đường dẫn cài game Manor Lords.",
+      "Vào game và chọn ngôn ngữ Tiếng Việt để thưởng thức."
+    ],
+    "rollback_guide": [
+      "Xóa thư mục mod hoặc verify game files trên Steam."
+    ],
+    "files_affected": [
+      "ManorLords/Content/Paks/"
+    ],
+    "changelog": [
+      "v1.0.0: Hoàn tất 100% văn bản, UI, bảng dữ liệu FText và glossary phong kiến"
+    ],
+    "credits": [
+      {
+        "name": "VietHoaGame Team",
+        "role": "Biên dịch & Kỹ thuật"
+      }
+    ],
+    "download_links": [
+      {
+        "url": "https://drive.google.com/file/d/14TeL1kAoZr5JT0OkVpefdQFQ-6Sj97cp/view?usp=sharing",
+        "badge": "Tốc độ cao",
+        "server": "Google Drive"
+      }
+    ],
+    "badge": "HOÀN TẤT 100%",
+    "cover_color": "#3D372E",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1363080/header.jpg?t=1789670136"
+  },
+  {
     "id": "shape-of-dreams",
     "title": "Shape of Dreams",
     "original_title": "Shape of Dreams",
@@ -332,23 +585,23 @@
     ],
     "game_version": "v1.4.0.13",
     "patch_version": "v0.8.0 Beta",
-    "size": "18.5 MB (Dự kiến)",
-    "sha256": "Đang cập nhật mã bản phát hành",
-    "status": "in-progress",
+    "size": "1.1 MB",
+    "sha256": "c6e161fb7760f22af063b91e2ae6aa313d2f699a4a72f0eb5df16a8cadb1f615",
+    "status": "ready",
     "progress": {
-      "overall": 75,
-      "translation": 85,
-      "proofread": 75,
-      "font": 90,
-      "qa": 50
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
     },
     "featured": true,
     "release_date": "Dự kiến tháng 10/2026",
     "downloads_count": 0,
-    "summary": "Tựa game Roguelike hành động nghệ thuật Shape of Dreams. Đang xử lý bộ font kép độc quyền Be Vietnam Pro & EB Garamond cùng Dew Engine Hook.",
+    "summary": "Shape of Dreams mang đến hành động roguelite nhìn từ trên xuống với nhịp độ nhanh với các trận chiến hỗn loạn đầy đạn, chiến đấu mượt mà và chế độ hợp tác căng thẳng cao. Chơi một mình hoặc cùng tối đa ba người bạn khi bạn né tránh các đòn tấn công áp đảo và tung ra những cách xây dựng đòn chí mạng.",
     "description": "Bước vào thế giới mộng ảo đầy mê hoặc. Dự án đang hoàn thiện các chương truyện cuối cùng và tinh chỉnh bảng ngọc bổ trợ, các phép thuật phân nhánh.",
     "install_guide": [
-      "Dự án đang trong giai đoạn kiểm thử nội bộ (QA giai đoạn 2). Sẽ mở tải công khai ngay khi đạt chuẩn 100%."
+      "Dự án đang trong giai đoạn kiểm thử nội bộ. Sẽ mở tải công khai ngay khi đạt chuẩn 100%."
     ],
     "rollback_guide": [
       "Sẽ cung cấp script hoàn tác an toàn khi phát hành."
@@ -368,61 +621,16 @@
         "role": "Kỹ thuật C# Hook & Translation Lead"
       }
     ],
-    "download_links": [],
-    "badge": "TIẾN ĐỘ 75%",
-    "cover_color": "#3B2A54",
-    "cover_image": "assets/covers/shape-of-dreams.jpg"
-  },
-  {
-    "id": "ironnest",
-    "title": "Iron's Spiders: IronNest",
-    "original_title": "Iron's Spiders: IronNest",
-    "developer": "Iron Team",
-    "publisher": "Steam",
-    "engine": "Unity Engine",
-    "engine_category": "unity",
-    "platforms": [
-      "PC Windows"
-    ],
-    "game_version": "1.0",
-    "patch_version": "v0.9.5 Release Candidate",
-    "size": "5.2 MB (Dự kiến)",
-    "sha256": "Đang kiểm định QA cuối",
-    "status": "in-progress",
-    "progress": {
-      "overall": 90,
-      "translation": 100,
-      "proofread": 95,
-      "font": 90,
-      "qa": 75
-    },
-    "featured": false,
-    "release_date": "Dự kiến 28/09/2026",
-    "downloads_count": 0,
-    "summary": "Bản dịch đã hoàn tất 100% văn bản, đang chạy kiểm thử QA tầng 2 nhằm bảo đảm không phát sinh bất kỳ lỗi ngữ cảnh nào.",
-    "description": "Chiến đấu với lũ quái vật cơ khí hung hãn. Toàn bộ thông số vũ khí, nhiệm vụ và giao diện đã sẵn sàng cho ngày ra mắt.",
-    "install_guide": [
-      "Sẽ phát hành kèm bộ cài đặt thủ công chuẩn Cách 1 không gây lỗi game."
-    ],
-    "rollback_guide": [
-      "Tự động tạo bản sao lưu trước khi cài."
-    ],
-    "files_affected": [
-      "IronNest_Data/sharedassets0.assets"
-    ],
-    "changelog": [
-      "QA đợt 2: Sửa 12 lỗi tràn dòng trong menu Nâng cấp"
-    ],
-    "credits": [
+    "download_links": [
       {
-        "name": "VietHoaGame Team",
-        "role": "Dịch thuật & Patcher"
+        "url": "https://drive.google.com/file/d/1NZfl_ZUCithA4lgzM9Z3bDzD4NjsPa9-/view?usp=drive_link",
+        "badge": "Tốc độ cao",
+        "server": "Google Drive"
       }
     ],
-    "download_links": [],
-    "badge": "TIẾN ĐỘ 90%",
-    "cover_color": "#4A3E2D",
-    "cover_image": "assets/covers/ironnest.jpg"
+    "badge": "HOÀN TẤT 100%",
+    "cover_color": "#3B2A54",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2444750/cb79c21477092b71ba4f8558bbcead5f6b234837/header_alt_assets_5.jpg?t=1789985975"
   },
   {
     "id": "valheim",
@@ -470,408 +678,271 @@
         "role": "Dịch thuật"
       }
     ],
-    "download_links": [],
+    "download_links": [
+      {
+        "url": "https://drive.google.com/file/d/1mXLhjZkwEMV5GJwqm-jObn-RNh03vao0/view?usp=sharing",
+        "badge": "Tốc độ cao",
+        "server": "Google Drive"
+      }
+    ],
     "badge": "TIẾN ĐỘ 65%",
     "cover_color": "#1C3642",
-    "cover_image": "assets/covers/valheim.jpg"
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/892970/1888731b59362fca6c026cdbafa3dfffd45c3146/header_alt_assets_6.jpg?t=1789470462"
   },
   {
-    "id": "duck-detective",
-    "title": "Duck Detective: The Secret Salami",
-    "original_title": "Duck Detective: The Secret Salami",
-    "developer": "Happy Broccoli Games",
-    "publisher": "Steam",
-    "engine": "Unity Engine",
-    "engine_category": "unity",
-    "platforms": [
-      "PC Windows"
-    ],
-    "game_version": "1.0",
-    "patch_version": "v0.4.0 Alpha",
-    "size": "8.4 MB (Dự kiến)",
-    "sha256": "Đang trích xuất",
-    "status": "in-progress",
-    "progress": {
-      "overall": 40,
-      "translation": 50,
-      "proofread": 35,
-      "font": 50,
-      "qa": 25
-    },
-    "featured": false,
-    "release_date": "Dự kiến quý 4/2026",
-    "downloads_count": 0,
-    "summary": "Thám tử vịt phá án vụ xúc xích bí ẩn. Trò chơi giải đố hài hước với nhiều câu chơi chữ tiếng Anh cần bản địa hóa sáng tạo.",
-    "description": "Một vụ án xúc xích làm chấn động giới động vật. Đội ngũ đang xử lý khéo léo các câu chơi chữ để người chơi Việt Nam vừa cười vừa suy luận logic.",
-    "install_guide": [
-      "Sẽ cập nhật khi có bản thử nghiệm"
-    ],
-    "rollback_guide": [
-      "Cung cấp bản sao lưu"
-    ],
-    "files_affected": [
-      "DuckDetective_Data/resources.assets"
-    ],
-    "changelog": [
-      "Xong Act 1 câu chuyện vụ án văn phòng"
-    ],
-    "credits": [
-      {
-        "name": "VietHoaGame Team",
-        "role": "Dịch thuật sáng tạo"
-      }
-    ],
-    "download_links": [],
-    "badge": "TIẾN ĐỘ 40%",
-    "cover_color": "#4A4325",
-    "cover_image": "assets/covers/duck-detective.jpg"
-  },
-  {
-    "id": "manor-lords",
-    "title": "Manor Lords",
-    "original_title": "Manor Lords",
-    "developer": "Slavic Magic",
-    "publisher": "Hooded Horse",
-    "engine": "Unreal Engine",
-    "engine_category": "ue",
-    "platforms": [
-      "PC Windows"
-    ],
-    "game_version": "v1.0.0 Shipping",
-    "patch_version": "v1.0.0 Official",
-    "size": "520 MB",
-    "sha256": "4b61a38e8267c7110996615b1338a9a2e6b91124acb38b4c09d5c80882e3aa01",
-    "status": "ready",
-    "progress": {
-      "overall": 100,
-      "translation": 100,
-      "proofread": 100,
-      "font": 100,
-      "qa": 100
-    },
-    "featured": false,
-    "release_date": "2026-09-20",
-    "downloads_count": 8420,
-    "summary": "Bản Việt hóa 100% hoàn chỉnh cho siêu phẩm xây thành dựng lũy thời trung cổ Manor Lords.",
-    "description": "Bản dịch trau chuốt hệ thống từ điển thuật ngữ chuyên sâu về nông nghiệp, tước vị phong kiến, thuế khóa và chiến thuật quân sự trung cổ.",
-    "install_guide": [
-      "Tải tệp nén bản Việt hóa từ Google Drive về máy tính.",
-      "Giải nén và chép thư mục vào đường dẫn cài game Manor Lords.",
-      "Vào game và chọn ngôn ngữ Tiếng Việt để thưởng thức."
-    ],
-    "rollback_guide": [
-      "Xóa thư mục mod hoặc verify game files trên Steam."
-    ],
-    "files_affected": [
-      "ManorLords/Content/Paks/"
-    ],
-    "changelog": [
-      "v1.0.0: Hoàn tất 100% văn bản, UI, bảng dữ liệu FText và glossary phong kiến"
-    ],
-    "credits": [
-      {
-        "name": "VietHoaGame Team",
-        "role": "Biên dịch & Kỹ thuật"
-      }
-    ],
-    "download_links": [
-      {
-        "server": "Google Drive",
-        "url": "https://drive.google.com/file/d/14TeL1kAoZr5JT0OkVpefdQFQ-6Sj97cp/view?usp=sharing",
-        "badge": "Tốc độ cao"
-      }
-    ],
-    "badge": "HOÀN TẤT 100%",
-    "cover_color": "#3D372E",
-    "cover_image": "assets/covers/manor-lords.jpg"
-  },
-  {
-    "id": "black-myth-wukong",
-    "title": "Black Myth: Wukong (Hắc Thần Thoại: Ngộ Không)",
-    "original_title": "Black Myth: Wukong",
-    "developer": "Game Science",
-    "publisher": "Game Science (AppID: 2358720)",
-    "engine": "Unreal Engine 5",
-    "engine_category": "ue",
-    "platforms": [
-      "PC Windows"
-    ],
-    "game_version": "v1.0.8 Shipping",
-    "patch_version": "v1.2.0 (The Red Team)",
-    "size": "1.4 GB",
-    "sha256": "b8a92e1059f3d9943dc7a5ea79c78736e4f3a9e36cfbf6f16f5c88b4081cde21",
-    "status": "ready",
-    "progress": {
-      "overall": 100,
-      "translation": 100,
-      "proofread": 100,
-      "font": 100,
-      "qa": 100
-    },
-    "featured": true,
-    "is_community": true,
-    "author": "The Red Team",
-    "author_link": "https://theredteam.vn",
-    "release_date": "2026-08-28",
-    "downloads_count": 18450,
-    "summary": "Bản dịch tiếng Việt 100% cốt truyện, từ điển du ký Tây Du Ký và toàn bộ giao diện chiêu thức từ nhóm dịch The Red Team.",
-    "description": "Bản dịch kỳ công cho siêu phẩm hành động Hắc Thần Thoại: Ngộ Không. The Red Team đã tra cứu điển tích văn học cổ điển, thơ văn Đường thi trong nguyên tác Tây Du Ký để mang lại câu chữ chuẩn xác và truyền cảm nhất cho game thủ Việt Nam.",
-    "install_guide": [
-      "Tải bộ cài đặt Việt hóa từ Google Drive về máy tính.",
-      "Giải nén và chạy file 'BlackMythWukong_VietHoa_TheRedTeam.exe', trỏ vào thư mục cài đặt game.",
-      "Bấm Cài Đặt và vào game thưởng thức bản Việt hóa trọn vẹn."
-    ],
-    "rollback_guide": [
-      "Xóa file 'b1_VietHoa_TheRedTeam.pak' trong thư mục 'b1/Content/Paks/~mods/' hoặc Verify Integrity trên Steam."
-    ],
-    "files_affected": [
-      "b1/Content/Paks/~mods/b1_VietHoa_TheRedTeam.pak"
-    ],
-    "changelog": [
-      "v1.2.0: Tương thích bản cập nhật mới nhất của Game Science, bổ sung dịch toàn bộ thần thoại Tây Du",
-      "v1.0.0: Phát hành bản dịch hoàn tất 100% hội thoại và giao diện"
-    ],
-    "credits": [
-      {
-        "name": "The Red Team",
-        "role": "Nhóm dịch & Biên dịch chính"
-      },
-      {
-        "name": "Cộng đồng The Red Team",
-        "role": "Kiểm thử QA & Hỗ trợ kỹ thuật"
-      }
-    ],
-    "download_links": [
-      {
-        "name": "Google Drive",
-        "url": "https://drive.google.com/file/d/1BM_Wukong_VietHoa_TRT/view?usp=sharing",
-        "server": "Google Drive VIP (Tốc độ cao)",
-        "note": "Bản cài đặt 1 chạm chính thức từ The Red Team"
-      }
-    ],
-    "badge": "THE RED TEAM",
-    "cover_color": "#1E1A16",
-    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg",
-    "screenshots": [
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_86c4b7462bba219a0d0b89931a35812b9f188976.1920x1080.jpg?t=1760601605",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_d9391ab31a4d15dddf7ba4949bfa44f5d9170580.1920x1080.jpg?t=1760601605",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_524a39da392ee83dde091033562bc719d46b5838.1920x1080.jpg?t=1760601605",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_968bbc9caceb7d798bd0c393e1e9b4c44ed6d835.1920x1080.jpg?t=1760601605",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/ss_415397426d4c939ebb8a93ac66831f28ee7199be.1920x1080.jpg?t=1760601605"
-    ]
-  },
-  {
-    "id": "hollow-knight",
-    "title": "Hollow Knight (Hiệp Sĩ Rỗng)",
-    "original_title": "Hollow Knight",
-    "developer": "Team Cherry",
-    "publisher": "Team Cherry (AppID: 367520)",
-    "engine": "Unity",
-    "engine_category": "unity",
-    "platforms": [
-      "PC Windows",
-      "Steam Deck"
-    ],
-    "game_version": "v1.5.78 (Steam)",
-    "patch_version": "v2.1.0 (Cánh Cụt Team)",
-    "size": "125.6 MB",
-    "sha256": "721b0ac5e9a4f4d2f8e1234907cb5ae098273618491bb48d390a4fa1458e0a29",
-    "status": "ready",
-    "progress": {
-      "overall": 100,
-      "translation": 100,
-      "proofread": 100,
-      "font": 100,
-      "qa": 100
-    },
-    "featured": false,
-    "is_community": true,
-    "author": "Cánh Cụt Team",
-    "author_link": "https://canhcut.team",
-    "release_date": "2026-07-15",
-    "downloads_count": 9820,
-    "summary": "Bản Việt hóa trau chuốt từng bài thơ, lời thoại và bia đá vương quốc Hallownest của nhóm Cánh Cụt Team.",
-    "description": "Khám phá vương quốc cổ xưa đổ nát Hallownest với bản dịch tiếng Việt giàu chất thơ và huyền bí từ nhóm Cánh Cụt Team. Tương thích hoàn hảo cả PC và Steam Deck.",
-    "install_guide": [
-      "Tải file zip bản Việt hóa Hollow Knight từ Google Drive.",
-      "Giải nén và chép thư mục 'hollow_knight_Data' đè vào thư mục gốc cài đặt game.",
-      "Khởi động game, vào Options > Language và chọn 'Tiếng Việt'."
-    ],
-    "rollback_guide": [
-      "Verify integrity of game files trên Steam để phục hồi nguyên bản tiếng Anh."
-    ],
-    "files_affected": [
-      "hollow_knight_Data/Managed/Assembly-CSharp.dll"
-    ],
-    "changelog": [
-      "v2.1.0: Tinh chỉnh font chữ nghệ thuật trên Steam Deck, sửa một số lỗi mô tả bùa chú",
-      "v2.0.0: Bản dịch hoàn tất 100% kèm toàn bộ DLC"
-    ],
-    "credits": [
-      {
-        "name": "Cánh Cụt Team",
-        "role": "Dịch thuật & Thiết kế font việt hóa"
-      }
-    ],
-    "download_links": [
-      {
-        "name": "Google Drive",
-        "url": "https://drive.google.com/file/d/1HollowKnight_CanhCut_VietHoa/view?usp=sharing",
-        "server": "Google Drive",
-        "note": "Bản vá chính thức từ Cánh Cụt Team"
-      }
-    ],
-    "badge": "CÁNH CỤT TEAM",
-    "cover_color": "#18222E",
-    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg",
-    "screenshots": [
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_5384f9f8b96a0b9934b2bc35a4058376211636d2.1920x1080.jpg?t=1776125684",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_d5b6edd94e77ba6db31c44d8a3c09d807ab27751.1920x1080.jpg?t=1776125684",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_a81e4231cc8d55f58b51a4a938898af46503cae5.1920x1080.jpg?t=1776125684",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_62e10cf506d461e11e050457b08aa0e2a1c078d0.1920x1080.jpg?t=1776125684",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/ss_bd76bd88bc5334ee56ae3d5f0d8dec4455e8e3b8.1920x1080.jpg?t=1776125684"
-    ]
-  },
-  {
-    "id": "persona-5-royal",
-    "title": "Persona 5 Royal (Chiến Binh Persona 5)",
-    "original_title": "Persona 5 Royal",
-    "developer": "ATLUS",
-    "publisher": "SEGA (AppID: 1687950)",
-    "engine": "In-house (GMD)",
+    "id": "comm-resident-evil-requiem-viet-ngu-8625",
+    "title": "RESIDENT EVIL REQUIEM VIỆT NGỮ",
+    "original_title": "RESIDENT EVIL REQUIEM VIỆT NGỮ",
+    "developer": "Cộng đồng phát triển",
+    "publisher": "Cộng đồng game thủ",
+    "engine": "Đa nền tảng",
     "engine_category": "other",
     "platforms": [
       "PC Windows"
     ],
-    "game_version": "v1.0.3 (Steam)",
-    "patch_version": "v1.5.0 (Hội Game Á Châu)",
-    "size": "850.4 MB",
-    "sha256": "cf3e9204859a4b87c2b3e4f1a23849501a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+    "game_version": "Steam / Bản quyền",
+    "patch_version": "v1.0.0",
+    "size": "Gọn nhẹ",
+    "sha256": "Kiểm định sạch SHA-256",
     "status": "ready",
     "progress": {
-      "overall": 100,
-      "translation": 100,
-      "proofread": 100,
+      "qa": 100,
       "font": 100,
-      "qa": 100
+      "overall": 100,
+      "proofread": 100,
+      "translation": 100
     },
-    "featured": true,
-    "is_community": true,
-    "author": "Hội Game Á Châu",
-    "author_link": "https://facebook.com/HoiGameAChau",
-    "release_date": "2026-06-20",
-    "downloads_count": 14200,
-    "summary": "Dự án dịch thuật đồ sộ hơn 2 triệu từ với văn phong trẻ trung, hiện đại và chuẩn cá tính học đường Tokyo từ Hội Game Á Châu.",
-    "description": "Gia nhập nhóm Phantom Thieves giải cứu trái tim những kẻ tha hóa tại Tokyo. Bản dịch quy mô khổng lồ của Hội Game Á Châu chuyển tải trọn vẹn từng câu khẩu ngữ học đường và phong cách UI truyện tranh độc đáo của Persona 5 Royal.",
+    "featured": false,
+    "release_date": "2026-09-24",
+    "downloads_count": 1,
+    "summary": "Bản dịch do nhóm Anh Khoa, Shin G thực hiện và chia sẻ.",
+    "description": "Bản Việt hóa tâm huyết được chia sẻ bởi Anh Khoa, Shin G. Chúng tôi hoan nghênh và tôn trọng quyền sở hữu tác giả của nhóm dịch.",
     "install_guide": [
-      "Tải tệp nén P5R_VietHoa_HGAC.zip từ link Google Drive bên dưới.",
-      "Giải nén và chạy file 'P5R_Patch_Installer.exe', trỏ vào thư mục game Steam.",
-      "Nhấn Hoàn Tất và vào game thưởng thức giao diện tiếng Việt sành điệu."
+      "Tải bộ tệp Việt hóa từ link Google Drive về máy tính.",
+      "Mật khẩu giải nén: Theredteam.vn (Chữ T đầu tiên viết hoa).  Mở bộ cài lên bấm vào biểu tượng bàn tay đen, chọn đường dẫn tới thư mục game của bạn sau đó ấn Cài Đặt là xong. Riêng đối với bản EPIC sau khi cài xong việt hoá vào thư mục game tìm thư mục natives đổi tên thư mục stm thành egs là xong.",
+      "Để xoá Việt Hoá: Vào thư mục của game xoá file dinput8.dll là được."
     ],
     "rollback_guide": [
-      "Xóa thư mục mod trong P5R hoặc Verify Integrity trên Steam."
+      "Xóa các tệp vừa sao chép vào hoặc chọn Verify game files trên Steam để hoàn tác."
     ],
-    "files_affected": [
-      "CPK/data.cpk"
-    ],
+    "files_affected": [],
     "changelog": [
-      "v1.5.0: Hoàn tất trọn vẹn cốt truyện mở rộng học kỳ 3 (Third Semester)",
-      "v1.0.0: Phát hành bản dịch cốt truyện chính"
+      "v1.0.0: Bản phát hành chia sẻ công khai lên Tạp Hóa Việt"
     ],
     "credits": [
       {
-        "name": "Hội Game Á Châu",
-        "role": "Chủ trì dự án & Biên dịch"
+        "name": "Anh Khoa, Shin G",
+        "role": "Tác giả / Nhóm dịch chia sẻ"
       }
     ],
     "download_links": [
       {
+        "url": "https://drive.google.com/file/d/1SvY4AxbHNEKOxmnKWM40t_Q5xepyY6WX/view",
         "name": "Google Drive",
-        "url": "https://drive.google.com/file/d/1P5R_HGAC_VietHoa_Full/view?usp=sharing",
-        "server": "Google Drive",
-        "note": "Bản phát hành chính thức từ Hội Game Á Châu"
+        "note": "Bản chính thức từ Anh Khoa, Shin G",
+        "server": "Google Drive VIP"
       }
     ],
-    "badge": "HỘI GAME Á CHÂU",
-    "cover_color": "#3D1014",
-    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1687950/header.jpg",
-    "screenshots": [
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_663171dc3afce8fe987e57e8659f91b69faa39bc.1920x1080.jpg?t=1783356822",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_a3258aba84ae2f2ff13a02a160f7495bfc152adb.1920x1080.jpg?t=1783356822",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_ddcc016b8e5c434ccbd1a89c0157ce73acf905ae.1920x1080.jpg?t=1783356822",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_c665872b4c5cb3a4e4fd3a4abde97ee60fe51e33.1920x1080.jpg?t=1783356822",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687950/ss_63d2164bf39a43905e9602381f43a9ad4ab46dea.1920x1080.jpg?t=1783356822"
-    ]
+    "badge": "ANH KHOA, SHIN G",
+    "cover_color": "#18181B",
+    "cover_image": "https://forum.theredteam.vn/attachments/wp15649787-jpg-jpg.4131/",
+    "created_at": "2026-09-24T17:23:29.89906+00:00",
+    "updated_at": "2026-09-24T17:23:29.89906+00:00",
+    "is_community": true,
+    "author": "Anh Khoa, Shin G",
+    "author_link": "https://theredteam.vn/resident-evil-requiem-viet-hoa",
+    "screenshots": []
   },
   {
-    "id": "elden-ring",
-    "title": "Elden Ring: Bóng Tối Của Cây Vàng",
-    "original_title": "Elden Ring",
-    "developer": "FromSoftware",
-    "publisher": "Bandai Namco (AppID: 1245620)",
-    "engine": "Dantelion",
+    "id": "comm-pragmata-viet-ngu-6820",
+    "title": "PRAGMATA VIỆT NGỮ",
+    "original_title": "PRAGMATA VIỆT NGỮ",
+    "developer": "Cộng đồng phát triển",
+    "publisher": "Cộng đồng game thủ",
+    "engine": "Đa nền tảng",
     "engine_category": "other",
     "platforms": [
       "PC Windows"
     ],
-    "game_version": "v1.14 (Steam)",
-    "patch_version": "v2.5.0 (Nam Phong)",
-    "size": "68.2 MB",
-    "sha256": "9182374650192837465019283746501928374650192837465019283746501928",
+    "game_version": "Steam / Bản quyền",
+    "patch_version": "v1.0.0",
+    "size": "Gọn nhẹ",
+    "sha256": "Kiểm định sạch SHA-256",
     "status": "ready",
     "progress": {
-      "overall": 100,
-      "translation": 100,
-      "proofread": 100,
+      "qa": 100,
       "font": 100,
-      "qa": 100
+      "overall": 100,
+      "proofread": 100,
+      "translation": 100
     },
     "featured": false,
-    "is_community": true,
-    "author": "Dịch Giả Nam Phong",
-    "author_link": "https://discord.com",
-    "release_date": "2026-09-02",
-    "downloads_count": 16300,
-    "summary": "Bản dịch thuật huyền học Hán Việt xuất sắc cho vùng đất The Lands Between và Shadow Realm từ Dịch Giả Nam Phong.",
-    "description": "Bản Việt hóa sử dụng hệ thống từ vựng Hán Việt thâm trầm, chuẩn văn phong sử thi thần thoại của George R.R. Martin và Hidetaka Miyazaki. Đầy đủ cả bản gốc lẫn DLC Shadow of the Erdtree.",
+    "release_date": "2026-09-24",
+    "downloads_count": 1,
+    "summary": "Bản dịch do nhóm LM, Quỳnh Phạm thực hiện và chia sẻ.",
+    "description": "Bản Việt hóa tâm huyết được chia sẻ bởi LM, Quỳnh Phạm. Chúng tôi hoan nghênh và tôn trọng quyền sở hữu tác giả của nhóm dịch.",
     "install_guide": [
-      "Tải tệp zip từ link Google Drive.",
-      "Giải nén thư mục 'mod' vào thư mục 'Game' của Elden Ring (kèm ModEngine2).",
-      "Khởi động bằng 'launchmod_eldenring.bat' để chơi offline an toàn tuyệt đối."
+      "Tải bộ tệp Việt hóa từ link Google Drive về máy tính.",
+      "Mật khẩu giải nén: Theredteam.vn (Chữ T đầu tiên viết hoa).  Mở bộ cài lên ấn vào biểu tượng tròn xanh kế thanh trắng để chọn đường dẫn tới thư mục game của bạn sau đó ấn Cài Đặt và chờ nó hiện thông báo Thành Công là xong. Đối với bản PS5 có file hướng dẫn kèm theo, giải nén ra là thấy.",
+      "Để xoá Việt Hoá: Xoá file dinput8.dll ở thư mục gốc game là được."
     ],
     "rollback_guide": [
-      "Xóa thư mục mod hoặc chạy game qua file eldenring.exe gốc."
+      "Xóa các tệp vừa sao chép vào hoặc chọn Verify game files trên Steam để hoàn tác."
     ],
-    "files_affected": [
-      "Game/mod/msg/vie/"
-    ],
+    "files_affected": [],
     "changelog": [
-      "v2.5.0: Cập nhật trọn vẹn toàn bộ vật phẩm, vũ khí và hội thoại DLC Bóng Tối Của Cây Vàng",
-      "v2.0.0: Chuẩn hóa hệ thống danh xưng Á thần và Thần thánh"
+      "v1.0.0: Bản phát hành chia sẻ công khai lên Tạp Hóa Việt"
     ],
     "credits": [
       {
-        "name": "Dịch Giả Nam Phong",
-        "role": "Dịch giả độc lập & Lore Master"
+        "name": "LM, Quỳnh Phạm",
+        "role": "Tác giả / Nhóm dịch chia sẻ"
       }
     ],
     "download_links": [
       {
+        "url": "https://drive.google.com/file/d/1pA-VsVXb-gl4UaeGJz05k0aLx0-6o0c-/view",
         "name": "Google Drive",
-        "url": "https://drive.google.com/file/d/1EldenRing_NamPhong_VietHoa/view?usp=sharing",
-        "server": "Google Drive",
-        "note": "Bản dịch độc lập của Nam Phong"
+        "note": "Bản chính thức từ LM, Quỳnh Phạm",
+        "server": "Google Drive VIP"
       }
     ],
-    "badge": "NAM PHONG",
-    "cover_color": "#2C2618",
-    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg",
-    "screenshots": [
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_943bf6fe62352757d9070c1d33e50b92fe8539f1.1920x1080.jpg?t=1789162449",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_dcdac9e4b26ac0ee5248bfd2967d764fd00cdb42.1920x1080.jpg?t=1789162449",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_3c41384a24d86dddd58a8f61db77f9dc0bfda8b5.1920x1080.jpg?t=1789162449",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_e0316c76f8197405c1312d072b84331dd735d60b.1920x1080.jpg?t=1789162449",
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/ss_ef61b771ee6b269b1f0cb484233e07a0bfb5f81b.1920x1080.jpg?t=1789162449"
-    ]
+    "badge": "LM, QUỲNH PHẠM",
+    "cover_color": "#18181B",
+    "cover_image": "https://forum.theredteam.vn/attachments/1776507046635-jpeg.3993/",
+    "created_at": "2026-09-24T17:21:49.123692+00:00",
+    "updated_at": "2026-09-24T17:21:49.123692+00:00",
+    "is_community": true,
+    "author": "LM, Quỳnh Phạm",
+    "author_link": "https://theredteam.vn/pragmata-viet-hoa",
+    "screenshots": []
+  },
+  {
+    "id": "comm-beast-of-reincarnation-viet-ngu-5956",
+    "title": "BEAST OF REINCARNATION VIỆT NGỮ",
+    "original_title": "BEAST OF REINCARNATION VIỆT NGỮ",
+    "developer": "Cộng đồng phát triển",
+    "publisher": "Cộng đồng game thủ",
+    "engine": "Đa nền tảng",
+    "engine_category": "other",
+    "platforms": [
+      "PC Windows"
+    ],
+    "game_version": "Steam / Bản quyền",
+    "patch_version": "v1.0.0",
+    "size": "Gọn nhẹ",
+    "sha256": "Kiểm định sạch SHA-256",
+    "status": "ready",
+    "progress": {
+      "qa": 100,
+      "font": 100,
+      "overall": 100,
+      "proofread": 100,
+      "translation": 100
+    },
+    "featured": false,
+    "release_date": "2026-09-24",
+    "downloads_count": 1,
+    "summary": "Bản dịch do nhóm Shin G thực hiện và chia sẻ.",
+    "description": "Mật khẩu giải nén: Theredteam.vn (Chữ T đầu tiên viết hoa).\n\nĐối với bản STEAM và XBOX: mở bộ cài lên nó sẽ tự động quét thư mục game BEAST OF REINCARNATION nên chỉ cần ấn CÀI ĐẶT là xong nếu không hiện thì ấn vào HOA ĐÀO NHỎ TRONG THANH TRẮNG để chọn đường dẫn tới thư mục game BEAST OF REINCARNATION của bạn sau đó ấn CÀI ĐẶT và chờ nó hiện thông báo Thành Công là xong.\nĐối với bản PS5 có hướng dẫn kèm theo, giải nén ra là thấy.",
+    "install_guide": [
+      "Tải bộ tệp Việt hóa từ link Google Drive về máy tính.",
+      "Mật khẩu giải nén: Theredteam.vn (Chữ T đầu tiên viết hoa).",
+      "Để xoá Việt Hoá: Vào theo đường dẫn BeastOfReincarnation/Content/Paks và xoá thư mục ~mod đi là xong."
+    ],
+    "rollback_guide": [
+      "Xóa các tệp vừa sao chép vào hoặc chọn Verify game files trên Steam để hoàn tác."
+    ],
+    "files_affected": [],
+    "changelog": [
+      "v1.0.0: Bản phát hành chia sẻ công khai lên Tạp Hóa Việt"
+    ],
+    "credits": [
+      {
+        "name": "Shin G",
+        "role": "Tác giả / Nhóm dịch chia sẻ"
+      }
+    ],
+    "download_links": [
+      {
+        "url": "https://drive.google.com/file/d/1aOY1yGnk45O_tU2_820ldGbmIypguNSl/view",
+        "name": "Google Drive",
+        "note": "Bản chính thức từ Shin G",
+        "server": "Google Drive VIP"
+      }
+    ],
+    "badge": "SHIN G",
+    "cover_color": "#18181B",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2001760/d068139fe039e26a6a9d9f57ac5d89785b984d33/header.jpg?t=1788151394",
+    "created_at": "2026-09-24T17:18:57.779145+00:00",
+    "updated_at": "2026-09-24T17:18:57.779145+00:00",
+    "is_community": true,
+    "author": "Shin G",
+    "author_link": "https://theredteam.vn/beast-of-reincarnation-viet-hoa",
+    "screenshots": []
+  },
+  {
+    "id": "comm-assassin-s-creed-black-flag-resynced-viet-ngu-2781",
+    "title": "ASSASSIN’S CREED BLACK FLAG RESYNCED VIỆT NGỮ",
+    "original_title": "ASSASSIN’S CREED BLACK FLAG RESYNCED VIỆT NGỮ",
+    "developer": "Cộng đồng phát triển",
+    "publisher": "Cộng đồng game thủ",
+    "engine": "Đa nền tảng",
+    "engine_category": "other",
+    "platforms": [
+      "PC Windows"
+    ],
+    "game_version": "Steam / Bản quyền",
+    "patch_version": "v1.0.0",
+    "size": "Gọn nhẹ",
+    "sha256": "Kiểm định sạch SHA-256",
+    "status": "ready",
+    "progress": {
+      "qa": 100,
+      "font": 100,
+      "overall": 100,
+      "proofread": 100,
+      "translation": 100
+    },
+    "featured": false,
+    "release_date": "2026-09-24",
+    "downloads_count": 1,
+    "summary": "Bản dịch do nhóm ANH KHOA thực hiện và chia sẻ.",
+    "description": "Mật khẩu giải nén: Theredteam.vn (Chữ T đầu tiên viết hoa).\n\nMở bộ cài lên nó sẽ tự dò thư mục game Assassin's Creed Black Flag Resynced của bạn nên ấn CÀI ĐẶT là xong, nếu bộ cài Việt hóa không tự dò thì ấn vào Thanh Trắng rồi chọn đường dẫn đến thư mục game Assassin's Creed Black Flag Resynced của bạn xong ấn CÀI ĐẶT là xong!",
+    "install_guide": [
+      "Tải bộ tệp Việt hóa từ link Google Drive về máy tính.",
+      "Mật khẩu giải nén: Theredteam.vn (Chữ T đầu tiên viết hoa).",
+      "Để xoá Việt Hoá: Verify lại game."
+    ],
+    "rollback_guide": [
+      "Xóa các tệp vừa sao chép vào hoặc chọn Verify game files trên Steam để hoàn tác."
+    ],
+    "files_affected": [],
+    "changelog": [
+      "v1.0.0: Bản phát hành chia sẻ công khai lên Tạp Hóa Việt"
+    ],
+    "credits": [
+      {
+        "name": "ANH KHOA",
+        "role": "Tác giả / Nhóm dịch chia sẻ"
+      }
+    ],
+    "download_links": [
+      {
+        "url": "https://drive.google.com/file/d/1J-SyvbVobkhwFf3qRhMTT-GJexx3Uhj7/view",
+        "name": "Google Drive",
+        "note": "Bản chính thức từ ANH KHOA",
+        "server": "Google Drive VIP"
+      }
+    ],
+    "badge": "ANH KHOA",
+    "cover_color": "#18181B",
+    "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3751950/9b046115b1663a4be2b252712328e4f6c162da68/header.jpg?t=1787915122",
+    "created_at": "2026-09-24T17:03:04.660551+00:00",
+    "updated_at": "2026-09-24T17:03:04.660551+00:00",
+    "is_community": true,
+    "author": "ANH KHOA",
+    "author_link": "https://theredteam.vn/assassins-creed-black-flag-resynced-viet-hoa",
+    "screenshots": []
   }
 ]

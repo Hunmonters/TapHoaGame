@@ -90,50 +90,74 @@ const App = {
       SupabaseClient.init();
     }
 
-    // 2. Thử lấy dữ liệu từ Supabase Cloud nếu đã cấu hình
-    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
-      const cloudGames = await SupabaseClient.getGames();
-      const cloudReqs = await SupabaseClient.getRequests();
-      if (cloudGames && cloudGames.length) {
-        this.games = cloudGames;
-        console.log("[App] Đã nạp thành công dữ liệu games từ Supabase Cloud!");
-      }
-      if (cloudReqs && cloudReqs.length) {
-        this.requests = cloudReqs;
-      }
-      if (this.games.length) return;
-    }
-
-    // 3. Thử lấy từ localStorage nếu có bản lưu tùy biến của Admin
+    // 2. Nạp dữ liệu nền tảng từ data/games.json hoặc data_bundle.js trước
+    let localGames = [];
+    let localReqs = [];
     try {
-      const cached = localStorage.getItem("thv_custom_games");
-      if (cached) {
-        this.games = JSON.parse(cached);
+      const [gamesRes, reqsRes] = await Promise.all([
+        fetch("data/games.json").catch(() => ({ ok: false })),
+        fetch("data/requests.json").catch(() => ({ ok: false }))
+      ]);
+
+      if (gamesRes && gamesRes.ok) {
+        localGames = await gamesRes.json();
+      }
+      if (reqsRes && reqsRes.ok) {
+        localReqs = await reqsRes.json();
       }
     } catch (e) {}
 
-    // 4. Nạp từ games.json nếu chưa có
-    if (!this.games || !this.games.length) {
-      try {
-        const [gamesRes, reqsRes] = await Promise.all([
-          fetch("data/games.json"),
-          fetch("data/requests.json").catch(() => ({ ok: false }))
-        ]);
-
-        if (gamesRes.ok) {
-          this.games = await gamesRes.json();
-        }
-        if (reqsRes && reqsRes.ok) {
-          this.requests = await reqsRes.json();
-        }
-      } catch (err) {
-        console.warn("Đang nạp dữ liệu dự phòng từ data_bundle.js", err);
-        if (window.FALLBACK_GAMES) this.games = window.FALLBACK_GAMES;
-        if (window.FALLBACK_REQUESTS) this.requests = window.FALLBACK_REQUESTS;
-      }
+    // Dự phòng offline từ data_bundle.js nếu mở qua file:///
+    if (!localGames.length && window.FALLBACK_GAMES) {
+      localGames = window.FALLBACK_GAMES;
+    }
+    if (!localReqs.length && window.FALLBACK_REQUESTS) {
+      localReqs = window.FALLBACK_REQUESTS;
     }
 
-    // 5. Loại bỏ vĩnh viễn các game Admin đã bấm Xóa
+    // Khởi tạo Map dữ liệu từ file đĩa (bảo đảm mọi game mới quét đều hiện diện)
+    const gameMap = new Map();
+    localGames.forEach(g => {
+      if (g && g.id) gameMap.set(g.id, g);
+    });
+
+    // 3. Nếu có Supabase Cloud, hợp nhất thông minh (lấy thêm game cộng đồng & cập nhật mới nhất)
+    if (window.SupabaseClient && SupabaseClient.hasCloud()) {
+      try {
+        const [cloudGames, cloudReqs] = await Promise.all([
+          SupabaseClient.getGames(),
+          SupabaseClient.getRequests()
+        ]);
+        if (cloudGames && cloudGames.length) {
+          cloudGames.forEach(cg => {
+            if (cg && cg.id) {
+              if (gameMap.has(cg.id)) {
+                // Hợp nhất thuộc tính, ưu tiên dữ liệu mới
+                gameMap.set(cg.id, { ...gameMap.get(cg.id), ...cg });
+              } else {
+                // Thêm các game cộng đồng từ Cloud
+                gameMap.set(cg.id, cg);
+              }
+            }
+          });
+          console.log("[App] Đã đồng bộ thành công dữ liệu với Supabase Cloud!");
+        }
+        if (cloudReqs && cloudReqs.length) {
+          this.requests = cloudReqs;
+        } else if (localReqs.length) {
+          this.requests = localReqs;
+        }
+      } catch (err) {
+        console.warn("[App] Lỗi kết nối Supabase, sử dụng dữ liệu cục bộ:", err);
+        if (localReqs.length) this.requests = localReqs;
+      }
+    } else {
+      if (localReqs.length) this.requests = localReqs;
+    }
+
+    this.games = Array.from(gameMap.values());
+
+    // 4. Loại bỏ vĩnh viễn các game Admin đã bấm Xóa
     try {
       const deletedIds = new Set(JSON.parse(localStorage.getItem("thv_deleted_games") || "[]"));
       if (deletedIds.size > 0 && Array.isArray(this.games)) {

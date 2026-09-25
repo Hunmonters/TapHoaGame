@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "req-1790270202672",
+    "title": "CONTROL Resonant",
+    "engine": "PC",
+    "url": "https://store.steampowered.com/app/3669870/CONTROL_Resonant/",
+    "why": "Không hỗ trợ ngôn ngữ Tiếng Việt",
+    "votes": 1,
+    "created_at": "2026-09-24T17:16:44.686614+00:00",
+    "cover_url": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3669870/1e0c76e4253d347bb1304c3f213570251d924edf/header.jpg?t=1790259464"
+  },
+  {
+    "id": "req-1790270686729",
+    "title": "The Magus Circle",
+    "engine": "PC",
+    "url": "https://store.steampowered.com/app/2796640/The_Magus_Circle/",
+    "why": "Không hỗ trợ ngôn ngữ Tiếng Việt",
+    "votes": 1,
+    "created_at": "2026-09-24T17:24:48.420664+00:00",
+    "cover_url": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2796640/1c9b203ae7005cc7009569fcc90ae1bc4d6efa33/header.jpg?t=1790254825"
+  },
+  {
+    "id": "req-1790270730747",
+    "title": "Tasty Chef",
+    "engine": "PC",
+    "url": "https://store.steampowered.com/app/5019920/Tasty_Chef/",
+    "why": "Không hỗ trợ ngôn ngữ Tiếng Việt",
+    "votes": 1,
+    "created_at": "2026-09-24T17:25:32.211354+00:00",
+    "cover_url": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/5019920/f68a77dcee43b69d9f3403e92dbe45de8f3e9c7b/header.jpg?t=1790204769"
+  }
+]
