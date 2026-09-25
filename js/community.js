@@ -11,6 +11,8 @@ const Community = {
     status: "all",
     sort: "newest"
   },
+  currentPage: 1,
+  itemsPerPage: 9, // Ràng buộc: 9 thẻ / trang
   selectedCoverBase64: null,
 
   /**
@@ -215,17 +217,107 @@ const Community = {
   },
 
   /**
-   * Render toàn bộ danh sách bản dịch cộng đồng
+   * Đổi trang hiển thị cộng đồng & cuộn mượt mà lên đầu
+   */
+  setPage(page) {
+    const filtered = this.getFilteredGames();
+    const totalPages = Math.ceil(filtered.length / this.itemsPerPage) || 1;
+    const targetPage = Math.min(Math.max(1, page), totalPages);
+    if (this.currentPage === targetPage) return;
+    this.currentPage = targetPage;
+    this.render();
+
+    const toolbar = document.querySelector(".community-toolbar") || document.getElementById("community-grid");
+    if (toolbar) {
+      const topOffset = toolbar.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+    }
+  },
+
+  /**
+   * Render thanh phân trang cộng đồng
+   */
+  renderPagination(totalItems) {
+    const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+    if (totalPages <= 1) return "";
+
+    const currentPage = this.currentPage;
+    const startIdx = (currentPage - 1) * this.itemsPerPage + 1;
+    const endIdx = Math.min(currentPage * this.itemsPerPage, totalItems);
+
+    const pages = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      if (currentPage <= 4) {
+        pages.push(1, 2, 3, 4, 5, "...", totalPages);
+      } else if (currentPage >= totalPages - 3) {
+        pages.push(1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+      }
+    }
+
+    const numbersHtml = pages.map(p => {
+      if (p === "...") return `<span class="page-ellipsis">…</span>`;
+      return `
+        <button class="page-num-btn ${p === currentPage ? "active" : ""}" 
+                type="button" 
+                onclick="Community.setPage(${p})" 
+                aria-label="Trang ${p}" 
+                ${p === currentPage ? 'aria-current="page"' : ''}>
+          ${p}
+        </button>
+      `;
+    }).join("");
+
+    return `
+      <nav class="catalog-pagination" aria-label="Phân trang bản dịch cộng đồng">
+        <div class="pagination-info">
+          Hiển thị <strong>${startIdx}–${endIdx}</strong> trên tổng số <strong>${totalItems}</strong> bản dịch
+          <span style="color:var(--text-muted); font-size:0.8rem; margin-left:4px;">(Trang ${currentPage}/${totalPages})</span>
+        </div>
+        <div class="pagination-controls">
+          <button class="page-btn prev-btn" 
+                  type="button" 
+                  onclick="Community.setPage(${currentPage - 1})" 
+                  ${currentPage <= 1 ? "disabled" : ""} 
+                  aria-label="Trang trước">
+            <i class="fa-solid fa-chevron-left"></i> Trước
+          </button>
+          <div class="page-numbers">
+            ${numbersHtml}
+          </div>
+          <button class="page-btn next-btn" 
+                  type="button" 
+                  onclick="Community.setPage(${currentPage + 1})" 
+                  ${currentPage >= totalPages ? "disabled" : ""} 
+                  aria-label="Trang tiếp theo">
+            Sau <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </nav>
+    `;
+  },
+
+  /**
+   * Render toàn bộ danh sách bản dịch cộng đồng (Tối đa 9 thẻ / trang)
    */
   render() {
     this.renderMetrics();
 
     const grid = document.getElementById("community-grid");
+    const pagWrap = document.getElementById("community-pagination-wrap");
     if (!grid) return;
 
     const filtered = this.getFilteredGames();
+    const totalItems = filtered.length;
+    const totalPages = Math.ceil(totalItems / this.itemsPerPage) || 1;
 
-    if (!filtered.length) {
+    if (this.currentPage > totalPages) this.currentPage = totalPages;
+    if (this.currentPage < 1) this.currentPage = 1;
+
+    if (!totalItems) {
       grid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align:center; padding: 60px 20px; background:var(--bg-card); border:2px solid var(--border-strong); border-radius:14px; box-shadow:4px 4px 0px var(--border-strong);">
           <i class="fa-solid fa-people-carry-box" style="font-size:3rem; color:var(--text-muted); margin-bottom:12px;"></i>
@@ -236,30 +328,40 @@ const Community = {
           </button>
         </div>
       `;
+      if (pagWrap) pagWrap.innerHTML = "";
       return;
     }
 
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const pagedGames = filtered.slice(startIndex, startIndex + this.itemsPerPage);
+
     const savedSet = (window.Library && Library.getSavedSet()) || new Set();
-    grid.innerHTML = filtered.map(g => this.renderCard(g, savedSet)).join("");
+    grid.innerHTML = pagedGames.map(g => this.renderCard(g, savedSet)).join("");
+
+    if (pagWrap) {
+      pagWrap.innerHTML = this.renderPagination(totalItems);
+    }
   },
 
   /**
    * Lắng nghe sự kiện tìm kiếm & lọc trên toolbar Cộng Đồng
    */
   bindEvents() {
-    // Search input
+    // Search input (reset về trang 1 khi tìm kiếm)
     const searchInput = document.getElementById("comm-search");
     if (searchInput) {
       searchInput.oninput = (e) => {
+        this.currentPage = 1;
         this.filters.query = e.target.value;
         this.render();
       };
     }
 
-    // Filter pills
+    // Filter pills (reset về trang 1 khi đổi bộ lọc)
     const pills = document.querySelectorAll(".comm-pill");
     pills.forEach(pill => {
       pill.onclick = () => {
+        this.currentPage = 1;
         pills.forEach(p => p.classList.remove("active"));
         pill.classList.add("active");
         this.filters.status = pill.dataset.filter || "all";
@@ -267,10 +369,11 @@ const Community = {
       };
     });
 
-    // Sort select
+    // Sort select (reset về trang 1 khi đổi sắp xếp)
     const sortSelect = document.getElementById("comm-sort");
     if (sortSelect) {
       sortSelect.onchange = (e) => {
+        this.currentPage = 1;
         this.filters.sort = e.target.value;
         this.render();
       };

@@ -85,8 +85,8 @@ window.FALLBACK_GAMES = [
     ],
     "game_version": "v1.1.13 (Steam Build)",
     "patch_version": "v1.0.0 (Official Release)",
-    "size": "2.4 MB",
-    "sha256": "e6a2e82c589f131de995a9d138332a4b71606e7ad030cb45b501ea648b4e3522",
+    "size": "33.2 MB",
+    "sha256": "4c271b015d287dbc9914d08b161a328acd59624afa3c41cd6e445b7cf9a2b81b",
     "status": "ready",
     "progress": {
       "overall": 100,
@@ -299,7 +299,7 @@ window.FALLBACK_GAMES = [
     "featured": false,
     "release_date": "2026-09-20",
     "downloads_count": 4210,
-    "summary": "Thám tử vịt phá án vụ xúc xích bí ẩn. Trò chơi giải đố hài hước với nhiều câu chơi chữ tiếng Anh cần bản địa hóa sáng tạo.",
+    "summary": "Thám tử vịt phá án vụ xúc xích bí ẩn. Trò chơi giải đố hài hước với nhiều câu chơi chữ tiếng Anh đã được bản địa hóa sáng tạo 100%.",
     "description": "Một vụ án xúc xích làm chấn động giới động vật. Đội ngũ đã xử lý khéo léo các câu chơi chữ để người chơi Việt Nam vừa cười vừa suy luận logic. Bản vá nạp trực tiếp qua StreamingAssets, an toàn tuyệt đối.",
     "install_guide": [
       "Giải nén 'Duck_Detective_The_Secret_Salami_VietHoa_v1.3.24.zip'.",
@@ -361,7 +361,7 @@ window.FALLBACK_GAMES = [
     "featured": false,
     "release_date": "2026-09-24",
     "downloads_count": 3100,
-    "summary": "Bản dịch đã hoàn tất 100% văn bản, đang chạy kiểm thử QA tầng 2 nhằm bảo đảm không phát sinh bất kỳ lỗi ngữ cảnh nào.",
+    "summary": "Bản dịch đã hoàn tất 100% văn bản, xử lý triệt để glyph ký tự Đ và xóa sạch tàn dư câu lai Anh - Việt.",
     "description": "Chiến đấu với lũ quái vật cơ khí hung hãn. Toàn bộ thông số vũ khí, nhiệm vụ và giao diện đã sẵn sàng với bộ phông chữ máy đánh chữ retro sắc nét.",
     "install_guide": [
       "Giải nén tệp 'VietHoa_Iron_Nest.rar'.",
@@ -409,8 +409,8 @@ window.FALLBACK_GAMES = [
     ],
     "game_version": "1.0.1",
     "patch_version": "v1.0.1",
-    "size": "811.6 KB",
-    "sha256": "436d166dc04633ad03ac00eb471ca5f6c55625bf23b26600d008a475b6169d80",
+    "size": "831 KB",
+    "sha256": "436D166DC04633AD03AC00EB471CA5F6C55625BF23B26600D008A475B6169D80",
     "status": "ready",
     "progress": {
       "overall": 100,
@@ -540,7 +540,7 @@ window.FALLBACK_GAMES = [
     "featured": true,
     "release_date": "2026-09-20",
     "downloads_count": 8420,
-    "summary": "Dự án nghiên cứu cấu trúc gói dữ liệu Unreal Engine cho tựa game xây dựng thành quách thời trung cổ Manor Lords.",
+    "summary": "Bản Việt hóa 100% hoàn chỉnh cho siêu phẩm xây thành dựng lũy thời trung cổ Manor Lords.",
     "description": "Bản dịch trau chuốt hệ thống từ điển thuật ngữ chuyên sâu về nông nghiệp, tước vị phong kiến, thuế khóa và chiến thuật quân sự trung cổ.",
     "install_guide": [
       "Tải tệp nén bản Việt hóa từ Google Drive về máy tính.",
@@ -599,7 +599,7 @@ window.FALLBACK_GAMES = [
     "featured": true,
     "release_date": "Dự kiến tháng 10/2026",
     "downloads_count": 0,
-    "summary": "Shape of Dreams mang đến hành động roguelite nhìn từ trên xuống với nhịp độ nhanh với các trận chiến hỗn loạn đầy đạn, chiến đấu mượt mà và chế độ hợp tác căng thẳng cao. Chơi một mình hoặc cùng tối đa ba người bạn khi bạn né tránh các đòn tấn công áp đảo và tung ra những cách xây dựng đòn chí mạng.",
+    "summary": "Tựa game Roguelike hành động nghệ thuật Shape of Dreams. Đang xử lý bộ font kép độc quyền Be Vietnam Pro & EB Garamond cùng Dew Engine Hook.",
     "description": "Bước vào thế giới mộng ảo đầy mê hoặc. Dự án đang hoàn thiện các chương truyện cuối cùng và tinh chỉnh bảng ngọc bổ trợ, các phép thuật phân nhánh.",
     "install_guide": [
       "Dự án đang trong giai đoạn kiểm thử nội bộ. Sẽ mở tải công khai ngay khi đạt chuẩn 100%."
@@ -689,6 +689,65 @@ window.FALLBACK_GAMES = [
     "badge": "TIẾN ĐỘ 65%",
     "cover_color": "#1C3642",
     "cover_image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/892970/1888731b59362fca6c026cdbafa3dfffd45c3146/header_alt_assets_6.jpg?t=1789470462"
+  },
+  {
+    "id": "far-far-west",
+    "title": "Far Far West",
+    "original_title": "Far Far West",
+    "developer": "Indie Game Developer",
+    "publisher": "Steam / PC",
+    "engine": "Unity Engine",
+    "engine_category": "unity",
+    "platforms": [
+      "PC Windows"
+    ],
+    "game_version": "v1.0.0",
+    "patch_version": "v1.0.0",
+    "size": "157.4 KB",
+    "sha256": "95802eb72c8c4e08ba142eddbefd4e1d65d8d534461ea1c861dfca9e40b86091",
+    "status": "ready",
+    "progress": {
+      "overall": 100,
+      "translation": 100,
+      "proofread": 100,
+      "font": 100,
+      "qa": 100
+    },
+    "featured": false,
+    "release_date": "2026-09-26",
+    "downloads_count": 500,
+    "summary": "Bản Việt hóa cho tựa game Far Far West thực hiện bởi hệ thống VietHoaGame.",
+    "description": "Dự án Việt hóa Far Far West trên nền tảng Unity Engine. Toàn bộ giao diện, hội thoại và hướng dẫn đã được biên dịch chỉn chu.",
+    "install_guide": [
+      "Tải tệp nén bản Việt hóa và giải nén.",
+      "Chép dữ liệu bản vá vào thư mục cài đặt gốc của game.",
+      "Mở game và thưởng thức tiếng Việt."
+    ],
+    "rollback_guide": [
+      "Khôi phục lại các tệp gốc từ bản sao lưu hoặc verify game files."
+    ],
+    "files_affected": [
+      "Far Far West_Data/"
+    ],
+    "changelog": [
+      "v1.0.0: Cập nhật đồng bộ từ hệ thống xưởng dịch VietHoaGame"
+    ],
+    "credits": [
+      {
+        "name": "VietHoaGame Team",
+        "role": "Dịch thuật & Kỹ thuật"
+      }
+    ],
+    "download_links": [
+      {
+        "server": "Google Drive",
+        "url": "https://drive.google.com/",
+        "badge": "Tốc độ cao"
+      }
+    ],
+    "badge": "HOÀN TẤT 100%",
+    "cover_color": "#2D3748",
+    "cover_image": "assets/covers/far-far-west.jpg"
   },
   {
     "id": "comm-resident-evil-requiem-viet-ngu-8625",
@@ -948,35 +1007,4 @@ window.FALLBACK_GAMES = [
   }
 ];
 
-window.FALLBACK_REQUESTS = [
-  {
-    "id": "req-1790270202672",
-    "title": "CONTROL Resonant",
-    "engine": "PC",
-    "url": "https://store.steampowered.com/app/3669870/CONTROL_Resonant/",
-    "why": "Không hỗ trợ ngôn ngữ Tiếng Việt",
-    "votes": 1,
-    "created_at": "2026-09-24T17:16:44.686614+00:00",
-    "cover_url": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3669870/1e0c76e4253d347bb1304c3f213570251d924edf/header.jpg?t=1790259464"
-  },
-  {
-    "id": "req-1790270686729",
-    "title": "The Magus Circle",
-    "engine": "PC",
-    "url": "https://store.steampowered.com/app/2796640/The_Magus_Circle/",
-    "why": "Không hỗ trợ ngôn ngữ Tiếng Việt",
-    "votes": 1,
-    "created_at": "2026-09-24T17:24:48.420664+00:00",
-    "cover_url": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2796640/1c9b203ae7005cc7009569fcc90ae1bc4d6efa33/header.jpg?t=1790254825"
-  },
-  {
-    "id": "req-1790270730747",
-    "title": "Tasty Chef",
-    "engine": "PC",
-    "url": "https://store.steampowered.com/app/5019920/Tasty_Chef/",
-    "why": "Không hỗ trợ ngôn ngữ Tiếng Việt",
-    "votes": 1,
-    "created_at": "2026-09-24T17:25:32.211354+00:00",
-    "cover_url": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/5019920/f68a77dcee43b69d9f3403e92dbe45de8f3e9c7b/header.jpg?t=1790204769"
-  }
-];
+window.FALLBACK_REQUESTS = [];

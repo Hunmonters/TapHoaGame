@@ -7,10 +7,13 @@ const Catalog = {
   games: [],
   filters: {
     query: "",
-    engine: "all",
-    status: "all",
+    filter: "all",
     sort: "newest"
   },
+  currentPage: 1,
+  currentReadyPage: 1, // Điều hướng phân trang riêng cho Bản Dịch Hoàn Thành
+  currentWipPage: 1,   // Điều hướng phân trang riêng cho Dự Án Đang Dịch
+  itemsPerPage: 9,     // Ràng buộc: đúng 9 thẻ / trang
   currentSlide: 0,
   spotlightGames: [],
   currentSpotlightIndex: 0,
@@ -219,12 +222,6 @@ const Catalog = {
     wireTrack.innerHTML = `${fullText} ${separator} ${fullText}`;
   },
 
-  filters: {
-    query: "",
-    filter: "all",
-    sort: "newest"
-  },
-
   /**
    * Lọc và sắp xếp danh sách game
    */
@@ -325,7 +322,135 @@ const Catalog = {
   },
 
   /**
-   * Render Thư Viện Bản Dịch chia thành 2 phân khu Hoàn Thành & Đang Dịch
+   * Đổi trang hiển thị cho các view đơn (Community, Featured)
+   */
+  setPage(page) {
+    const filtered = this.getFilteredGames();
+    const totalPages = Math.ceil(filtered.length / this.itemsPerPage) || 1;
+    const targetPage = Math.min(Math.max(1, page), totalPages);
+    if (this.currentPage === targetPage) return;
+    this.currentPage = targetPage;
+    this.renderCatalog();
+
+    const toolbar = document.querySelector(".catalog-toolbar") || document.getElementById("catalog-sections-wrap");
+    if (toolbar) {
+      const topOffset = toolbar.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+    }
+  },
+
+  /**
+   * Đổi trang hiển thị ĐỘC LẬP cho phân khu Bản Dịch Hoàn Thành
+   */
+  setReadyPage(page) {
+    const filtered = this.getFilteredGames();
+    const readyGames = filtered.filter(g => g.status === "ready");
+    const totalPages = Math.ceil(readyGames.length / this.itemsPerPage) || 1;
+    const targetPage = Math.min(Math.max(1, page), totalPages);
+    if (this.currentReadyPage === targetPage) return;
+    this.currentReadyPage = targetPage;
+    this.renderCatalog();
+
+    const sec = document.getElementById("section-ready-games");
+    if (sec) {
+      const topOffset = sec.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+    }
+  },
+
+  /**
+   * Đổi trang hiển thị ĐỘC LẬP cho phân khu Dự Án Đang Dịch
+   */
+  setWipPage(page) {
+    const filtered = this.getFilteredGames();
+    const wipGames = filtered.filter(g => g.status !== "ready");
+    const totalPages = Math.ceil(wipGames.length / this.itemsPerPage) || 1;
+    const targetPage = Math.min(Math.max(1, page), totalPages);
+    if (this.currentWipPage === targetPage) return;
+    this.currentWipPage = targetPage;
+    this.renderCatalog();
+
+    const sec = document.getElementById("section-wip-games");
+    if (sec) {
+      const topOffset = sec.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: "smooth" });
+    }
+  },
+
+  /**
+   * Render thanh phân trang chuẩn Neubrutalist tái sử dụng cho từng phân khu
+   */
+  renderPagination(totalItems, currentPage = 1, onPageChangeFnName = "Catalog.setPage", label = "bản dịch") {
+    const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+    if (totalPages <= 1) {
+      return "";
+    }
+
+    const startIdx = (currentPage - 1) * this.itemsPerPage + 1;
+    const endIdx = Math.min(currentPage * this.itemsPerPage, totalItems);
+
+    // Tính toán các nút số trang (hỗ trợ dấu ba chấm nếu nhiều trang)
+    const pages = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      if (currentPage <= 4) {
+        pages.push(1, 2, 3, 4, 5, "...", totalPages);
+      } else if (currentPage >= totalPages - 3) {
+        pages.push(1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+      }
+    }
+
+    const numbersHtml = pages.map(p => {
+      if (p === "...") {
+        return `<span class="page-ellipsis">…</span>`;
+      }
+      return `
+        <button class="page-num-btn ${p === currentPage ? "active" : ""}" 
+                type="button" 
+                onclick="${onPageChangeFnName}(${p})" 
+                aria-label="Trang ${p}" 
+                ${p === currentPage ? 'aria-current="page"' : ''}>
+          ${p}
+        </button>
+      `;
+    }).join("");
+
+    return `
+      <nav class="catalog-pagination" aria-label="Phân trang ${label}">
+        <div class="pagination-info">
+          Hiển thị <strong>${startIdx}–${endIdx}</strong> trên tổng số <strong>${totalItems}</strong> ${label}
+          <span style="color:var(--text-muted); font-size:0.8rem; margin-left:4px;">(Trang ${currentPage}/${totalPages})</span>
+        </div>
+        <div class="pagination-controls">
+          <button class="page-btn prev-btn" 
+                  type="button" 
+                  onclick="${onPageChangeFnName}(${currentPage - 1})" 
+                  ${currentPage <= 1 ? "disabled" : ""} 
+                  aria-label="Trang trước">
+            <i class="fa-solid fa-chevron-left"></i> Trước
+          </button>
+          <div class="page-numbers">
+            ${numbersHtml}
+          </div>
+          <button class="page-btn next-btn" 
+                  type="button" 
+                  onclick="${onPageChangeFnName}(${currentPage + 1})" 
+                  ${currentPage >= totalPages ? "disabled" : ""} 
+                  aria-label="Trang tiếp theo">
+            Sau <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </nav>
+    `;
+  },
+
+  /**
+   * Render Thư Viện Bản Dịch
+   * - Hoàn Thành & Đang Dịch mỗi phân khu có bộ đếm và nút điều hướng phân trang RIÊNG BIỆT
+   * - Mỗi phân khu chỉ hiển thị tối đa đúng 9 thẻ / trang
    */
   renderCatalog() {
     const container = document.getElementById("catalog-sections-wrap") || document.getElementById("games-grid");
@@ -333,9 +458,11 @@ const Catalog = {
     if (!container) return;
 
     const filtered = this.getFilteredGames();
-    if (countEl) countEl.textContent = `${filtered.length} trên tổng ${this.games.length} game`;
+    const totalItems = filtered.length;
 
-    if (!filtered.length) {
+    if (countEl) countEl.textContent = `${totalItems} trên tổng ${this.games.length} game`;
+
+    if (!totalItems) {
       container.innerHTML = `
         <div class="catalog-empty" style="text-align:center; padding:60px 20px; background:var(--bg-card); border:2px solid var(--border-strong); border-radius:var(--radius-md); box-shadow:4px 4px 0px var(--border-strong);">
           <i class="fa-solid fa-box-open" style="font-size:2.8rem; color:var(--text-muted); margin-bottom:12px;"></i>
@@ -346,10 +473,17 @@ const Catalog = {
       return;
     }
 
-    const savedSet = Library.getSavedSet();
+    const savedSet = (window.Library && Library.getSavedSet()) || new Set();
 
-    // Nếu người dùng chọn tab Cộng Đồng
+    // 1. Nếu người dùng chọn tab Cộng Đồng
     if (this.filters.filter === "community") {
+      const totalPages = Math.ceil(totalItems / this.itemsPerPage) || 1;
+      if (this.currentPage > totalPages) this.currentPage = totalPages;
+      if (this.currentPage < 1) this.currentPage = 1;
+
+      const paged = filtered.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage);
+      const paginationHtml = this.renderPagination(totalItems, this.currentPage, "Catalog.setPage", "bản dịch cộng đồng");
+
       container.innerHTML = `
         <section class="catalog-group-section" id="section-community-games">
           <div class="catalog-group-head">
@@ -357,20 +491,39 @@ const Catalog = {
               <span class="group-badge ready" style="background:#7C3AED"><i class="fa-solid fa-users"></i> CỘNG ĐỒNG</span>
               <h3>Bản Dịch Do Cộng Đồng & Nhóm Dịch Đóng Góp</h3>
             </div>
-            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-              <span class="catalog-group-count">${filtered.length} bản dịch</span>
+            <div class="catalog-group-controls">
+              <span class="catalog-group-count">${totalItems} bản dịch • Trang ${this.currentPage}/${totalPages}</span>
+              ${totalPages > 1 ? `
+                <div class="mini-page-nav">
+                  <button class="mini-page-btn" onclick="Catalog.setPage(${this.currentPage - 1})" ${this.currentPage <= 1 ? "disabled" : ""} title="Trang trước">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <span class="mini-page-indicator">${this.currentPage}/${totalPages}</span>
+                  <button class="mini-page-btn" onclick="Catalog.setPage(${this.currentPage + 1})" ${this.currentPage >= totalPages ? "disabled" : ""} title="Trang sau">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              ` : ""}
             </div>
           </div>
           <div class="games-grid grid-community">
-            ${filtered.map(g => this.renderGameCard(g, savedSet)).join("")}
+            ${paged.map(g => this.renderGameCard(g, savedSet)).join("")}
           </div>
+          ${paginationHtml}
         </section>
       `;
       return;
     }
 
-    // Nếu người dùng chọn tab Nổi bật (Featured)
+    // 2. Nếu người dùng chọn tab Nổi bật (Featured)
     if (this.filters.filter === "featured") {
+      const totalPages = Math.ceil(totalItems / this.itemsPerPage) || 1;
+      if (this.currentPage > totalPages) this.currentPage = totalPages;
+      if (this.currentPage < 1) this.currentPage = 1;
+
+      const paged = filtered.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage);
+      const paginationHtml = this.renderPagination(totalItems, this.currentPage, "Catalog.setPage", "bản dịch nổi bật");
+
       container.innerHTML = `
         <section class="catalog-group-section" id="section-featured-games">
           <div class="catalog-group-head">
@@ -378,23 +531,54 @@ const Catalog = {
               <span class="group-badge ready" style="background:var(--accent-orange)"><i class="fa-solid fa-star"></i> SPOTLIGHT</span>
               <h3>Bản Dịch Mới Cập Nhật Nổi Bật</h3>
             </div>
-            <span class="catalog-group-count">${filtered.length} bản dịch nổi bật</span>
+            <div class="catalog-group-controls">
+              <span class="catalog-group-count">${totalItems} bản dịch • Trang ${this.currentPage}/${totalPages}</span>
+              ${totalPages > 1 ? `
+                <div class="mini-page-nav">
+                  <button class="mini-page-btn" onclick="Catalog.setPage(${this.currentPage - 1})" ${this.currentPage <= 1 ? "disabled" : ""} title="Trang trước">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <span class="mini-page-indicator">${this.currentPage}/${totalPages}</span>
+                  <button class="mini-page-btn" onclick="Catalog.setPage(${this.currentPage + 1})" ${this.currentPage >= totalPages ? "disabled" : ""} title="Trang sau">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              ` : ""}
+            </div>
           </div>
           <div class="games-grid grid-featured">
-            ${filtered.map(g => this.renderGameCard(g, savedSet)).join("")}
+            ${paged.map(g => this.renderGameCard(g, savedSet)).join("")}
           </div>
+          ${paginationHtml}
         </section>
       `;
       return;
     }
 
+    // 3. Cho chế độ "Tất Cả", "Tải Ngay" (ready) hoặc "Đang Dịch" (wip)
+    // Hoàn Thành và Đang Dịch có phân trang 9 thẻ và cụm điều hướng HOÀN TOÀN ĐỘC LẬP
     const readyGames = filtered.filter(g => g.status === "ready");
     const wipGames = filtered.filter(g => g.status !== "ready");
 
     let html = "";
 
-    // Phân khu 1: Bản Dịch Đã Hoàn Thành
-    if (readyGames.length > 0) {
+    // Phân khu 1: Bản Dịch Đã Hoàn Thành (có điều hướng riêng)
+    if (readyGames.length > 0 && this.filters.filter !== "wip") {
+      const readyTotalPages = Math.ceil(readyGames.length / this.itemsPerPage) || 1;
+      if (this.currentReadyPage > readyTotalPages) this.currentReadyPage = readyTotalPages;
+      if (this.currentReadyPage < 1) this.currentReadyPage = 1;
+
+      const pagedReady = readyGames.slice(
+        (this.currentReadyPage - 1) * this.itemsPerPage,
+        this.currentReadyPage * this.itemsPerPage
+      );
+      const readyPagination = this.renderPagination(
+        readyGames.length,
+        this.currentReadyPage,
+        "Catalog.setReadyPage",
+        "bản dịch hoàn thành"
+      );
+
       html += `
         <section class="catalog-group-section" id="section-ready-games">
           <div class="catalog-group-head">
@@ -402,17 +586,46 @@ const Catalog = {
               <span class="group-badge ready"><i class="fa-solid fa-circle-check"></i> HOÀN THÀNH</span>
               <h3>Bản Dịch Đã Hoàn Thành (Sẵn Sàng Tải Về)</h3>
             </div>
-            <span class="catalog-group-count">${readyGames.length} bản dịch</span>
+            <div class="catalog-group-controls">
+              <span class="catalog-group-count">${readyGames.length} bản dịch • Trang ${this.currentReadyPage}/${readyTotalPages}</span>
+              ${readyTotalPages > 1 ? `
+                <div class="mini-page-nav">
+                  <button class="mini-page-btn" onclick="Catalog.setReadyPage(${this.currentReadyPage - 1})" ${this.currentReadyPage <= 1 ? "disabled" : ""} title="Trang trước">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <span class="mini-page-indicator">${this.currentReadyPage}/${readyTotalPages}</span>
+                  <button class="mini-page-btn" onclick="Catalog.setReadyPage(${this.currentReadyPage + 1})" ${this.currentReadyPage >= readyTotalPages ? "disabled" : ""} title="Trang sau">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              ` : ""}
+            </div>
           </div>
           <div class="games-grid grid-ready">
-            ${readyGames.map(g => this.renderGameCard(g, savedSet)).join("")}
+            ${pagedReady.map(g => this.renderGameCard(g, savedSet)).join("")}
           </div>
+          ${readyPagination}
         </section>
       `;
     }
 
-    // Phân khu 2: Dự Án Đang Dịch
-    if (wipGames.length > 0) {
+    // Phân khu 2: Dự Án Đang Dịch (có điều hướng riêng)
+    if (wipGames.length > 0 && this.filters.filter !== "ready") {
+      const wipTotalPages = Math.ceil(wipGames.length / this.itemsPerPage) || 1;
+      if (this.currentWipPage > wipTotalPages) this.currentWipPage = wipTotalPages;
+      if (this.currentWipPage < 1) this.currentWipPage = 1;
+
+      const pagedWip = wipGames.slice(
+        (this.currentWipPage - 1) * this.itemsPerPage,
+        this.currentWipPage * this.itemsPerPage
+      );
+      const wipPagination = this.renderPagination(
+        wipGames.length,
+        this.currentWipPage,
+        "Catalog.setWipPage",
+        "dự án đang dịch"
+      );
+
       html += `
         <section class="catalog-group-section" id="section-wip-games">
           <div class="catalog-group-head">
@@ -420,11 +633,25 @@ const Catalog = {
               <span class="group-badge wip"><i class="fa-solid fa-clock-rotate-left"></i> ĐANG THỰC HIỆN</span>
               <h3>Dự Án Đang Dịch (Tiến Độ Trong Xưởng)</h3>
             </div>
-            <span class="catalog-group-count">${wipGames.length} dự án</span>
+            <div class="catalog-group-controls">
+              <span class="catalog-group-count">${wipGames.length} dự án • Trang ${this.currentWipPage}/${wipTotalPages}</span>
+              ${wipTotalPages > 1 ? `
+                <div class="mini-page-nav">
+                  <button class="mini-page-btn" onclick="Catalog.setWipPage(${this.currentWipPage - 1})" ${this.currentWipPage <= 1 ? "disabled" : ""} title="Trang trước">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <span class="mini-page-indicator">${this.currentWipPage}/${wipTotalPages}</span>
+                  <button class="mini-page-btn" onclick="Catalog.setWipPage(${this.currentWipPage + 1})" ${this.currentWipPage >= wipTotalPages ? "disabled" : ""} title="Trang sau">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              ` : ""}
+            </div>
           </div>
           <div class="games-grid grid-wip">
-            ${wipGames.map(g => this.renderGameCard(g, savedSet)).join("")}
+            ${pagedWip.map(g => this.renderGameCard(g, savedSet)).join("")}
           </div>
+          ${wipPagination}
         </section>
       `;
     }
@@ -433,10 +660,13 @@ const Catalog = {
   },
 
   bindEvents() {
-    // Tìm kiếm
+    // Tìm kiếm (reset tất cả phân trang về trang 1 khi gõ tìm kiếm)
     const searchInput = document.getElementById("catalog-search");
     if (searchInput) {
       searchInput.oninput = (e) => {
+        this.currentPage = 1;
+        this.currentReadyPage = 1;
+        this.currentWipPage = 1;
         this.filters.query = e.target.value;
         this.renderCatalog();
       };
@@ -446,6 +676,9 @@ const Catalog = {
     const filterPills = document.querySelectorAll(".filter-pill");
     filterPills.forEach(pill => {
       pill.onclick = () => {
+        this.currentPage = 1;
+        this.currentReadyPage = 1;
+        this.currentWipPage = 1;
         filterPills.forEach(p => p.classList.remove("active"));
         pill.classList.add("active");
         this.filters.filter = pill.dataset.filter || "all";
@@ -453,10 +686,13 @@ const Catalog = {
       };
     });
 
-    // Select sort
+    // Select sort (reset về trang 1 khi đổi sắp xếp)
     const sortSelect = document.getElementById("filter-sort");
     if (sortSelect) {
       sortSelect.onchange = (e) => {
+        this.currentPage = 1;
+        this.currentReadyPage = 1;
+        this.currentWipPage = 1;
         this.filters.sort = e.target.value;
         this.renderCatalog();
       };
@@ -466,6 +702,9 @@ const Catalog = {
     const resetBtn = document.getElementById("btn-reset-filters");
     if (resetBtn) {
       resetBtn.onclick = () => {
+        this.currentPage = 1;
+        this.currentReadyPage = 1;
+        this.currentWipPage = 1;
         this.filters = { query: "", filter: "all", sort: "newest" };
         if (searchInput) searchInput.value = "";
         if (sortSelect) sortSelect.value = "newest";
